@@ -1550,7 +1550,7 @@
 
     if (!firebaseConfig) {
       try {
-        const savedCustomFb = sessionStorage.getItem('ddp_custom_firebase_config');
+        const savedCustomFb = localStorage.getItem('ddp_custom_firebase_config');
         if (savedCustomFb) firebaseConfig = JSON.parse(savedCustomFb);
       } catch (e) {}
     }
@@ -1713,6 +1713,7 @@
           allUsersMap[u.uid] = u;
           if (currentProfile && !currentProfile.isGuest && currentProfile.uid === u.uid) {
             currentProfile = { ...currentProfile, ...u };
+            localStorage.setItem('ddp_active_session', JSON.stringify({ uid: currentProfile.uid, user: currentProfile }));
             updateProfileUI();
           }
         });
@@ -1726,7 +1727,7 @@
       initAvatarSelector();
       renderPremadeRooms();
 
-      const savedSession = sessionStorage.getItem('ddp_active_session');
+      const savedSession = localStorage.getItem('ddp_active_session');
       if (savedSession) {
         try {
           const parsed = JSON.parse(savedSession);
@@ -1817,7 +1818,7 @@
           if (gasRes && gasRes.ok && gasRes.user) {
             currentProfile = gasRes.user;
             allUsersMap[gasRes.user.uid] = gasRes.user;
-            sessionStorage.setItem('ddp_active_session', JSON.stringify({ uid: gasRes.user.uid, user: gasRes.user }));
+            localStorage.setItem('ddp_active_session', JSON.stringify({ uid: gasRes.user.uid, user: gasRes.user }));
             showToast(`Swagat hai ${name}! +25 Free Coins Google Sheet mein save ho gaye 🎉`, 'success');
             enterMainApp();
             btn.disabled = false;
@@ -1855,7 +1856,7 @@
         await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', uid), userDoc);
 
         currentProfile = userDoc;
-        sessionStorage.setItem('ddp_active_session', JSON.stringify({ uid, user: userDoc }));
+        localStorage.setItem('ddp_active_session', JSON.stringify({ uid, user: userDoc }));
         showToast(`Swagat hai ${name}! +25 Free Coins mile hain 🎉`, 'success');
         enterMainApp();
       } catch (err) {
@@ -1884,7 +1885,7 @@
           if (gasRes && gasRes.ok && gasRes.user) {
             currentProfile = gasRes.user;
             allUsersMap[gasRes.user.uid] = gasRes.user;
-            sessionStorage.setItem('ddp_active_session', JSON.stringify({ uid: gasRes.user.uid, user: gasRes.user }));
+            localStorage.setItem('ddp_active_session', JSON.stringify({ uid: gasRes.user.uid, user: gasRes.user }));
             showToast(`Welcome back, ${gasRes.user.name}! ❤️`, 'success');
             enterMainApp();
             btn.disabled = false;
@@ -1915,7 +1916,7 @@
         }
 
         currentProfile = { uid, ...userData };
-        sessionStorage.setItem('ddp_active_session', JSON.stringify({ uid, user: currentProfile }));
+        localStorage.setItem('ddp_active_session', JSON.stringify({ uid, user: currentProfile }));
         showToast(`Welcome back, ${userData.name}! ❤️`, 'success');
         enterMainApp();
       } catch (err) {
@@ -1956,7 +1957,7 @@
       }
 
       currentProfile = guestObj;
-      sessionStorage.setItem('ddp_active_session', JSON.stringify(guestObj));
+      localStorage.setItem('ddp_active_session', JSON.stringify(guestObj));
       showToast(`Guest "${name}" ke roop mein entry ho gayi! 🎧`, 'success');
       enterMainApp();
     };
@@ -1970,7 +1971,7 @@
       const validPass = adminCredentials.passcode || 'admin123';
 
       if (id === validId && pass === validPass) {
-        sessionStorage.setItem('ddp_active_session', JSON.stringify({ isAdmin: true }));
+        localStorage.setItem('ddp_active_session', JSON.stringify({ isAdmin: true }));
         showToast('Admin Control Center unlocked! 🛡️', 'success');
         enterAdminDashboard();
       } else {
@@ -2004,14 +2005,14 @@
     };
 
     window.handleAdminLogout = () => {
-      sessionStorage.removeItem('ddp_active_session');
+      localStorage.removeItem('ddp_active_session');
       document.getElementById('admin-dashboard-view').classList.add('hidden');
       document.getElementById('auth-view').classList.remove('hidden');
       switchAuthTab('register');
     };
 
     window.handleLogout = () => {
-      sessionStorage.removeItem('ddp_active_session');
+      localStorage.removeItem('ddp_active_session');
       currentProfile = null;
       closeChatOverlay();
       document.getElementById('main-view').classList.add('hidden');
@@ -2021,7 +2022,7 @@
     };
 
     window.logoutAndSwitchToRegister = () => {
-      sessionStorage.removeItem('ddp_active_session');
+      localStorage.removeItem('ddp_active_session');
       currentProfile = null;
       closeChatOverlay();
       document.getElementById('main-view').classList.add('hidden');
@@ -2347,6 +2348,7 @@
           });
         }
         currentProfile.coins = newBalance;
+        localStorage.setItem('ddp_active_session', JSON.stringify({ uid: currentProfile.uid, user: currentProfile }));
         updateProfileUI();
         document.getElementById('modal-wallet-balance').textContent = newBalance;
         cancelUpiCheckout();
@@ -2423,6 +2425,7 @@
           }
           if (gasRes && gasRes.ok) {
             currentProfile.coins = gasRes.newBalance;
+            localStorage.setItem('ddp_active_session', JSON.stringify({ uid: currentProfile.uid, user: currentProfile }));
             updateProfileUI();
             document.getElementById('modal-wallet-balance').textContent = gasRes.newBalance;
             document.getElementById('share-coin-username').value = '';
@@ -2537,6 +2540,7 @@
             hostUid: currentProfile.uid, hostName: currentProfile.name, createdAt: Date.now()
           });
           currentProfile.coins = currentCoins - 50;
+          localStorage.setItem('ddp_active_session', JSON.stringify({ uid: currentProfile.uid, user: currentProfile }));
           updateProfileUI();
           renderCustomRooms();
         }
@@ -2560,6 +2564,7 @@
         });
       }
       currentProfile.moodText = val;
+      localStorage.setItem('ddp_active_session', JSON.stringify({ uid: currentProfile.uid, user: currentProfile }));
       updateProfileUI();
       showToast('Mood update ho gaya! ✨', 'success');
     };
@@ -2572,6 +2577,7 @@
         });
       }
       currentProfile.intent = newIntent;
+      localStorage.setItem('ddp_active_session', JSON.stringify({ uid: currentProfile.uid, user: currentProfile }));
       updateProfileUI();
       showToast(`Status updated: "${INTENT_LABELS[newIntent]}"`, 'success');
     };
@@ -3670,7 +3676,7 @@
       if (isIos) {
         showToast('iPhone/Safari mein neeche Share (↑) dabakar "Add to Home Screen" chunein!', 'info');
       } else {
-        showToast('Browser menu (⋮) kholein aur "Install app" par tap karein (ensure icon-192.png & icon-512.png repo mein hon)!', 'info');
+        showToast('Browser menu (⋮) kholein aur "Install app" par tap karein!', 'info');
       }
     };
 
@@ -3853,110 +3859,67 @@
             categories: ["social", "communication"],
             icons: [
               { src: activeIcon192, sizes: "192x192", type: "image/png", purpose: "any" },
-              { src: activeIcon512, sizes: "512x512", type: "image/png", purpose: "any" },
-              { src: activeIcon512, sizes: "512x512", type: "image/png", purpose: "maskable" }
+              { src: activeIcon512, sizes: "512x512", type: "image/png", purpose: "any" }
             ]
           }, null, 2)
         },
         sw: {
           filename: 'sw.js',
           mime: 'application/javascript',
-          content: `// Service Worker for DIL - DOSTI - PYAR PWA
-const CACHE_NAME = 'dil-dosti-pyar-v2';
-const PRECACHE_ASSETS = ['./', './index.html', './manifest.json'];
-
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(PRECACHE_ASSETS))
-      .then(() => self.skipWaiting())
-  );
-});
-
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
-    ).then(() => self.clients.claim())
-  );
-});
-
-self.addEventListener('fetch', (event) => {
-  const { request } = event;
-  if (
-    request.method !== 'GET' ||
-    request.url.includes('firestore.googleapis.com') ||
-    request.url.includes('identitytoolkit.googleapis.com') ||
-    request.url.includes('script.google.com')
-  ) return;
-
-  if (request.mode === 'navigate') {
-    event.respondWith(
-      fetch(request)
-        .then((res) => {
-          const copy = res.clone();
-          caches.open(CACHE_NAME).then((c) => c.put('./index.html', copy));
-          return res;
-        })
-        .catch(() => caches.match('./index.html'))
-    );
-    return;
-  }
-
-  event.respondWith(
-    caches.match(request).then((cached) => cached || fetch(request))
-  );
-});`
+          content: [
+            "// Service Worker for DIL - DOSTI - PYAR PWA",
+            "const CACHE_NAME = 'dil-dosti-pyar-v3';",
+            "const PRECACHE_ASSETS = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];",
+            "",
+            "self.addEventListener('install', (event) => {",
+            "  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(PRECACHE_ASSETS)).then(() => self.skipWaiting()));",
+            "});",
+            "",
+            "self.addEventListener('activate', (event) => {",
+            "  event.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))).then(() => self.clients.claim()));",
+            "});",
+            "",
+            "self.addEventListener('fetch', (event) => {",
+            "  const { request } = event;",
+            "  if (request.method !== 'GET' || request.url.includes('firestore.googleapis.com') || request.url.includes('script.google.com')) return;",
+            "  if (request.mode === 'navigate') {",
+            "    event.respondWith(fetch(request).then((res) => { const copy = res.clone(); caches.open(CACHE_NAME).then((c) => c.put('./index.html', copy)); return res; }).catch(() => caches.match('./index.html')));",
+            "    return;",
+            "  }",
+            "  event.respondWith(caches.match(request).then((cached) => cached || fetch(request)));",
+            "});"
+          ].join('\n')
         },
         codegs: {
           filename: 'Code.gs',
           mime: 'text/plain',
-          content: `/**
- * Google Apps Script Backend Bridge for DIL - DOSTI - PYAR
- * Deploy as Web App (Execute as: Me, Who has access: Anyone)
- */
-const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID';
-
-function getAppSpreadsheet() {
-  if (SHEET_ID && SHEET_ID !== 'YOUR_GOOGLE_SHEET_ID') {
-    return SpreadsheetApp.openById(SHEET_ID);
-  }
-  return SpreadsheetApp.getActiveSpreadsheet();
-}
-
-function doGet(e) {
-  const action = (e && e.parameter && e.parameter.action) || 'status';
-  return ContentService.createTextOutput(JSON.stringify({
-    ok: true,
-    app: 'DIL - DOSTI - PYAR',
-    action: action,
-    timestamp: new Date().toISOString()
-  })).setMimeType(ContentService.MimeType.JSON);
-}
-
-function doPost(e) {
-  try {
-    const payload = JSON.parse(e.postData.contents || '{}');
-    const ss = getAppSpreadsheet();
-    const sheetName = payload.collection || 'ActivityLogs';
-    let sheet = ss.getSheetByName(sheetName);
-    if (!sheet) {
-      sheet = ss.insertSheet(sheetName);
-      sheet.appendRow(['Timestamp', 'Action', 'User', 'DataJSON']);
-    }
-    sheet.appendRow([
-      new Date(),
-      payload.action || 'event',
-      payload.username || 'guest',
-      JSON.stringify(payload)
-    ]);
-    return ContentService.createTextOutput(JSON.stringify({ ok: true }))
-      .setMimeType(ContentService.MimeType.JSON);
-  } catch (err) {
-    return ContentService.createTextOutput(JSON.stringify({ ok: false, error: err.message }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-}`
+          content: [
+            "// Google Apps Script Backend Bridge for DIL - DOSTI - PYAR",
+            "// Deploy as Web App (Execute as: Me, Who has access: Anyone)",
+            "const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID';",
+            "",
+            "function getAppSpreadsheet() {",
+            "  if (SHEET_ID && SHEET_ID !== 'YOUR_GOOGLE_SHEET_ID') return SpreadsheetApp.openById(SHEET_ID);",
+            "  return SpreadsheetApp.getActiveSpreadsheet();",
+            "}",
+            "",
+            "function doGet(e) {",
+            "  const action = (e && e.parameter && e.parameter.action) || 'status';",
+            "  return ContentService.createTextOutput(JSON.stringify({ ok: true, app: 'DIL - DOSTI - PYAR', action: action })).setMimeType(ContentService.MimeType.JSON);",
+            "}",
+            "",
+            "function doPost(e) {",
+            "  try {",
+            "    const payload = JSON.parse(e.postData.contents || '{}');",
+            "    const ss = getAppSpreadsheet();",
+            "    let sheet = ss.getSheetByName('ActivityLogs') || ss.insertSheet('ActivityLogs');",
+            "    sheet.appendRow([new Date(), payload.action || 'event', payload.username || 'guest', JSON.stringify(payload)]);",
+            "    return ContentService.createTextOutput(JSON.stringify({ ok: true })).setMimeType(ContentService.MimeType.JSON);",
+            "  } catch (err) {",
+            "    return ContentService.createTextOutput(JSON.stringify({ ok: false, error: err.message })).setMimeType(ContentService.MimeType.JSON);",
+            "  }",
+            "}"
+          ].join('\n')
         }
       };
     }
