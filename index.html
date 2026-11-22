@@ -8,7 +8,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="DilDostiPyar" />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cdefs%3E%3ClinearGradient id='hg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23f43f5e'/%3E%3Cstop offset='50%25' stop-color='%23fda4af'/%3E%3Cstop offset='100%25' stop-color='%23fde68a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='120' height='120' rx='28' fill='%230b1528'/%3E%3Cpath d='M60 94C60 94 24 72 24 46C24 34 33 25 45 25C52 25 57 29 60 34C63 29 68 25 75 25C87 25 96 34 96 46C96 72 60 94 60 94Z' fill='none' stroke='url(%23hg)' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M45 84C45 84 26 70 26 53C26 45 32 39 39 39C44 39 48 42 50 46C52 42 56 39 61 39C68 39 74 45 74 53' fill='none' stroke='%23e11d48' stroke-width='5.5' stroke-linecap='round'/%3E%3Ccircle cx='66' cy='47' r='4.5' fill='%23fcd34d'/%3E%3Ccircle cx='78' cy='47' r='4.5' fill='%23fda4af'/%3E%3Cpath d='M54 78C58 67 61 57 66 56C70 55 72 60 76 60C80 60 82 55 79 56C75 57 73 68 70 78' fill='none' stroke='%23fde68a' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E" />
+  <link rel="icon" type="image/png" href="./icon-192.png" />
+  <link rel="apple-touch-icon" href="./icon-192.png" />
   <link rel="manifest" href="./manifest.json" />
   <title>DIL - DOSTI - PYAR | Voice & Text Social PWA</title>
 
@@ -436,7 +437,6 @@
       <!-- Top App Bar (Top-Left App Logo + User Status) -->
       <header class="glass-panel px-3.5 py-2.5 flex items-center justify-between sticky top-0 z-20 gap-2">
         <div class="flex items-center gap-2.5 min-w-0">
-          <!-- Top-Left Romantic App Icon -->
           <div onclick="switchMainTab('rooms')" title="DIL - DOSTI - PYAR"
             class="w-10 h-10 rounded-xl shadow-lg shadow-rose-500/25 shrink-0 cursor-pointer hover:scale-105 transition overflow-hidden bg-slate-950 flex items-center justify-center">
             <img id="main-brand-img" alt="DIL - DOSTI - PYAR" class="w-full h-full object-cover hidden" />
@@ -1447,7 +1447,7 @@
           <div class="p-4 rounded-2xl bg-slate-900 border border-rose-500/30 space-y-3">
             <div>
               <h4 class="font-display font-bold text-sm text-rose-300">App Logo & Browser Favicon</h4>
-              <p class="text-[11px] text-slate-400">Top-left header logo aur browser tab favicon ko live update karein.</p>
+              <p class="text-[11px] text-slate-400">Top-left header logo aur browser tab favicon ko live update karein. Neeche se GitHub ke liye PNG icons bhi download kar sakte hain.</p>
             </div>
 
             <div class="flex items-center gap-3">
@@ -1467,6 +1467,17 @@
               </div>
             </div>
 
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button" onclick="downloadGeneratedIconPng(192)"
+                class="py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-white/10 text-amber-300 text-[11px] font-bold transition">
+                ⬇️ Download icon-192.png
+              </button>
+              <button type="button" onclick="downloadGeneratedIconPng(512)"
+                class="py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-white/10 text-amber-300 text-[11px] font-bold transition">
+                ⬇️ Download icon-512.png
+              </button>
+            </div>
+
             <div class="flex gap-2">
               <input type="url" id="admin-appicon-url-input" placeholder="Ya direct Icon/Favicon URL paste karein..."
                 class="flex-1 px-3 py-2 rounded-xl bg-slate-950 border border-white/10 text-xs text-white focus:outline-none focus:border-rose-500" />
@@ -1481,7 +1492,7 @@
           <div class="p-4 rounded-2xl bg-slate-900 border border-cyan-500/30 space-y-3">
             <div>
               <h4 class="font-display font-bold text-sm text-cyan-300">PWA & Google Apps Script Files</h4>
-              <p class="text-[11px] text-slate-400">VaniSetu ki tarah yahan se teeno deployment files copy ya download karein:</p>
+              <p class="text-[11px] text-slate-400">Yahan se teeno deployment files copy ya download karein:</p>
             </div>
 
             <div class="grid grid-cols-3 gap-1.5 bg-slate-950 p-1 rounded-xl border border-white/10">
@@ -1544,6 +1555,7 @@
       } catch (e) {}
     }
 
+    const isFirebaseDemoMode = !firebaseConfig;
     if (!firebaseConfig) {
       firebaseConfig = { apiKey: "demo-key", authDomain: "demo.firebaseapp.com", projectId: "demo-project" };
     }
@@ -1552,7 +1564,7 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    // Optional: Apna Google Apps Script Web App URL (Admin panel se bhi set kar sakte hain)
+    // Apna Google Apps Script Web App URL
     const DEFAULT_GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxCc3IeQe01tidDeOhsb5TD_BdDmYYi9dXjUzd4mwnkpVWfWpMk-4eIjT5SBJWv48Ce/exec";
     let gasWebAppUrl = localStorage.getItem('ddp_gas_webapp_url') || DEFAULT_GAS_WEB_APP_URL;
 
@@ -1594,6 +1606,7 @@
 
     let activeChat = null;
     let unsubscribeMessages = null;
+    let gasChatPollInterval = null;
     let unsubscribeAdminInspector = null;
     let adminInspectedRoom = null;
     let pendingFlagPayload = null;
@@ -1692,47 +1705,76 @@
       lucide.createIcons();
     };
 
+    async function syncUsersFromGas() {
+      if (!gasWebAppUrl) return;
+      const res = await callGasApi('GET', { action: 'getUsers' });
+      if (res && res.ok && Array.isArray(res.users)) {
+        res.users.forEach(u => {
+          allUsersMap[u.uid] = u;
+          if (currentProfile && !currentProfile.isGuest && currentProfile.uid === u.uid) {
+            currentProfile = { ...currentProfile, ...u };
+            updateProfileUI();
+          }
+        });
+        renderPeopleDirectory();
+        renderAdminUsers();
+        updateAdminStats();
+      }
+    }
+
     async function bootstrapAuth() {
       initAvatarSelector();
       renderPremadeRooms();
 
-      try {
-        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-          await signInWithCustomToken(auth, __initial_auth_token);
-        } else {
-          await signInAnonymously(auth);
-        }
-      } catch (err) {
-        console.warn('Auth fallback:', err.message);
+      const savedSession = sessionStorage.getItem('ddp_active_session');
+      if (savedSession) {
+        try {
+          const parsed = JSON.parse(savedSession);
+          if (parsed.isAdmin) {
+            enterAdminDashboard();
+          } else if (parsed.isGuest) {
+            currentProfile = parsed;
+            enterMainApp();
+          } else if (parsed.user) {
+            currentProfile = parsed.user;
+            enterMainApp();
+          }
+        } catch (e) {}
       }
 
-      onAuthStateChanged(auth, async (user) => {
-        currentAuthUser = user;
-        setupRealtimeListeners();
-
-        const savedSession = sessionStorage.getItem('ddp_active_session');
-        if (savedSession) {
-          try {
-            const parsed = JSON.parse(savedSession);
-            if (parsed.isAdmin) {
-              enterAdminDashboard();
-              return;
-            }
-            if (parsed.isGuest) {
-              currentProfile = parsed;
-              enterMainApp();
-              return;
-            }
-            if (parsed.uid) {
-              const snap = await getDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', parsed.uid));
-              if (snap.exists()) {
-                currentProfile = { uid: snap.id, ...snap.data() };
-                enterMainApp();
-              }
-            }
-          } catch (e) {}
+      if (!isFirebaseDemoMode) {
+        try {
+          if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+            await signInWithCustomToken(auth, __initial_auth_token);
+          } else {
+            await signInAnonymously(auth);
+          }
+        } catch (err) {
+          console.warn('Auth fallback:', err.message);
         }
-      });
+
+        onAuthStateChanged(auth, async (user) => {
+          currentAuthUser = user;
+          setupRealtimeListeners();
+
+          if (savedSession && !currentProfile) {
+            try {
+              const parsed = JSON.parse(savedSession);
+              if (parsed.uid) {
+                const snap = await getDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', parsed.uid));
+                if (snap.exists()) {
+                  currentProfile = { uid: snap.id, ...snap.data() };
+                  enterMainApp();
+                }
+              }
+            } catch (e) {}
+          }
+        });
+      } else {
+        await syncUsersFromGas();
+        setInterval(syncUsersFromGas, 12000);
+      }
+
       lucide.createIcons();
     }
 
@@ -1775,7 +1817,7 @@
           if (gasRes && gasRes.ok && gasRes.user) {
             currentProfile = gasRes.user;
             allUsersMap[gasRes.user.uid] = gasRes.user;
-            sessionStorage.setItem('ddp_active_session', JSON.stringify({ uid: gasRes.user.uid }));
+            sessionStorage.setItem('ddp_active_session', JSON.stringify({ uid: gasRes.user.uid, user: gasRes.user }));
             showToast(`Swagat hai ${name}! +25 Free Coins Google Sheet mein save ho gaye 🎉`, 'success');
             enterMainApp();
             btn.disabled = false;
@@ -1813,7 +1855,7 @@
         await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', uid), userDoc);
 
         currentProfile = userDoc;
-        sessionStorage.setItem('ddp_active_session', JSON.stringify({ uid }));
+        sessionStorage.setItem('ddp_active_session', JSON.stringify({ uid, user: userDoc }));
         showToast(`Swagat hai ${name}! +25 Free Coins mile hain 🎉`, 'success');
         enterMainApp();
       } catch (err) {
@@ -1842,7 +1884,7 @@
           if (gasRes && gasRes.ok && gasRes.user) {
             currentProfile = gasRes.user;
             allUsersMap[gasRes.user.uid] = gasRes.user;
-            sessionStorage.setItem('ddp_active_session', JSON.stringify({ uid: gasRes.user.uid }));
+            sessionStorage.setItem('ddp_active_session', JSON.stringify({ uid: gasRes.user.uid, user: gasRes.user }));
             showToast(`Welcome back, ${gasRes.user.name}! ❤️`, 'success');
             enterMainApp();
             btn.disabled = false;
@@ -1873,7 +1915,7 @@
         }
 
         currentProfile = { uid, ...userData };
-        sessionStorage.setItem('ddp_active_session', JSON.stringify({ uid }));
+        sessionStorage.setItem('ddp_active_session', JSON.stringify({ uid, user: currentProfile }));
         showToast(`Welcome back, ${userData.name}! ❤️`, 'success');
         enterMainApp();
       } catch (err) {
@@ -1907,9 +1949,11 @@
         createdAt: Date.now()
       };
 
-      try {
-        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'guest_sessions', guestUid), guestObj);
-      } catch (err) {}
+      if (!isFirebaseDemoMode) {
+        try {
+          await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'guest_sessions', guestUid), guestObj);
+        } catch (err) {}
+      }
 
       currentProfile = guestObj;
       sessionStorage.setItem('ddp_active_session', JSON.stringify(guestObj));
@@ -1945,11 +1989,13 @@
       }
 
       try {
-        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'admin_auth'), {
-          adminId: newId,
-          passcode: newPass,
-          updatedAt: Date.now()
-        });
+        if (!isFirebaseDemoMode) {
+          await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'admin_auth'), {
+            adminId: newId,
+            passcode: newPass,
+            updatedAt: Date.now()
+          });
+        }
         adminCredentials = { adminId: newId, passcode: newPass };
         showToast(`Admin Credentials updated! Naya ID: "${newId}" 🔐`, 'success');
       } catch (err) {
@@ -1989,6 +2035,7 @@
       document.getElementById('admin-dashboard-view').classList.add('hidden');
       document.getElementById('main-view').classList.remove('hidden');
 
+      syncUsersFromGas();
       updateProfileUI();
       renderPremadeRooms();
       renderCustomRooms();
@@ -2038,19 +2085,10 @@
     // ==================== REAL-TIME FIRESTORE SYNC ====================
     let listenersInitialized = false;
     function setupRealtimeListeners() {
-      if (listenersInitialized) return;
+      if (listenersInitialized || isFirebaseDemoMode) return;
       listenersInitialized = true;
 
-      if (gasWebAppUrl) {
-        callGasApi('GET', { action: 'getUsers' }).then(res => {
-          if (res && res.ok && Array.isArray(res.users)) {
-            res.users.forEach(u => { allUsersMap[u.uid] = u; });
-            renderPeopleDirectory();
-            renderAdminUsers();
-            updateAdminStats();
-          }
-        });
-      }
+      syncUsersFromGas();
 
       onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'users'), (snap) => {
         allUsersMap = {};
@@ -2248,11 +2286,12 @@
       }
     };
 
-    window.openWalletModal = (defaultTab = 'buy', prefillUsername = '') => {
+    window.openWalletModal = async (defaultTab = 'buy', prefillUsername = '') => {
       if (currentProfile?.isGuest) {
         showToast('Guest users wallet use nahi kar sakte. Register karein!', 'warn');
         return;
       }
+      await syncUsersFromGas();
       document.getElementById('modal-wallet-balance').textContent = currentProfile?.coins ?? 0;
       populateShareUserDatalist();
       if (prefillUsername) {
@@ -2292,19 +2331,23 @@
       const newBalance = (currentProfile.coins || 0) + coins;
 
       try {
-        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', currentProfile.uid), {
-          coins: newBalance
-        });
-        await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'coin_transactions'), {
-          type: 'purchase',
-          toUid: currentProfile.uid,
-          toUsername: currentProfile.username,
-          rupees,
-          amount: coins,
-          fee: 0,
-          note: `Purchased ${coins} Coins for ₹${rupees}`,
-          createdAt: Date.now()
-        });
+        if (!isFirebaseDemoMode) {
+          await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', currentProfile.uid), {
+            coins: newBalance
+          });
+          await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'coin_transactions'), {
+            type: 'purchase',
+            toUid: currentProfile.uid,
+            toUsername: currentProfile.username,
+            rupees,
+            amount: coins,
+            fee: 0,
+            note: `Purchased ${coins} Coins for ₹${rupees}`,
+            createdAt: Date.now()
+          });
+        }
+        currentProfile.coins = newBalance;
+        updateProfileUI();
         document.getElementById('modal-wallet-balance').textContent = newBalance;
         cancelUpiCheckout();
         showToast(`₹${rupees} payment successful! +${coins} Coins credited.`, 'success');
@@ -2357,12 +2400,6 @@
         return;
       }
 
-      const recipient = Object.values(allUsersMap).find(u => !u.isGuest && u.username === targetUsername);
-      if (!recipient) {
-        showToast(`User "@${targetUsername}" nahi mila! Sirf registered users ko coins bhej sakte hain.`, 'error');
-        return;
-      }
-
       const fee = Math.round(amount * 0.02);
       const totalDeduct = amount + fee;
       const senderBalance = currentProfile.coins || 0;
@@ -2374,12 +2411,31 @@
 
       try {
         if (gasWebAppUrl) {
-          callGasApi('POST', {
+          const gasRes = await callGasApi('POST', {
             action: 'shareCoins',
             fromUsername: currentProfile.username,
-            toUsername: recipient.username,
+            toUsername: targetUsername,
             amount
           });
+          if (gasRes && gasRes.ok === false) {
+            showToast(gasRes.error || 'Coin transfer fail ho gaya', 'error');
+            return;
+          }
+          if (gasRes && gasRes.ok) {
+            currentProfile.coins = gasRes.newBalance;
+            updateProfileUI();
+            document.getElementById('modal-wallet-balance').textContent = gasRes.newBalance;
+            document.getElementById('share-coin-username').value = '';
+            showToast(`@${targetUsername} ko ${amount} Coins bhej diye gaye! (Fee: ${gasRes.fee} Coins)`, 'success');
+            switchWalletTab('history');
+            return;
+          }
+        }
+
+        const recipient = Object.values(allUsersMap).find(u => !u.isGuest && u.username === targetUsername);
+        if (!recipient) {
+          showToast(`User "@${targetUsername}" nahi mila!`, 'error');
+          return;
         }
 
         await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', currentProfile.uid), {
@@ -2460,19 +2516,30 @@
       const topic = document.getElementById('new-room-topic').value.trim();
 
       try {
-        await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'custom_rooms'), {
-          name,
-          icon: icon || '💬',
-          category: category || 'General',
-          topic,
-          hostUid: currentProfile.uid,
-          hostName: currentProfile.name,
-          createdAt: Date.now()
-        });
+        if (!isFirebaseDemoMode) {
+          await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'custom_rooms'), {
+            name,
+            icon: icon || '💬',
+            category: category || 'General',
+            topic,
+            hostUid: currentProfile.uid,
+            hostName: currentProfile.name,
+            createdAt: Date.now()
+          });
 
-        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', currentProfile.uid), {
-          coins: currentCoins - 50
-        });
+          await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', currentProfile.uid), {
+            coins: currentCoins - 50
+          });
+        } else {
+          customRooms.unshift({
+            id: `custom_${Date.now()}`,
+            name, icon: icon || '💬', category: category || 'General', topic,
+            hostUid: currentProfile.uid, hostName: currentProfile.name, createdAt: Date.now()
+          });
+          currentProfile.coins = currentCoins - 50;
+          updateProfileUI();
+          renderCustomRooms();
+        }
 
         document.getElementById('new-room-name').value = '';
         document.getElementById('new-room-topic').value = '';
@@ -2487,17 +2554,25 @@
       if (!currentProfile || currentProfile.isGuest) return;
       const val = document.getElementById('profile-mood-input').value.trim();
       if (!val) return;
-      await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', currentProfile.uid), {
-        moodText: val
-      });
+      if (!isFirebaseDemoMode) {
+        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', currentProfile.uid), {
+          moodText: val
+        });
+      }
+      currentProfile.moodText = val;
+      updateProfileUI();
       showToast('Mood update ho gaya! ✨', 'success');
     };
 
     window.updateUserIntent = async (newIntent) => {
       if (!currentProfile || currentProfile.isGuest) return;
-      await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', currentProfile.uid), {
-        intent: newIntent
-      });
+      if (!isFirebaseDemoMode) {
+        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', currentProfile.uid), {
+          intent: newIntent
+        });
+      }
+      currentProfile.intent = newIntent;
+      updateProfileUI();
       showToast(`Status updated: "${INTENT_LABELS[newIntent]}"`, 'success');
     };
 
@@ -2583,13 +2658,23 @@
 
       const reason = document.getElementById('flag-reason-select').value;
       try {
-        await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'flagged_items'), {
-          ...pendingFlagPayload,
-          reason,
-          reporterUid: currentProfile?.uid || 'anon',
-          reporterName: currentProfile?.name || 'User',
-          createdAt: Date.now()
-        });
+        if (!isFirebaseDemoMode) {
+          await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'flagged_items'), {
+            ...pendingFlagPayload,
+            reason,
+            reporterUid: currentProfile?.uid || 'anon',
+            reporterName: currentProfile?.name || 'User',
+            createdAt: Date.now()
+          });
+        }
+        if (gasWebAppUrl) {
+          callGasApi('POST', {
+            action: 'flagReport',
+            username: currentProfile?.username || 'anon',
+            reason,
+            ...pendingFlagPayload
+          });
+        }
         pendingFlagPayload = null;
         closeModal('modal-flag-report');
         showToast('Report Admin ko bhej diya gaya hai! 🚩', 'success');
@@ -2721,6 +2806,7 @@
       document.getElementById('admin-dashboard-view').classList.remove('hidden');
 
       setupRealtimeListeners();
+      syncUsersFromGas();
       const idField = document.getElementById('new-admin-id-input');
       const passField = document.getElementById('new-admin-pass-input');
       if (idField) idField.value = adminCredentials.adminId || 'admin';
@@ -3062,6 +3148,10 @@
         unsubscribeMessages();
         unsubscribeMessages = null;
       }
+      if (gasChatPollInterval) {
+        clearInterval(gasChatPollInterval);
+        gasChatPollInterval = null;
+      }
       cancelVoiceRecording();
       activeChat = null;
       document.getElementById('chat-room-overlay').classList.add('hidden');
@@ -3167,11 +3257,27 @@
     };
 
     // ==================== MESSAGES (TEXT & VOICE NOTES) ====================
+    async function fetchMessagesFromGas(channelKey) {
+      if (!gasWebAppUrl) return;
+      const res = await callGasApi('GET', { action: 'getMessages', channel: channelKey });
+      if (res && res.ok && Array.isArray(res.messages)) {
+        const sorted = res.messages.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
+        renderMessages(sorted, channelKey);
+      }
+    }
+
     function subscribeToChatMessages(channelKey) {
       if (unsubscribeMessages) unsubscribeMessages();
+      if (gasChatPollInterval) clearInterval(gasChatPollInterval);
 
       const feed = document.getElementById('chat-messages-feed');
       feed.innerHTML = `<div class="text-center text-xs text-slate-500 py-8">Messages load ho rahe hain...</div>`;
+
+      if (isFirebaseDemoMode && gasWebAppUrl) {
+        fetchMessagesFromGas(channelKey);
+        gasChatPollInterval = setInterval(() => fetchMessagesFromGas(channelKey), 4000);
+        return;
+      }
 
       unsubscribeMessages = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', channelKey), (snapshot) => {
         const msgs = snapshot.docs.map(d => ({ id: d.id, ...d.data() }))
@@ -3277,11 +3383,14 @@
         createdAt: Date.now()
       };
 
-      if (gasWebAppUrl) {
-        callGasApi('POST', { action: 'sendMessage', channel: channelKey, ...msgPayload });
-      }
-
       try {
+        if (gasWebAppUrl) {
+          await callGasApi('POST', { action: 'sendMessage', channel: channelKey, ...msgPayload });
+          if (isFirebaseDemoMode) {
+            await fetchMessagesFromGas(channelKey);
+            return;
+          }
+        }
         await addDoc(collection(db, 'artifacts', appId, 'public', 'data', channelKey), msgPayload);
       } catch (err) {
         showToast('Message send nahi ho paya', 'error');
@@ -3367,11 +3476,15 @@
         createdAt: Date.now()
       };
 
-      if (gasWebAppUrl) {
-        callGasApi('POST', { action: 'sendMessage', channel: channelKey, ...voicePayload });
-      }
-
       try {
+        if (gasWebAppUrl) {
+          await callGasApi('POST', { action: 'sendMessage', channel: channelKey, ...voicePayload });
+          if (isFirebaseDemoMode) {
+            await fetchMessagesFromGas(channelKey);
+            showToast('Voice note bhej diya gaya! 🎙️', 'success');
+            return;
+          }
+        }
         await addDoc(collection(db, 'artifacts', appId, 'public', 'data', channelKey), voicePayload);
         showToast('Voice note bhej diya gaya! 🎙️', 'success');
       } catch (err) {
@@ -3513,42 +3626,16 @@
       return canvas.toDataURL('image/png');
     }
 
-    async function injectDynamicPngManifest() {
-      try {
-        const png192 = await generatePngDataUrlFromLogo(192, appBrandingConfig.appIconUrl || '');
-        const png512 = await generatePngDataUrlFromLogo(512, appBrandingConfig.appIconUrl || '');
-        const baseUrl = window.location.href.split('#')[0].split('?')[0];
-
-        const manifestObj = {
-          name: "DIL - DOSTI - PYAR | Voice & Text Social PWA",
-          short_name: "DilDostiPyar",
-          description: "18+ Privacy-First Text & Voice Chatrooms, Mutual Friend Calls & Coin Economy PWA",
-          start_url: baseUrl,
-          scope: baseUrl.substring(0, baseUrl.lastIndexOf('/') + 1),
-          display: "standalone",
-          orientation: "portrait",
-          background_color: "#070b15",
-          theme_color: "#080d1a",
-          icons: [
-            { src: png192, sizes: "192x192", type: "image/png", purpose: "any" },
-            { src: png512, sizes: "512x512", type: "image/png", purpose: "any" },
-            { src: png512, sizes: "512x512", type: "image/png", purpose: "maskable" }
-          ]
-        };
-
-        const blob = new Blob([JSON.stringify(manifestObj)], { type: 'application/manifest+json' });
-        const manifestUrl = URL.createObjectURL(blob);
-        let linkEl = document.querySelector('link[rel="manifest"]');
-        if (!linkEl) {
-          linkEl = document.createElement('link');
-          linkEl.rel = 'manifest';
-          document.head.appendChild(linkEl);
-        }
-        linkEl.href = manifestUrl;
-      } catch (e) {
-        console.warn('Dynamic PNG manifest error:', e);
-      }
-    }
+    window.downloadGeneratedIconPng = async (size = 512) => {
+      const pngDataUrl = await generatePngDataUrlFromLogo(size, appBrandingConfig.appIconUrl || '');
+      const a = document.createElement('a');
+      a.href = pngDataUrl;
+      a.download = `icon-${size}.png`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      showToast(`icon-${size}.png download ho gayi! Ise GitHub repo mein upload karein.`, 'success');
+    };
 
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
@@ -3583,7 +3670,7 @@
       if (isIos) {
         showToast('iPhone/Safari mein neeche Share (↑) dabakar "Add to Home Screen" chunein!', 'info');
       } else {
-        showToast('Browser menu (⋮) kholein aur "Install app" ya "Add to Home screen" par tap karein!', 'info');
+        showToast('Browser menu (⋮) kholein aur "Install app" par tap karein (ensure icon-192.png & icon-512.png repo mein hon)!', 'info');
       }
     };
 
@@ -3631,7 +3718,6 @@
         }
       });
 
-      injectDynamicPngManifest();
       if (selectedAdminFileKey === 'manifest') {
         selectAdminCodeFile('manifest');
       }
@@ -3663,10 +3749,14 @@
       if (!file) return;
       try {
         const dataUrl = await compressImageFileToDataUrl(file, 256);
-        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'branding'), {
-          ...appBrandingConfig,
-          adminAvatarUrl: dataUrl
-        });
+        appBrandingConfig.adminAvatarUrl = dataUrl;
+        applyBrandingToUI();
+        if (!isFirebaseDemoMode) {
+          await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'branding'), {
+            ...appBrandingConfig,
+            adminAvatarUrl: dataUrl
+          });
+        }
         showToast('Admin profile picture update ho gayi! 📷', 'success');
       } catch (err) {
         showToast('Photo upload karne mein error aaya', 'error');
@@ -3675,10 +3765,14 @@
 
     window.resetAdminAvatar = async () => {
       try {
-        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'branding'), {
-          ...appBrandingConfig,
-          adminAvatarUrl: ''
-        });
+        appBrandingConfig.adminAvatarUrl = '';
+        applyBrandingToUI();
+        if (!isFirebaseDemoMode) {
+          await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'branding'), {
+            ...appBrandingConfig,
+            adminAvatarUrl: ''
+          });
+        }
         showToast('Admin profile picture hata di gayi', 'info');
       } catch (err) {}
     };
@@ -3688,10 +3782,14 @@
       if (!file) return;
       try {
         const dataUrl = await compressImageFileToDataUrl(file, 512);
-        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'branding'), {
-          ...appBrandingConfig,
-          appIconUrl: dataUrl
-        });
+        appBrandingConfig.appIconUrl = dataUrl;
+        applyBrandingToUI();
+        if (!isFirebaseDemoMode) {
+          await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'branding'), {
+            ...appBrandingConfig,
+            appIconUrl: dataUrl
+          });
+        }
         showToast('App Icon aur Favicon live update ho gaye! 🖼️', 'success');
       } catch (err) {
         showToast('Icon upload karne mein error aaya', 'error');
@@ -3705,10 +3803,14 @@
         return;
       }
       try {
-        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'branding'), {
-          ...appBrandingConfig,
-          appIconUrl: url
-        });
+        appBrandingConfig.appIconUrl = url;
+        applyBrandingToUI();
+        if (!isFirebaseDemoMode) {
+          await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'branding'), {
+            ...appBrandingConfig,
+            appIconUrl: url
+          });
+        }
         document.getElementById('admin-appicon-url-input').value = '';
         showToast('Naya App Icon URL apply ho gaya! ✨', 'success');
       } catch (err) {
@@ -3718,21 +3820,27 @@
 
     window.resetAppIconToDefault = async () => {
       try {
-        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'branding'), {
-          ...appBrandingConfig,
-          appIconUrl: ''
-        });
+        appBrandingConfig.appIconUrl = '';
+        applyBrandingToUI();
+        if (!isFirebaseDemoMode) {
+          await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'branding'), {
+            ...appBrandingConfig,
+            appIconUrl: ''
+          });
+        }
         showToast('Default romantic icon restore ho gaya ❤️', 'info');
       } catch (err) {}
     };
 
     function getAdminCodeTemplates() {
-      const activeIcon = appBrandingConfig.appIconUrl || './icon-512.png';
+      const activeIcon192 = appBrandingConfig.appIconUrl || './icon-192.png';
+      const activeIcon512 = appBrandingConfig.appIconUrl || './icon-512.png';
       return {
         manifest: {
           filename: 'manifest.json',
           mime: 'application/json',
           content: JSON.stringify({
+            id: "./index.html",
             name: "DIL - DOSTI - PYAR | Voice & Text Social PWA",
             short_name: "DilDostiPyar",
             description: "18+ Privacy-First Text & Voice Chatrooms, Mutual Friend Calls & Coin Economy PWA",
@@ -3744,9 +3852,9 @@
             theme_color: "#080d1a",
             categories: ["social", "communication"],
             icons: [
-              { src: activeIcon, sizes: "192x192", type: "image/png", purpose: "any" },
-              { src: activeIcon, sizes: "512x512", type: "image/png", purpose: "any" },
-              { src: activeIcon, sizes: "512x512", type: "image/png", purpose: "maskable" }
+              { src: activeIcon192, sizes: "192x192", type: "image/png", purpose: "any" },
+              { src: activeIcon512, sizes: "512x512", type: "image/png", purpose: "any" },
+              { src: activeIcon512, sizes: "512x512", type: "image/png", purpose: "maskable" }
             ]
           }, null, 2)
         },
@@ -3778,7 +3886,8 @@ self.addEventListener('fetch', (event) => {
   if (
     request.method !== 'GET' ||
     request.url.includes('firestore.googleapis.com') ||
-    request.url.includes('identitytoolkit.googleapis.com')
+    request.url.includes('identitytoolkit.googleapis.com') ||
+    request.url.includes('script.google.com')
   ) return;
 
   if (request.mode === 'navigate') {
@@ -3808,23 +3917,19 @@ self.addEventListener('fetch', (event) => {
  */
 const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID';
 
+function getAppSpreadsheet() {
+  if (SHEET_ID && SHEET_ID !== 'YOUR_GOOGLE_SHEET_ID') {
+    return SpreadsheetApp.openById(SHEET_ID);
+  }
+  return SpreadsheetApp.getActiveSpreadsheet();
+}
+
 function doGet(e) {
   const action = (e && e.parameter && e.parameter.action) || 'status';
-  if (action === 'manifest') {
-    const manifest = {
-      name: 'DIL - DOSTI - PYAR',
-      short_name: 'DilDostiPyar',
-      start_url: './index.html',
-      display: 'standalone',
-      background_color: '#070b15',
-      theme_color: '#080d1a'
-    };
-    return ContentService.createTextOutput(JSON.stringify(manifest))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
   return ContentService.createTextOutput(JSON.stringify({
     ok: true,
     app: 'DIL - DOSTI - PYAR',
+    action: action,
     timestamp: new Date().toISOString()
   })).setMimeType(ContentService.MimeType.JSON);
 }
@@ -3832,8 +3937,8 @@ function doGet(e) {
 function doPost(e) {
   try {
     const payload = JSON.parse(e.postData.contents || '{}');
-    const ss = SpreadsheetApp.openById(SHEET_ID);
-    const sheetName = payload.collection || 'Logs';
+    const ss = getAppSpreadsheet();
+    const sheetName = payload.collection || 'ActivityLogs';
     let sheet = ss.getSheetByName(sheetName);
     if (!sheet) {
       sheet = ss.insertSheet(sheetName);
@@ -3843,7 +3948,7 @@ function doPost(e) {
       new Date(),
       payload.action || 'event',
       payload.username || 'guest',
-      JSON.stringify(payload.data || {})
+      JSON.stringify(payload)
     ]);
     return ContentService.createTextOutput(JSON.stringify({ ok: true }))
       .setMimeType(ContentService.MimeType.JSON);
@@ -4149,7 +4254,6 @@ function doPost(e) {
     }
 
     bootstrapAuth();
-    injectDynamicPngManifest();
 
     // Register Service Worker for PWA Install & Offline Support
     if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost')) {
