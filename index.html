@@ -157,10 +157,10 @@
               </div>
             </div>
           </div>
-          <button type="button" onclick="openHelpModal('terms')"
+          <button type="button" onclick="openHelpModal()"
             class="px-2.5 py-1.5 rounded-full bg-slate-850 hover:bg-slate-800 border border-white/10 text-[11px] font-semibold text-slate-200 flex items-center gap-1 transition shrink-0">
-            <i data-lucide="help-circle" class="w-3.5 h-3.5 text-cyan-400"></i>
-            <span>Help</span>
+            <i data-lucide="info" class="w-3.5 h-3.5 text-cyan-400"></i>
+            <span>Info & Help</span>
           </button>
         </div>
 
@@ -408,10 +408,10 @@
           18+ Privacy-First Platform • Text & Voice Only
         </p>
         <div class="flex items-center gap-4">
-          <button type="button" onclick="openHelpModal('terms')"
+          <button type="button" onclick="openHelpModal()"
             class="text-[11px] text-slate-400 hover:text-cyan-300 font-medium transition flex items-center gap-1">
-            <i data-lucide="book-open" class="w-3.5 h-3.5 text-cyan-400"></i>
-            <span>Help & Policies</span>
+            <i data-lucide="info" class="w-3.5 h-3.5 text-cyan-400"></i>
+            <span>Info & Help</span>
           </button>
           <span class="text-slate-700">•</span>
           <button type="button" onclick="switchAuthTab('admin')"
@@ -452,9 +452,10 @@
         </div>
 
         <div class="flex items-center gap-1.5 shrink-0">
-          <button onclick="openHelpModal('terms')" title="Help & Policies"
-            class="p-2 rounded-full bg-slate-850 hover:bg-slate-800 border border-white/10 text-cyan-400 transition">
-            <i data-lucide="help-circle" class="w-4 h-4"></i>
+          <button onclick="openHelpModal()" title="Info & Help"
+            class="px-2.5 py-1.5 rounded-full bg-slate-850 hover:bg-slate-800 border border-white/10 text-cyan-300 text-[11px] font-semibold flex items-center gap-1 transition">
+            <i data-lucide="info" class="w-3.5 h-3.5 text-cyan-400"></i>
+            <span>Info & Help</span>
           </button>
 
           <button onclick="openWalletOrUpgrade()" id="header-coin-btn"
@@ -634,10 +635,10 @@
           <div class="p-4 rounded-2xl bg-slate-900/90 border border-white/5 space-y-2">
             <div class="flex items-center justify-between">
               <h4 class="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
-                <i data-lucide="shield" class="w-4 h-4"></i> Privacy, Rules & Help
+                <i data-lucide="shield" class="w-4 h-4"></i> Info, Rules & Help
               </h4>
-              <button onclick="openHelpModal('terms')" class="text-[11px] text-cyan-400 font-semibold underline">
-                Read All Policies →
+              <button onclick="openHelpModal()" class="text-[11px] text-cyan-400 font-semibold underline">
+                Open Info & Help →
               </button>
             </div>
             <p class="text-xs text-slate-400 leading-relaxed">
@@ -744,72 +745,112 @@
             class="flex-1 px-4 py-2.5 rounded-xl bg-slate-900 border border-white/10 text-sm text-white focus:outline-none focus:border-rose-500" />
 
           <button type="submit" id="btn-send-msg"
-            class="p-3 rounded-xl bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-lg shadow-rose-500/20 hover:opacity-95 transition shrink-0">
+            class="p-3 rounded-xl bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-lg shadow-rose-500/25 hover:opacity-95 transition shrink-0" title="Send Message">
             <i data-lucide="send" class="w-5 h-5"></i>
           </button>
         </form>
       </div>
     </div>
 
-    <!-- ==================== 4. USER PROFILE CARD & FLAG MODAL ==================== -->
-    <div id="modal-user-detail" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-4 hidden">
+    <!-- ==================== 4. MUTUAL FRIEND PRIVACY LIMITS MODAL ==================== -->
+    <div id="modal-friend-privacy" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-4 hidden">
       <div class="w-full max-w-sm bg-slate-900 border border-white/10 rounded-3xl p-5 space-y-4 shadow-2xl">
-        <div class="flex items-start justify-between">
-          <div class="flex items-center gap-3">
-            <div id="detail-user-avatar" class="w-14 h-14 rounded-2xl bg-gradient-to-br from-rose-500 to-amber-500 flex items-center justify-center text-3xl shadow-lg">
-              😊
-            </div>
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <span id="priv-friend-avatar" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-xl">😊</span>
             <div>
-              <h4 id="detail-user-name" class="font-display font-bold text-base text-white">User Name</h4>
-              <p id="detail-user-username" class="text-xs text-slate-400">@username</p>
-              <p id="detail-user-meta" class="text-[11px] text-slate-300 mt-0.5">Male • 24 • India</p>
+              <h4 id="priv-friend-name" class="font-display font-bold text-sm text-white">Friend Name</h4>
+              <p class="text-[11px] text-slate-400">Set what they can do with you</p>
             </div>
           </div>
-          <button onclick="closeModal('modal-user-detail')" class="p-1.5 rounded-lg bg-slate-800 text-slate-400 hover:text-white">
+          <button onclick="closeModal('modal-friend-privacy')" class="p-1.5 rounded-lg bg-slate-800 text-slate-400">
             <i data-lucide="x" class="w-4 h-4"></i>
           </button>
         </div>
 
-        <div class="flex flex-wrap gap-2">
-          <span id="detail-user-intent" class="px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-500/20 text-rose-300 border border-rose-500/30">
-            ❤️ Dil - Just for Fun
-          </span>
-          <span id="detail-user-mood" class="px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-            Mood: 😊 Happy
-          </span>
+        <div class="space-y-2">
+          <button type="button" onclick="saveFriendPermission('both')" data-perm="both"
+            class="perm-option-btn w-full p-3 rounded-xl border border-white/10 bg-slate-950/70 text-left flex items-center justify-between transition">
+            <div>
+              <p class="text-xs font-bold text-white">📞💬 Both (Call & Message)</p>
+              <p class="text-[11px] text-slate-400">Voice call aur text/voice notes dono allowed</p>
+            </div>
+            <span class="perm-check text-rose-400 font-bold hidden">✓</span>
+          </button>
+
+          <button type="button" onclick="saveFriendPermission('message_only')" data-perm="message_only"
+            class="perm-option-btn w-full p-3 rounded-xl border border-white/10 bg-slate-950/70 text-left flex items-center justify-between transition">
+            <div>
+              <p class="text-xs font-bold text-white">💬 Message Only</p>
+              <p class="text-[11px] text-slate-400">Sirf text & voice notes bhej sakte hain (Call blocked)</p>
+            </div>
+            <span class="perm-check text-rose-400 font-bold hidden">✓</span>
+          </button>
+
+          <button type="button" onclick="saveFriendPermission('call_only')" data-perm="call_only"
+            class="perm-option-btn w-full p-3 rounded-xl border border-white/10 bg-slate-950/70 text-left flex items-center justify-between transition">
+            <div>
+              <p class="text-xs font-bold text-white">📞 Call Only</p>
+              <p class="text-[11px] text-slate-400">Sirf voice call kar sakte hain (Messages blocked)</p>
+            </div>
+            <span class="perm-check text-rose-400 font-bold hidden">✓</span>
+          </button>
+
+          <button type="button" onclick="saveFriendPermission('none')" data-perm="none"
+            class="perm-option-btn w-full p-3 rounded-xl border border-white/10 bg-slate-950/70 text-left flex items-center justify-between transition">
+            <div>
+              <p class="text-xs font-bold text-rose-300">🚫 None (Block Call & Message)</p>
+              <p class="text-[11px] text-slate-400">Call aur message dono temporarily band</p>
+            </div>
+            <span class="perm-check text-rose-400 font-bold hidden">✓</span>
+          </button>
         </div>
-
-        <p id="detail-user-bio" class="text-xs text-slate-300 bg-slate-950/70 p-3 rounded-xl border border-white/5 italic">
-          "Bio"
-        </p>
-
-        <div id="detail-user-actions" class="pt-1"></div>
       </div>
     </div>
 
-    <!-- ==================== 5. FLAG / REPORT MODAL ==================== -->
+    <!-- ==================== 5. USER PROFILE DETAIL MODAL ==================== -->
+    <div id="modal-user-detail" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-4 hidden">
+      <div class="w-full max-w-sm bg-slate-900 border border-white/10 rounded-3xl p-5 space-y-4 shadow-2xl text-center">
+        <div class="flex justify-end">
+          <button onclick="closeModal('modal-user-detail')" class="p-1.5 rounded-lg bg-slate-800 text-slate-400">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <div id="detail-user-avatar" class="w-20 h-20 rounded-full bg-gradient-to-br from-rose-500 to-amber-500 flex items-center justify-center text-4xl mx-auto shadow-lg">
+          😊
+        </div>
+        <div>
+          <h4 id="detail-user-name" class="font-display font-bold text-lg text-white">Member Name</h4>
+          <p id="detail-user-username" class="text-xs text-slate-400">@username</p>
+          <p id="detail-user-meta" class="text-[11px] text-slate-300 mt-1">Gender • Age • Location</p>
+        </div>
+        <div class="flex flex-wrap justify-center gap-1.5">
+          <span id="detail-user-intent" class="px-3 py-1 rounded-full text-xs font-semibold bg-rose-500/20 text-rose-300">❤️ Dil</span>
+          <span id="detail-user-mood" class="px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-300">😊 Happy</span>
+        </div>
+        <p id="detail-user-bio" class="text-xs text-slate-300 italic">"Bio"</p>
+        <div id="detail-user-actions" class="pt-2"></div>
+      </div>
+    </div>
+
+    <!-- ==================== 6. FLAG / REPORT MODAL ==================== -->
     <div id="modal-flag-report" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-4 hidden">
       <div class="w-full max-w-sm bg-slate-900 border border-rose-500/30 rounded-3xl p-5 space-y-4 shadow-2xl">
         <div class="flex items-center justify-between">
-          <h4 class="font-display font-bold text-base text-rose-300 flex items-center gap-2">
+          <h4 class="font-display font-bold text-base text-rose-400 flex items-center gap-1.5">
             <i data-lucide="flag" class="w-4 h-4"></i> Flag / Report to Admin
           </h4>
           <button onclick="closeModal('modal-flag-report')" class="p-1.5 rounded-lg bg-slate-800 text-slate-400">
             <i data-lucide="x" class="w-4 h-4"></i>
           </button>
         </div>
-
-        <div class="p-3 rounded-xl bg-slate-950 border border-white/5 text-xs text-slate-300">
-          <p class="text-[11px] text-slate-400 mb-1">Reported Content:</p>
-          <p id="flag-target-preview" class="font-medium text-white line-clamp-2"></p>
-        </div>
-
+        <p id="flag-target-preview" class="text-xs text-slate-300 bg-slate-950 p-3 rounded-xl border border-white/5 break-words">Target preview</p>
         <form onsubmit="submitFlagReport(event)" class="space-y-3">
           <div>
-            <label class="block text-xs font-medium text-slate-300 mb-1.5">Reason for Reporting</label>
+            <label class="block text-xs font-medium text-slate-300 mb-1">Report Reason *</label>
             <select id="flag-reason-select" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-white/10 text-xs text-white focus:outline-none focus:border-rose-500">
-              <option value="Abusive / Inappropriate Language">Abusive / Inappropriate Language</option>
-              <option value="Spam / Unwanted Links">Spam / Unwanted Links</option>
+              <option value="Abusive / Vulgar Content">Abusive / Vulgar Content</option>
+              <option value="Spam / Scam / Fraud">Spam / Scam / Fraud</option>
               <option value="Fake Profile / Impersonation">Fake Profile / Impersonation</option>
               <option value="Harassment / Bullying">Harassment / Bullying</option>
             </select>
@@ -821,61 +862,138 @@
       </div>
     </div>
 
-    <!-- ==================== 6. PER-FRIEND PRIVACY LIMITS MODAL ==================== -->
-    <div id="modal-friend-privacy" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-4 hidden">
-      <div class="w-full max-w-sm bg-slate-900 border border-white/10 rounded-3xl p-5 space-y-4 shadow-2xl">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-2.5">
-            <span id="priv-friend-avatar" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-xl">😊</span>
-            <div>
-              <h4 id="priv-friend-name" class="font-display font-bold text-sm text-white">Friend Name</h4>
-              <p class="text-[11px] text-slate-400">Set Privacy Limits for this Friend</p>
-            </div>
+    <!-- ==================== 9. COMPREHENSIVE INFO & HELP MODAL ==================== -->
+    <div id="modal-help-policies" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-3 hidden">
+      <div class="w-full max-w-md bg-slate-900 border border-white/15 rounded-3xl p-4 sm:p-5 space-y-3.5 shadow-2xl max-h-[90vh] flex flex-col">
+        <div class="flex items-center justify-between shrink-0">
+          <div class="flex items-center gap-2">
+            <i data-lucide="info" class="w-5 h-5 text-cyan-400"></i>
+            <h4 id="info-help-modal-title" class="font-display font-bold text-base text-white">Info & Help</h4>
           </div>
-          <button onclick="closeModal('modal-friend-privacy')" class="p-1.5 rounded-lg bg-slate-800 text-slate-400 hover:text-white">
+          <button onclick="closeModal('modal-help-policies')" class="p-1.5 rounded-lg bg-slate-800 text-slate-400 hover:text-white">
             <i data-lucide="x" class="w-4 h-4"></i>
           </button>
         </div>
 
-        <p class="text-xs text-slate-300 bg-slate-950/80 p-3 rounded-xl border border-white/5">
-          Yeh friend aapko kya kar sakta hai? Changes turant apply honge:
-        </p>
+        <!-- VIEW A: 6 Stacked Colorful Menu Bars (All 6 visible at once) -->
+        <div id="help-menu-bars" class="flex-1 overflow-y-auto space-y-2.5 pr-0.5">
+          <p class="text-[11px] text-slate-400">Kisi bhi topic par tap karke poori jankari padhein:</p>
 
-        <div class="space-y-2">
-          <button onclick="saveFriendPermission('both')" data-perm="both"
-            class="perm-option-btn w-full p-3 rounded-xl border text-left flex items-center justify-between transition">
-            <div>
-              <p class="text-xs font-bold text-white">📞💬 Both (Call & Message)</p>
-              <p class="text-[11px] text-slate-400">Text, Voice Notes & Voice Calls allowed</p>
+          <!-- 1. Terms & Conditions (Cyan/Blue Bar) -->
+          <button type="button" onclick="openHelpTopic('terms')"
+            class="w-full p-3.5 rounded-2xl bg-gradient-to-r from-cyan-600/25 to-blue-600/20 hover:from-cyan-600/35 hover:to-blue-600/30 border border-cyan-500/40 flex items-center justify-between text-left transition active:scale-[0.99]">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-xl bg-cyan-500/20 text-cyan-300 flex items-center justify-center shrink-0">
+                <i data-lucide="file-text" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <p class="font-display font-bold text-xs text-cyan-200">1. Terms & Conditions</p>
+                <p class="text-[11px] text-slate-300/80">18+ Eligibility, Account Rules & Moderation</p>
+              </div>
             </div>
-            <span class="perm-check text-emerald-400 font-bold text-sm hidden">✓</span>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-cyan-300 shrink-0"></i>
           </button>
 
-          <button onclick="saveFriendPermission('message_only')" data-perm="message_only"
-            class="perm-option-btn w-full p-3 rounded-xl border text-left flex items-center justify-between transition">
-            <div>
-              <p class="text-xs font-bold text-white">💬 Message Only (No Calls)</p>
-              <p class="text-[11px] text-slate-400">Text & Voice Notes allowed, Voice Calls disabled</p>
+          <!-- 2. Usage Policy (Rose/Pink Bar) -->
+          <button type="button" onclick="openHelpTopic('usage')"
+            class="w-full p-3.5 rounded-2xl bg-gradient-to-r from-rose-600/25 to-pink-600/20 hover:from-rose-600/35 hover:to-pink-600/30 border border-rose-500/40 flex items-center justify-between text-left transition active:scale-[0.99]">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-xl bg-rose-500/20 text-rose-300 flex items-center justify-center shrink-0">
+                <i data-lucide="heart-handshake" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <p class="font-display font-bold text-xs text-rose-200">2. Usage Policy & Guidelines</p>
+                <p class="text-[11px] text-slate-300/80">Respectful Chat, Anti-Spam & Flagging Rules</p>
+              </div>
             </div>
-            <span class="perm-check text-emerald-400 font-bold text-sm hidden">✓</span>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-rose-300 shrink-0"></i>
           </button>
 
-          <button onclick="saveFriendPermission('call_only')" data-perm="call_only"
-            class="perm-option-btn w-full p-3 rounded-xl border text-left flex items-center justify-between transition">
-            <div>
-              <p class="text-xs font-bold text-white">📞 Call Only (No Messages)</p>
-              <p class="text-[11px] text-slate-400">Only Voice Calls allowed, Text/Voice Notes blocked</p>
+          <!-- 3. Fair Usage Policy (Amber/Orange Bar) -->
+          <button type="button" onclick="openHelpTopic('fup')"
+            class="w-full p-3.5 rounded-2xl bg-gradient-to-r from-amber-600/25 to-orange-600/20 hover:from-amber-600/35 hover:to-orange-600/30 border border-amber-500/40 flex items-center justify-between text-left transition active:scale-[0.99]">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center shrink-0">
+                <i data-lucide="scale" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <p class="font-display font-bold text-xs text-amber-200">3. Fair Usage Policy (FUP)</p>
+                <p class="text-[11px] text-slate-300/80">15s Voice Note Limit, Custom Rooms & Fair Play</p>
+              </div>
             </div>
-            <span class="perm-check text-emerald-400 font-bold text-sm hidden">✓</span>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-amber-300 shrink-0"></i>
           </button>
 
-          <button onclick="saveFriendPermission('none')" data-perm="none"
-            class="perm-option-btn w-full p-3 rounded-xl border text-left flex items-center justify-between transition">
-            <div>
-              <p class="text-xs font-bold text-rose-300">🚫 None (Muted / Blocked)</p>
-              <p class="text-[11px] text-slate-400">Neither Calls nor Messages allowed</p>
+          <!-- 4. Privacy & Safety Policy (Emerald/Teal Bar) -->
+          <button type="button" onclick="openHelpTopic('privacy')"
+            class="w-full p-3.5 rounded-2xl bg-gradient-to-r from-emerald-600/25 to-teal-600/20 hover:from-emerald-600/35 hover:to-teal-600/30 border border-emerald-500/40 flex items-center justify-between text-left transition active:scale-[0.99]">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center shrink-0">
+                <i data-lucide="shield-check" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <p class="font-display font-bold text-xs text-emerald-200">4. Privacy & Safety Policy</p>
+                <p class="text-[11px] text-slate-300/80">Zero Photo/Video Guarantee & Friend Limits</p>
+              </div>
             </div>
-            <span class="perm-check text-rose-400 font-bold text-sm hidden">✓</span>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-emerald-300 shrink-0"></i>
+          </button>
+
+          <!-- 5. Coins & Fee Rules (Violet/Purple Bar) -->
+          <button type="button" onclick="openHelpTopic('coins')"
+            class="w-full p-3.5 rounded-2xl bg-gradient-to-r from-violet-600/25 to-purple-600/20 hover:from-violet-600/35 hover:to-purple-600/30 border border-violet-500/40 flex items-center justify-between text-left transition active:scale-[0.99]">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-xl bg-violet-500/20 text-violet-300 flex items-center justify-center shrink-0">
+                <i data-lucide="coins" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <p class="font-display font-bold text-xs text-violet-200">5. Coins & 2% Fee Rules</p>
+                <p class="text-[11px] text-slate-300/80">25 Free Coins, Recharge Packs & ±0.50 Roundoff</p>
+              </div>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-violet-300 shrink-0"></i>
+          </button>
+
+          <!-- 6. FAQs & Help Guide (Indigo/Sky Bar) -->
+          <button type="button" onclick="openHelpTopic('faq')"
+            class="w-full p-3.5 rounded-2xl bg-gradient-to-r from-indigo-600/25 to-sky-600/20 hover:from-indigo-600/35 hover:to-sky-600/30 border border-indigo-500/40 flex items-center justify-between text-left transition active:scale-[0.99]">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-xl bg-indigo-500/20 text-indigo-300 flex items-center justify-center shrink-0">
+                <i data-lucide="help-circle" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <p class="font-display font-bold text-xs text-indigo-200">6. FAQs & Quick Help</p>
+                <p class="text-[11px] text-slate-300/80">Common Questions & Step-by-Step Guide</p>
+              </div>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-indigo-300 shrink-0"></i>
+          </button>
+        </div>
+
+        <!-- VIEW B: Detailed Policy Reader View (with Back & I Understand buttons) -->
+        <div id="help-detail-view" class="hidden flex-1 flex flex-col overflow-hidden space-y-3">
+          <div id="help-policy-content" class="flex-1 overflow-y-auto space-y-3 pr-1 text-xs text-slate-300 leading-relaxed">
+            <!-- Populated dynamically via openHelpTopic() -->
+          </div>
+
+          <div class="pt-2.5 border-t border-white/10 grid grid-cols-2 gap-2.5 shrink-0">
+            <button type="button" onclick="backToHelpMenu()"
+              class="py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-white/10 text-slate-200 text-xs font-bold flex items-center justify-center gap-1.5 transition">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              <span>Back</span>
+            </button>
+            <button type="button" onclick="backToHelpMenu()"
+              class="py-2.5 px-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-slate-950 text-xs font-extrabold flex items-center justify-center gap-1.5 shadow transition">
+              <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+              <span>I Understand ✓</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="help-modal-footer" class="pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-slate-400 shrink-0">
+          <span>Support: help@dildostipyar.app</span>
+          <button onclick="closeModal('modal-help-policies')" class="px-4 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold">
+            Close
           </button>
         </div>
       </div>
@@ -1132,61 +1250,6 @@
       </div>
     </div>
 
-    <!-- ==================== 9. COMPREHENSIVE HELP & POLICIES MODAL ==================== -->
-    <div id="modal-help-policies" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-3 hidden">
-      <div class="w-full max-w-md bg-slate-900 border border-white/15 rounded-3xl p-4 sm:p-5 space-y-3.5 shadow-2xl max-h-[90vh] flex flex-col">
-        <div class="flex items-center justify-between shrink-0">
-          <div class="flex items-center gap-2">
-            <i data-lucide="book-open-check" class="w-5 h-5 text-cyan-400"></i>
-            <h4 class="font-display font-bold text-base text-white">Help Center & App Policies</h4>
-          </div>
-          <button onclick="closeModal('modal-help-policies')" class="p-1.5 rounded-lg bg-slate-800 text-slate-400 hover:text-white">
-            <i data-lucide="x" class="w-4 h-4"></i>
-          </button>
-        </div>
-
-        <!-- Horizontal Policy Topic Pills -->
-        <div class="flex gap-1.5 overflow-x-auto pb-1 shrink-0">
-          <button type="button" onclick="switchHelpSection('terms')" id="help-tab-terms"
-            class="help-tab-btn px-3 py-1.5 rounded-xl text-[11px] font-bold bg-cyan-500 text-slate-950 shrink-0">
-            Terms & Conditions
-          </button>
-          <button type="button" onclick="switchHelpSection('usage')" id="help-tab-usage"
-            class="help-tab-btn px-3 py-1.5 rounded-xl text-[11px] font-bold bg-slate-850 text-slate-300 shrink-0">
-            Usage Policy
-          </button>
-          <button type="button" onclick="switchHelpSection('fup')" id="help-tab-fup"
-            class="help-tab-btn px-3 py-1.5 rounded-xl text-[11px] font-bold bg-slate-850 text-slate-300 shrink-0">
-            Fair Usage (FUP)
-          </button>
-          <button type="button" onclick="switchHelpSection('privacy')" id="help-tab-privacy"
-            class="help-tab-btn px-3 py-1.5 rounded-xl text-[11px] font-bold bg-slate-850 text-slate-300 shrink-0">
-            Privacy & Safety
-          </button>
-          <button type="button" onclick="switchHelpSection('coins')" id="help-tab-coins"
-            class="help-tab-btn px-3 py-1.5 rounded-xl text-[11px] font-bold bg-slate-850 text-slate-300 shrink-0">
-            Coins & Fee Rules
-          </button>
-          <button type="button" onclick="switchHelpSection('faq')" id="help-tab-faq"
-            class="help-tab-btn px-3 py-1.5 rounded-xl text-[11px] font-bold bg-slate-850 text-slate-300 shrink-0">
-            FAQs & Help
-          </button>
-        </div>
-
-        <!-- Policy Content Scroll Body -->
-        <div id="help-policy-content" class="flex-1 overflow-y-auto space-y-3 pr-1 text-xs text-slate-300 leading-relaxed">
-          <!-- Populated dynamically via switchHelpSection() -->
-        </div>
-
-        <div class="pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-slate-400 shrink-0">
-          <span>Support: help@dildostipyar.app</span>
-          <button onclick="closeModal('modal-help-policies')" class="px-4 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold">
-            Samajh Gaya ✓
-          </button>
-        </div>
-      </div>
-    </div>
-
     <!-- ==================== 10. VOICE CALL OVERLAY ==================== -->
     <div id="voice-call-overlay" class="fixed inset-0 bg-slate-950/95 backdrop-blur-xl z-50 flex flex-col items-center justify-between p-8 hidden">
       <div class="text-center mt-8">
@@ -1381,6 +1444,13 @@
               </button>
             </form>
           </div>
+
+          <!-- 2. Live App Icon & Favicon Updater Card -->
+          <div class="p-4 rounded-2xl bg-slate-900 border border-rose-500/30 space-y-3">
+            <div>
+              <h4 class="font-display font-bold text-sm text-rose-300">App Logo & Browser Favicon</h4>
+              <p class="text-[11px] text-slate-400">Top-left header logo aur browser tab favicon ko live update karein.</p>
+            </div>
 
             <div class="flex items-center gap-3">
               <div class="w-14 h-14 rounded-2xl bg-slate-950 border border-white/15 flex items-center justify-center overflow-hidden shrink-0">
@@ -3198,21 +3268,24 @@
       isMuted = !isMuted;
       document.getElementById('btn-toggle-mute').className = isMuted
         ? 'w-14 h-14 rounded-full bg-rose-500/30 border border-rose-500 text-rose-300 flex items-center justify-center transition'
-        : 'w-14 h-14 rounded-full bg-slate-800 border border-white/10 text-white flex items-center justify-center transition';
-      showToast(isMuted ? 'Mic Muted' : 'Mic Unmuted', 'info');
+        : 'w-14 h-14 rounded-full bg-slate-800 border border-white/10 text-white flex items-center justify-center hover:bg-slate-700 transition';
+      showToast(isMuted ? 'Microphone Muted' : 'Microphone Unmuted', 'info');
     };
 
     window.toggleCallSpeaker = () => {
       isSpeaker = !isSpeaker;
       document.getElementById('btn-toggle-speaker').className = isSpeaker
-        ? 'w-14 h-14 rounded-full bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 flex items-center justify-center transition'
-        : 'w-14 h-14 rounded-full bg-slate-800 border border-white/10 text-white flex items-center justify-center transition';
+        ? 'w-14 h-14 rounded-full bg-emerald-500/30 border border-emerald-500 text-emerald-300 flex items-center justify-center transition'
+        : 'w-14 h-14 rounded-full bg-slate-800 border border-white/10 text-white flex items-center justify-center hover:bg-slate-700 transition';
+      showToast(isSpeaker ? 'Speaker ON' : 'Speaker OFF', 'info');
     };
 
     window.endVoiceCall = () => {
       clearInterval(callTimerInterval);
+      isMuted = false;
+      isSpeaker = false;
       document.getElementById('voice-call-overlay').classList.add('hidden');
-      showToast('Call ended', 'info');
+      showToast('Voice call ended', 'info');
     };
 
     window.switchAdminSubTab = (sub) => {
@@ -3228,12 +3301,48 @@
         }
       });
 
-      if (sub === 'flags') renderAdminFlags();
-      if (sub === 'users') renderAdminUsers();
-      if (sub === 'rooms') renderAdminRoomsList();
       if (sub === 'pwa') {
-        applyBrandingToUI();
-        selectAdminCodeFile(selectedAdminFileKey);
+        selectAdminCodeFile(selectedAdminFileKey || 'manifest');
+      }
+      lucide.createIcons();
+    };
+
+    window.openHelpModal = (section = null) => {
+      document.getElementById('modal-help-policies').classList.remove('hidden');
+      if (section) {
+        openHelpTopic(section);
+      } else {
+        backToHelpMenu();
+      }
+      lucide.createIcons();
+    };
+
+    window.backToHelpMenu = () => {
+      document.getElementById('help-menu-bars').classList.remove('hidden');
+      document.getElementById('help-modal-footer').classList.remove('hidden');
+      document.getElementById('help-detail-view').classList.add('hidden');
+      document.getElementById('info-help-modal-title').textContent = 'Info & Help';
+      lucide.createIcons();
+    };
+
+    window.openHelpTopic = (section) => {
+      const titles = {
+        terms: 'Terms & Conditions',
+        usage: 'Usage Policy & Guidelines',
+        fup: 'Fair Usage Policy (FUP)',
+        privacy: 'Privacy & Safety Policy',
+        coins: 'Coins & 2% Fee Rules',
+        faq: 'FAQs & Quick Help'
+      };
+      document.getElementById('info-help-modal-title').textContent = titles[section] || 'Info & Help';
+      document.getElementById('help-menu-bars').classList.add('hidden');
+      document.getElementById('help-modal-footer').classList.add('hidden');
+      document.getElementById('help-detail-view').classList.remove('hidden');
+
+      const contentEl = document.getElementById('help-policy-content');
+      if (contentEl) {
+        contentEl.innerHTML = HELP_POLICIES_DATA[section] || HELP_POLICIES_DATA.terms;
+        contentEl.scrollTop = 0;
       }
       lucide.createIcons();
     };
