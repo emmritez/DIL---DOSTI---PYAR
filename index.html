@@ -8,9 +8,9 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="DilDostiPyar" />
-  <link rel="icon" type="image/png" href="./icon-192.png" />
-  <link rel="apple-touch-icon" href="./icon-192.png" />
-  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" type="image/png" href="/DIL---DOSTI---PYAR/icon-192.png" />
+  <link rel="apple-touch-icon" href="/DIL---DOSTI---PYAR/icon-192.png" />
+  <link rel="manifest" href="/DIL---DOSTI---PYAR/manifest.json" />
   <title>DIL - DOSTI - PYAR | Voice & Text Social PWA</title>
 
   <!-- Tailwind CSS -->
@@ -4221,7 +4221,7 @@
     // Register Service Worker for PWA Install & Offline Support
     if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost')) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
+        navigator.serviceWorker.register('/DIL---DOSTI---PYAR/sw.js', { scope: '/DIL---DOSTI---PYAR/' })
           .then((reg) => console.log('SW registered:', reg.scope))
           .catch((err) => console.warn('SW registration skipped:', err.message));
       });
