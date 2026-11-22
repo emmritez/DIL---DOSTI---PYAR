@@ -1,6 +1,12 @@
-// Service Worker for DIL - DOSTI - PYAR PWA
-const CACHE_NAME = 'dil-dosti-pyar-v3';
-const PRECACHE_ASSETS = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
+// Service Worker for DIL - DOSTI - PYAR PWA (GitHub Pages Subfolder Ready)
+const CACHE_NAME = 'dil-dosti-pyar-v4';
+const PRECACHE_ASSETS = [
+  '/DIL---DOSTI---PYAR/',
+  '/DIL---DOSTI---PYAR/index.html',
+  '/DIL---DOSTI---PYAR/manifest.json',
+  '/DIL---DOSTI---PYAR/icon-192.png',
+  '/DIL---DOSTI---PYAR/icon-512.png'
+];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -32,10 +38,10 @@ self.addEventListener('fetch', (event) => {
       fetch(request)
         .then((res) => {
           const copy = res.clone();
-          caches.open(CACHE_NAME).then((c) => c.put('./index.html', copy));
+          caches.open(CACHE_NAME).then((c) => c.put('/DIL---DOSTI---PYAR/index.html', copy));
           return res;
         })
-        .catch(() => caches.match('./index.html'))
+        .catch(() => caches.match('/DIL---DOSTI---PYAR/index.html'))
     );
     return;
   }
