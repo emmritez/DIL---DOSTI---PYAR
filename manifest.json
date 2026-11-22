@@ -1,27 +1,26 @@
 {
-"id": "./index.html",
-"name": "DIL - DOSTI - PYAR | Voice & Text Social PWA",
-"short_name": "DilDostiPyar",
-"description": "18+ Privacy-First Text & Voice Chatrooms, Mutual Friend Calls & Coin Economy PWA",
-"start_url": "./index.html",
-"scope": "./",
-"display": "standalone",
-"orientation": "portrait",
-"background_color": "#070b15",
-"theme_color": "#080d1a",
-"categories": \["social", "communication"\],
-"icons": \[
-{
-"src": "./icon-192.png",
-"sizes": "192x192",
-"type": "image/png",
-"purpose": "any"
-},
-{
-"src": "./icon-512.png",
-"sizes": "512x512",
-"type": "image/png",
-"purpose": "any"
-}
-\]
+  "id": "/DIL---DOSTI---PYAR/",
+  "name": "DIL - DOSTI - PYAR",
+  "short_name": "DilDostiPyar",
+  "description": "18+ Privacy-First Text & Voice Chatrooms, Mutual Friend Calls & Coin Economy PWA",
+  "start_url": "/DIL---DOSTI---PYAR/",
+  "scope": "/DIL---DOSTI---PYAR/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#070b15",
+  "theme_color": "#080d1a",
+  "icons": [
+    {
+      "src": "/DIL---DOSTI---PYAR/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/DIL---DOSTI---PYAR/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
 }
