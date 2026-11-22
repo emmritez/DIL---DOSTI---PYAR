@@ -1,6 +1,6 @@
 // Service Worker for DIL - DOSTI - PYAR PWA
-const CACHE_NAME = 'dil-dosti-pyar-v2';
-const PRECACHE_ASSETS = ['./', './index.html', './manifest.json'];
+const CACHE_NAME = 'dil-dosti-pyar-v3';
+const PRECACHE_ASSETS = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -23,7 +23,8 @@ self.addEventListener('fetch', (event) => {
   if (
     request.method !== 'GET' ||
     request.url.includes('firestore.googleapis.com') ||
-    request.url.includes('identitytoolkit.googleapis.com')
+    request.url.includes('identitytoolkit.googleapis.com') ||
+    request.url.includes('script.google.com')
   ) return;
 
   if (request.mode === 'navigate') {
