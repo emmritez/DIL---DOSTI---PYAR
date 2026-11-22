@@ -1,0 +1,26 @@
+{
+"name": "DIL - DOSTI - PYAR | Voice & Text Social PWA",
+"short_name": "DilDostiPyar",
+"description": "18+ Privacy-First Text & Voice Chatrooms, Mutual Friend Calls & Coin Economy PWA",
+"start_url": "./index.html",
+"scope": "./",
+"display": "standalone",
+"orientation": "portrait",
+"background_color": "#070b15",
+"theme_color": "#080d1a",
+"categories": \["social", "communication"\],
+"icons": \[
+{
+"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23f43f5e'/%3E%3Cstop offset='50%25' stop-color='%23ec4899'/%3E%3Cstop offset='100%25' stop-color='%23f59e0b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='192' height='192' rx='44' fill='%23070b15'/%3E%3Ccircle cx='96' cy='96' r='74' fill='url(%23g)'/%3E%3Cpath d='M96 132s-36-22.5-36-47c0-12.5 9.8-22 21.5-22 7 0 13.3 3.5 14.5 9.2 1.2-5.7 7.5-9.2 14.5-9.2 11.7 0 21.5 9.5 21.5 22 0 24.5-36 47-36 47z' fill='%23ffffff'/%3E%3C/svg%3E",
+"sizes": "192x192",
+"type": "image/svg+xml",
+"purpose": "any maskable"
+},
+{
+"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23f43f5e'/%3E%3Cstop offset='50%25' stop-color='%23ec4899'/%3E%3Cstop offset='100%25' stop-color='%23f59e0b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='112' fill='%23070b15'/%3E%3Ccircle cx='256' cy='256' r='196' fill='url(%23g)'/%3E%3Cpath d='M256 352s-96-60-96-125.3c0-33.3 26.1-58.7 57.3-58.7 18.7 0 35.5 9.3 38.7 24.5 3.2-15.2 20-24.5 38.7-24.5 31.2 0 57.3 25.4 57.3 58.7C352 292 256 352 256 352z' fill='%23ffffff'/%3E%3C/svg%3E",
+"sizes": "512x512",
+"type": "image/svg+xml",
+"purpose": "any maskable"
+}
+\]
+}

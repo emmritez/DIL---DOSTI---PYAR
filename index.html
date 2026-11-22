@@ -1,0 +1,3732 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#080d1a" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="DilDostiPyar" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cdefs%3E%3ClinearGradient id='hg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23f43f5e'/%3E%3Cstop offset='50%25' stop-color='%23fda4af'/%3E%3Cstop offset='100%25' stop-color='%23fde68a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='120' height='120' rx='28' fill='%230b1528'/%3E%3Cpath d='M60 94C60 94 24 72 24 46C24 34 33 25 45 25C52 25 57 29 60 34C63 29 68 25 75 25C87 25 96 34 96 46C96 72 60 94 60 94Z' fill='none' stroke='url(%23hg)' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M45 84C45 84 26 70 26 53C26 45 32 39 39 39C44 39 48 42 50 46C52 42 56 39 61 39C68 39 74 45 74 53' fill='none' stroke='%23e11d48' stroke-width='5.5' stroke-linecap='round'/%3E%3Ccircle cx='66' cy='47' r='4.5' fill='%23fcd34d'/%3E%3Ccircle cx='78' cy='47' r='4.5' fill='%23fda4af'/%3E%3Cpath d='M54 78C58 67 61 57 66 56C70 55 72 60 76 60C80 60 82 55 79 56C75 57 73 68 70 78' fill='none' stroke='%23fde68a' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E" />
+  <link rel="manifest" href="./manifest.json" />
+  <title>DIL - DOSTI - PYAR | Voice & Text Social PWA</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            slate: {
+              850: '#141d31',
+              900: '#0d1425',
+              950: '#070b15',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.25); border-radius: 9999px; }
+    body {
+      background-color: #070b15;
+      color: #f8fafc;
+      -webkit-tap-highlight-color: transparent;
+      overscroll-behavior-y: none;
+    }
+    .glass-panel {
+      background: rgba(13, 20, 37, 0.82);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .neon-glow {
+      box-shadow: 0 0 28px -6px rgba(244, 63, 94, 0.35);
+    }
+    .pulse-ring {
+      animation: pulseRing 1.8s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+    }
+    @keyframes pulseRing {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.65); }
+      70% { transform: scale(1); box-shadow: 0 0 0 18px rgba(244, 63, 94, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(244, 63, 94, 0); }
+    }
+    .wave-bar {
+      animation: waveAnim 0.95s ease-in-out infinite;
+    }
+    @keyframes waveAnim {
+      0%, 100% { height: 5px; }
+      50% { height: 18px; }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex justify-center bg-slate-950 selection:bg-rose-500/30 selection:text-rose-200">
+
+  <!-- Reusable SVG Sprite Definitions (Prevents Windows Emoji Square Boxes) -->
+  <svg class="hidden" aria-hidden="true">
+    <symbol id="icon-coin" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="10" fill="#f59e0b" stroke="#fef08a" stroke-width="1.8"/>
+      <circle cx="12" cy="12" r="6.8" fill="none" stroke="#b45309" stroke-width="1.2" stroke-dasharray="2 1.5"/>
+      <path d="M13.5 8.5h-2.2a1.8 1.8 0 0 0 0 3.6h1.4a1.8 1.8 0 0 1 0 3.6H10.2M12 7v1.5m0 7.2V17" stroke="#78350f" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+    </symbol>
+    <symbol id="icon-shield" viewBox="0 0 24 24">
+      <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z" fill="currentColor"/>
+    </symbol>
+    <symbol id="icon-ddp-logo" viewBox="0 0 120 120">
+      <defs>
+        <linearGradient id="ddp-heart-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#f43f5e"/>
+          <stop offset="50%" stop-color="#fda4af"/>
+          <stop offset="100%" stop-color="#fde68a"/>
+        </linearGradient>
+        <linearGradient id="ddp-inner-heart" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#e11d48"/>
+          <stop offset="100%" stop-color="#fb7185"/>
+        </linearGradient>
+        <linearGradient id="ddp-pair-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#fef08a"/>
+          <stop offset="100%" stop-color="#f59e0b"/>
+        </linearGradient>
+      </defs>
+      <rect x="4" y="4" width="112" height="112" rx="28" fill="#0b1528" stroke="rgba(253,164,175,0.28)" stroke-width="2"/>
+      <!-- Sparkles -->
+      <circle cx="28" cy="28" r="1.8" fill="#fde68a" opacity="0.9"/>
+      <circle cx="94" cy="30" r="2" fill="#fda4af" opacity="0.9"/>
+      <circle cx="92" cy="84" r="1.6" fill="#fde68a" opacity="0.8"/>
+      <circle cx="26" cy="76" r="1.5" fill="#fb7185" opacity="0.8"/>
+      <!-- Outer Glowing Romantic Heart -->
+      <path d="M60 95C60 95 22 72 22 45C22 33 31 24 43 24C51 24 57 28 60 34C63 28 69 24 77 24C89 24 98 33 98 45C98 72 60 95 60 95Z"
+        fill="none" stroke="url(#ddp-heart-grad)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Inner Crimson Heart Ribbon -->
+      <path d="M44 85C44 85 25 70 25 53C25 45 31 39 38 39C43 39 47 42 49 46C51 42 55 39 60 39C66 39 71 44 71 51"
+        fill="none" stroke="url(#ddp-inner-heart)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Two Embracing Friendship/Love Figures -->
+      <circle cx="66" cy="46" r="4.6" fill="url(#ddp-pair-grad)"/>
+      <circle cx="79" cy="46" r="4.6" fill="#fda4af"/>
+      <path d="M47 83C54 72 58 58 65 56C69 55 72 60 76 60C80 60 83 56 79 56C74 56 71 71 67 83"
+        fill="none" stroke="url(#ddp-pair-grad)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M79 56C79 67 77 76 74 83"
+        fill="none" stroke="#fda4af" stroke-width="4.5" stroke-linecap="round"/>
+    </symbol>
+  </svg>
+
+  <!-- Mobile-First App Shell -->
+  <div id="app-shell" class="w-full max-w-md min-h-screen bg-slate-900/95 border-x border-white/5 flex flex-col relative shadow-2xl overflow-hidden">
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2 w-[90%] max-w-sm pointer-events-none"></div>
+
+    <!-- ==================== 1. MAIN ENTRY / AUTH VIEW ==================== -->
+    <div id="auth-view" class="flex-1 flex flex-col justify-between p-5 overflow-y-auto">
+      <div class="pt-1">
+        <!-- Top-Left App Brand Icon & Help Button -->
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-11 h-11 rounded-2xl shadow-lg shadow-rose-500/25 shrink-0 overflow-hidden bg-slate-950 flex items-center justify-center">
+              <img id="auth-brand-img" alt="DIL - DOSTI - PYAR" class="w-full h-full object-cover hidden" />
+              <svg id="auth-brand-svg" class="w-full h-full"><use href="#icon-ddp-logo"/></svg>
+            </div>
+            <div>
+              <h1 class="font-display text-lg font-extrabold tracking-tight leading-none bg-gradient-to-r from-rose-400 via-amber-200 to-pink-400 bg-clip-text text-transparent">
+                DIL - DOSTI - PYAR
+              </h1>
+              <div class="flex items-center gap-1 mt-1">
+                <span class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-rose-500/15 text-rose-300 border border-rose-500/25">DIL</span>
+                <span class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/25">DOSTI</span>
+                <span class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-pink-500/15 text-pink-300 border border-pink-500/25">PYAR</span>
+              </div>
+            </div>
+          </div>
+          <button type="button" onclick="openHelpModal('terms')"
+            class="px-2.5 py-1.5 rounded-full bg-slate-850 hover:bg-slate-800 border border-white/10 text-[11px] font-semibold text-slate-200 flex items-center gap-1 transition shrink-0">
+            <i data-lucide="help-circle" class="w-3.5 h-3.5 text-cyan-400"></i>
+            <span>Help</span>
+          </button>
+        </div>
+
+        <p class="text-slate-400 text-xs text-center mt-1 leading-relaxed">
+          Sirf <span class="text-slate-200 font-medium">Text</span> & <span class="text-slate-200 font-medium">Voice</span> • Zero Photo/Video Privacy
+        </p>
+
+        <!-- 3 Prominent Entry Tabs -->
+        <div class="grid grid-cols-3 gap-1.5 bg-slate-950/90 p-1.5 rounded-2xl mt-4 border border-white/10">
+          <button type="button" onclick="switchAuthTab('register')" id="tab-btn-register"
+            class="py-2.5 text-xs font-bold rounded-xl transition-all bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-lg">
+            Register
+          </button>
+          <button type="button" onclick="switchAuthTab('login')" id="tab-btn-login"
+            class="py-2.5 text-xs font-bold rounded-xl transition-all text-slate-400 hover:text-white">
+            Login
+          </button>
+          <button type="button" onclick="switchAuthTab('guest')" id="tab-btn-guest"
+            class="py-2.5 text-xs font-bold rounded-xl transition-all text-slate-400 hover:text-white">
+            Login as GUEST
+          </button>
+        </div>
+
+        <!-- TAB 1: REGISTER FORM -->
+        <form id="form-register" onsubmit="handleRegister(event)" class="mt-4 space-y-3">
+          <div class="grid grid-cols-2 gap-2.5">
+            <div>
+              <label class="block text-[11px] font-medium text-slate-300 mb-1">Full Name *</label>
+              <input type="text" id="reg-name" required maxlength="28" placeholder="e.g. Aarav Sharma"
+                class="w-full px-3 py-2 rounded-xl bg-slate-950/90 border border-white/10 text-xs text-white focus:outline-none focus:border-rose-500" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-medium text-slate-300 mb-1">Unique Username *</label>
+              <input type="text" id="reg-username" required maxlength="18" placeholder="aarav_dil"
+                class="w-full px-3 py-2 rounded-xl bg-slate-950/90 border border-white/10 text-xs text-white focus:outline-none focus:border-rose-500" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-3 gap-2">
+            <div>
+              <label class="block text-[11px] font-medium text-slate-300 mb-1">Gender *</label>
+              <select id="reg-gender" required class="w-full px-2.5 py-2 rounded-xl bg-slate-950/90 border border-white/10 text-xs text-white focus:outline-none focus:border-rose-500">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[11px] font-medium text-slate-300 mb-1">Age (18+) *</label>
+              <input type="number" id="reg-age" required min="18" max="99" value="22"
+                class="w-full px-2.5 py-2 rounded-xl bg-slate-950/90 border border-white/10 text-xs text-white focus:outline-none focus:border-rose-500" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-medium text-slate-300 mb-1">4-6 Digit PIN *</label>
+              <input type="password" id="reg-pin" required minlength="4" maxlength="6" pattern="[0-9A-Za-z]{4,6}" placeholder="4-6 chars"
+                class="w-full px-2.5 py-2 rounded-xl bg-slate-950/90 border border-white/10 text-xs text-white focus:outline-none focus:border-rose-500" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-medium text-slate-300 mb-1">State / Country *</label>
+            <input type="text" id="reg-location" required maxlength="40" placeholder="e.g. Uttar Pradesh, India"
+              class="w-full px-3 py-2 rounded-xl bg-slate-950/90 border border-white/10 text-xs text-white focus:outline-none focus:border-rose-500" />
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-medium text-slate-300 mb-1">Choose Avatar</label>
+            <div id="avatar-selector" class="grid grid-cols-6 gap-1.5 bg-slate-950/60 p-1.5 rounded-xl border border-white/5"></div>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-medium text-slate-300 mb-1">Mood (Text or Emoji) *</label>
+            <input type="text" id="reg-mood-text" required maxlength="32" value="😊 Happy & Vibing" placeholder="Write mood or tap chips below..."
+              class="w-full px-3 py-2 rounded-xl bg-slate-950/90 border border-white/10 text-xs text-white focus:outline-none focus:border-rose-500" />
+            <div class="flex flex-wrap gap-1.5 mt-1.5">
+              <button type="button" onclick="setMoodPreset('😊 Happy')" class="px-2 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-[10px] text-slate-200 border border-white/5">😊 Happy</button>
+              <button type="button" onclick="setMoodPreset('💔 Heartbroken')" class="px-2 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-[10px] text-slate-200 border border-white/5">💔 Heartbroken</button>
+              <button type="button" onclick="setMoodPreset('🎵 Vibing')" class="px-2 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-[10px] text-slate-200 border border-white/5">🎵 Vibing</button>
+              <button type="button" onclick="setMoodPreset('🔥 Energetic')" class="px-2 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-[10px] text-slate-200 border border-white/5">🔥 Energetic</button>
+              <button type="button" onclick="setMoodPreset('🤔 Deep Thoughts')" class="px-2 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-[10px] text-slate-200 border border-white/5">🤔 Deep</button>
+            </div>
+          </div>
+
+          <!-- What are you up to? Radio Cards -->
+          <div>
+            <label class="block text-[11px] font-medium text-slate-300 mb-1.5">What are you up to? *</label>
+            <div class="space-y-1.5">
+              <label class="flex items-center gap-2.5 p-2.5 rounded-xl bg-slate-950/90 border border-white/10 hover:border-rose-500/50 cursor-pointer transition has-[:checked]:border-rose-500 has-[:checked]:bg-rose-500/10">
+                <input type="radio" name="reg-intent" value="Dil" class="accent-rose-500" checked />
+                <span class="text-base">❤️</span>
+                <div class="text-xs">
+                  <span class="font-bold text-white">Dil</span>
+                  <span class="text-slate-400"> - Just for Fun</span>
+                </div>
+              </label>
+
+              <label class="flex items-center gap-2.5 p-2.5 rounded-xl bg-slate-950/90 border border-white/10 hover:border-cyan-500/50 cursor-pointer transition has-[:checked]:border-cyan-500 has-[:checked]:bg-cyan-500/10">
+                <input type="radio" name="reg-intent" value="Dosti" class="accent-cyan-500" />
+                <span class="text-base">🤝</span>
+                <div class="text-xs">
+                  <span class="font-bold text-white">Dosti</span>
+                  <span class="text-slate-400"> - Looking for Friends</span>
+                </div>
+              </label>
+
+              <label class="flex items-center gap-2.5 p-2.5 rounded-xl bg-slate-950/90 border border-white/10 hover:border-amber-500/50 cursor-pointer transition has-[:checked]:border-amber-500 has-[:checked]:bg-amber-500/10">
+                <input type="radio" name="reg-intent" value="Pyar" class="accent-amber-500" />
+                <span class="text-base">💕</span>
+                <div class="text-xs">
+                  <span class="font-bold text-white">Pyar</span>
+                  <span class="text-slate-400"> - Seeking a Serious Relationship</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-medium text-slate-300 mb-1">Bio (Optional)</label>
+            <textarea id="reg-bio" rows="2" maxlength="90" placeholder="Shayari, music aur dil ki baatein..."
+              class="w-full px-3 py-2 rounded-xl bg-slate-950/90 border border-white/10 text-xs text-white focus:outline-none focus:border-rose-500 resize-none"></textarea>
+          </div>
+
+          <div class="flex items-start gap-2 pt-0.5">
+            <input type="checkbox" id="reg-accept-terms" required checked class="mt-0.5 accent-rose-500 rounded" />
+            <label for="reg-accept-terms" class="text-[11px] text-slate-400 leading-tight">
+              Main 18+ hoon aur app ki <button type="button" onclick="openHelpModal('terms')" class="text-rose-400 underline">Terms & Conditions</button>, <button type="button" onclick="openHelpModal('usage')" class="text-rose-400 underline">Usage Policy</button> aur <button type="button" onclick="openHelpModal('fup')" class="text-rose-400 underline">Fair Usage Policy</button> se sahmat hoon.
+            </label>
+          </div>
+
+          <button type="submit" id="btn-register-submit"
+            class="w-full py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-rose-500 via-pink-600 to-amber-500 text-white shadow-lg shadow-rose-500/25 hover:opacity-95 active:scale-[0.99] transition-all flex items-center justify-center gap-1.5">
+            <span>Create Account (+25 Free Coins</span>
+            <svg class="w-4 h-4 inline-block"><use href="#icon-coin"/></svg>
+            <span>)</span>
+          </button>
+        </form>
+
+        <!-- TAB 2: LOGIN FORM -->
+        <form id="form-login" onsubmit="handleLogin(event)" class="mt-5 space-y-4 hidden">
+          <div class="p-3.5 rounded-2xl bg-rose-500/10 border border-rose-500/25 text-xs text-rose-200">
+            Apne registered <strong>Username</strong> aur <strong>PIN</strong> se login karein aur apne friends se judein.
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1">Username *</label>
+            <input type="text" id="login-username" required placeholder="e.g. aarav_dil"
+              class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950/90 border border-white/10 text-sm text-white focus:outline-none focus:border-rose-500" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1">4-6 Digit PIN / Password *</label>
+            <input type="password" id="login-pin" required placeholder="••••"
+              class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950/90 border border-white/10 text-sm text-white focus:outline-none focus:border-rose-500" />
+          </div>
+
+          <button type="submit" id="btn-login-submit"
+            class="w-full py-3 rounded-xl font-bold text-sm bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-lg shadow-rose-500/25 hover:opacity-95 transition-all">
+            Login Karein →
+          </button>
+        </form>
+
+        <!-- TAB 3: LOGIN AS GUEST FORM -->
+        <form id="form-guest" onsubmit="handleGuestEntry(event)" class="mt-5 space-y-3.5 hidden">
+          <div class="p-3.5 rounded-2xl bg-cyan-500/10 border border-cyan-500/25 text-xs text-cyan-200 space-y-1">
+            <p class="font-semibold text-cyan-300 flex items-center gap-1.5">
+              <i data-lucide="shield-check" class="w-4 h-4"></i> Quick Guest Entry (Open Rooms Only):
+            </p>
+            <p class="text-[11px] text-cyan-200/80">
+              Guests sabhi 7 Open Chatrooms mein text aur voice notes bhej sakte hain. Personal chat, friend requests aur custom rooms ke liye Register karein.
+            </p>
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1">Guest Username *</label>
+            <input type="text" id="guest-name" required maxlength="20" placeholder="e.g. Musafir_07"
+              class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950/90 border border-white/10 text-sm text-white focus:outline-none focus:border-cyan-500" />
+          </div>
+
+          <div class="grid grid-cols-2 gap-2.5">
+            <div>
+              <label class="block text-xs font-medium text-slate-300 mb-1">Age (18+) *</label>
+              <input type="number" id="guest-age" required min="18" max="99" value="21"
+                class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950/90 border border-white/10 text-sm text-white focus:outline-none focus:border-cyan-500" />
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-300 mb-1">Gender *</label>
+              <select id="guest-gender" required
+                class="w-full px-3 py-2.5 rounded-xl bg-slate-950/90 border border-white/10 text-sm text-white focus:outline-none focus:border-cyan-500">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" id="btn-guest-submit"
+            class="w-full py-3 rounded-xl font-bold text-sm bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25 hover:opacity-95 transition-all">
+            Login as GUEST →
+          </button>
+        </form>
+
+        <!-- ADMIN LOGIN FORM (Discrete Footer Access) -->
+        <form id="form-admin" onsubmit="handleAdminLogin(event)" class="mt-5 space-y-4 hidden">
+          <div class="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/25 text-xs text-amber-200 space-y-1">
+            <div class="flex items-center justify-between">
+              <p class="font-bold text-amber-300 flex items-center gap-1.5">
+                <i data-lucide="shield-alert" class="w-4 h-4"></i> Admin Control Center
+              </p>
+              <button type="button" onclick="switchAuthTab('register')" class="text-[11px] underline text-amber-300">← Back</button>
+            </div>
+            <p class="text-amber-200/80 text-[11px]">
+              Default ID: <code class="px-1.5 py-0.5 rounded bg-slate-950 text-amber-300 font-mono">admin</code> | Passcode: <code class="px-1.5 py-0.5 rounded bg-slate-950 text-amber-300 font-mono">admin123</code>
+            </p>
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1">Admin ID</label>
+            <input type="text" id="admin-id-input" required value="admin"
+              class="w-full px-3.5 py-3 rounded-xl bg-slate-950/90 border border-white/10 text-sm text-white focus:outline-none focus:border-amber-500" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1">Admin Passcode</label>
+            <input type="password" id="admin-pass-input" required value="admin123"
+              class="w-full px-3.5 py-3 rounded-xl bg-slate-950/90 border border-white/10 text-sm text-white focus:outline-none focus:border-amber-500" />
+          </div>
+
+          <button type="submit"
+            class="w-full py-3 rounded-xl font-bold text-sm bg-gradient-to-r from-amber-500 to-orange-600 text-slate-950 shadow-lg shadow-amber-500/25 hover:opacity-95 transition-all flex items-center justify-center gap-1.5">
+            <svg class="w-4 h-4"><use href="#icon-shield"/></svg>
+            <span>Open Admin Dashboard</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Discrete Footer -->
+      <div class="mt-4 pt-3 border-t border-white/5 flex flex-col items-center gap-2">
+        <p class="text-[11px] text-slate-500 text-center">
+          18+ Privacy-First Platform • Text & Voice Only
+        </p>
+        <div class="flex items-center gap-4">
+          <button type="button" onclick="openHelpModal('terms')"
+            class="text-[11px] text-slate-400 hover:text-cyan-300 font-medium transition flex items-center gap-1">
+            <i data-lucide="book-open" class="w-3.5 h-3.5 text-cyan-400"></i>
+            <span>Help & Policies</span>
+          </button>
+          <span class="text-slate-700">•</span>
+          <button type="button" onclick="switchAuthTab('admin')"
+            class="text-[11px] text-amber-400/85 hover:text-amber-300 font-semibold transition flex items-center gap-1">
+            <svg class="w-3.5 h-3.5 text-amber-400"><use href="#icon-shield"/></svg>
+            <span>Admin Panel Login</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 2. MAIN APP VIEW ==================== -->
+    <div id="main-view" class="flex-1 flex flex-col h-screen hidden">
+
+      <!-- Top App Bar (Top-Left App Logo + User Status) -->
+      <header class="glass-panel px-3.5 py-2.5 flex items-center justify-between sticky top-0 z-20 gap-2">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <!-- Top-Left Romantic App Icon -->
+          <div onclick="switchMainTab('rooms')" title="DIL - DOSTI - PYAR"
+            class="w-10 h-10 rounded-xl shadow-lg shadow-rose-500/25 shrink-0 cursor-pointer hover:scale-105 transition overflow-hidden bg-slate-950 flex items-center justify-center">
+            <img id="main-brand-img" alt="DIL - DOSTI - PYAR" class="w-full h-full object-cover hidden" />
+            <svg id="main-brand-svg" class="w-full h-full"><use href="#icon-ddp-logo"/></svg>
+          </div>
+          <div class="min-w-0">
+            <div class="flex items-center gap-1.5">
+              <span class="font-display font-extrabold text-[11px] tracking-wide bg-gradient-to-r from-rose-400 via-amber-200 to-pink-400 bg-clip-text text-transparent shrink-0">
+                DIL-DOSTI-PYAR
+              </span>
+              <span id="header-badge" class="text-[9px] px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold shrink-0">DIL</span>
+            </div>
+            <div class="flex items-center gap-1.5 mt-0.5">
+              <span id="header-avatar" class="text-xs leading-none">😊</span>
+              <h2 id="header-name" class="font-semibold text-xs text-white leading-none truncate">User</h2>
+              <span class="text-slate-600 text-[10px]">•</span>
+              <p id="header-subtitle" class="text-[10px] text-slate-400 truncate">Online</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-1.5 shrink-0">
+          <button onclick="openHelpModal('terms')" title="Help & Policies"
+            class="p-2 rounded-full bg-slate-850 hover:bg-slate-800 border border-white/10 text-cyan-400 transition">
+            <i data-lucide="help-circle" class="w-4 h-4"></i>
+          </button>
+
+          <button onclick="openWalletOrUpgrade()" id="header-coin-btn"
+            class="px-3 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-bold flex items-center gap-1.5 hover:bg-amber-500/25 transition">
+            <svg class="w-4 h-4"><use href="#icon-coin"/></svg>
+            <span id="header-coins">25</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Scrollable Tab Area -->
+      <main class="flex-1 overflow-y-auto pb-24">
+
+        <!-- TAB 1: OPEN CHATROOMS -->
+        <section id="tab-rooms" class="p-4 space-y-5">
+          <!-- Create Custom Room Banner -->
+          <div class="p-4 rounded-2xl bg-gradient-to-br from-rose-950/75 via-slate-900 to-indigo-950/75 border border-rose-500/25 flex items-center justify-between gap-3 neon-glow">
+            <div>
+              <h3 class="font-display font-bold text-base text-white">Open Chatrooms</h3>
+              <p class="text-xs text-slate-300 mt-0.5">Live Text & Voice Notes • Zero Media</p>
+            </div>
+            <button onclick="openCreateRoomModal()"
+              class="shrink-0 px-3 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-bold text-xs shadow-lg shadow-amber-500/20 flex items-center gap-1.5 active:scale-95 transition">
+              <i data-lucide="plus-circle" class="w-4 h-4"></i>
+              <span>Apna Room (50</span>
+              <svg class="w-3.5 h-3.5"><use href="#icon-coin"/></svg>
+              <span>)</span>
+            </button>
+          </div>
+
+          <!-- 7 Pre-Defined Open Rooms -->
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">7 Pre-Defined Open Rooms (Free)</h4>
+              <span class="text-[11px] text-emerald-400 font-medium">● All Live</span>
+            </div>
+            <div id="premade-rooms-list" class="space-y-2.5"></div>
+          </div>
+
+          <!-- Custom Coin-Purchased Rooms -->
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Community Custom Rooms</h4>
+              <span id="custom-rooms-count" class="text-[11px] text-amber-400 font-medium">0 Rooms</span>
+            </div>
+            <div id="custom-rooms-list" class="space-y-2.5"></div>
+          </div>
+        </section>
+
+        <!-- TAB 2: PERSONAL CHATS -->
+        <section id="tab-chats" class="p-4 space-y-4 hidden">
+          <div>
+            <h3 class="font-display font-bold text-base text-white">Personal Chats</h3>
+            <p class="text-xs text-slate-400">Mutual friends ke saath private text, voice notes & calls</p>
+          </div>
+
+          <!-- Guest Lock -->
+          <div id="guest-lock-chats" class="hidden p-6 rounded-2xl bg-slate-850 border border-rose-500/25 text-center space-y-3">
+            <div class="w-14 h-14 rounded-full bg-rose-500/15 text-rose-400 flex items-center justify-center mx-auto">
+              <i data-lucide="lock" class="w-7 h-7"></i>
+            </div>
+            <h4 class="font-display font-bold text-base text-white">Personal Chat Locked Hai</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Guest users sirf Open Chatrooms use kar sakte hain. Personal chat aur voice call ke liye free account banayein.
+            </p>
+            <button onclick="logoutAndSwitchToRegister()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-rose-500 to-pink-600 text-white text-xs font-bold shadow-lg inline-flex items-center gap-1.5">
+              <span>Free Account Banayein (+25</span>
+              <svg class="w-3.5 h-3.5"><use href="#icon-coin"/></svg>
+              <span>)</span>
+            </button>
+          </div>
+
+          <div id="friends-chat-list" class="space-y-2.5"></div>
+        </section>
+
+        <!-- TAB 3: DOST & REQUESTS -->
+        <section id="tab-people" class="p-4 space-y-5 hidden">
+          <!-- Guest Lock -->
+          <div id="guest-lock-people" class="hidden p-6 rounded-2xl bg-slate-850 border border-cyan-500/25 text-center space-y-3">
+            <div class="w-14 h-14 rounded-full bg-cyan-500/15 text-cyan-400 flex items-center justify-center mx-auto">
+              <i data-lucide="user-plus" class="w-7 h-7"></i>
+            </div>
+            <h4 class="font-display font-bold text-base text-white">Friend Requests Locked</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Doosre users ko friend request bhejne aur accept karne ke liye registered account chahiye.
+            </p>
+            <button onclick="logoutAndSwitchToRegister()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-xs font-bold shadow-lg">
+              Abhi Register Karein
+            </button>
+          </div>
+
+          <div id="registered-people-content" class="space-y-5">
+            <!-- Incoming Friend Requests -->
+            <div>
+              <h4 class="text-xs font-bold uppercase tracking-wider text-rose-400 mb-2.5 flex items-center gap-1.5">
+                <i data-lucide="bell-ring" class="w-3.5 h-3.5"></i>
+                <span>Incoming Friend Requests (<span id="incoming-req-count">0</span>)</span>
+              </h4>
+              <div id="incoming-requests-list" class="space-y-2"></div>
+            </div>
+
+            <!-- Discover Registered Users -->
+            <div>
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2.5">Discover Registered Users</h4>
+              <div class="relative mb-3">
+                <i data-lucide="search" class="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                <input type="text" id="people-search-input" oninput="renderPeopleDirectory()" placeholder="Naam, username ya state se search karein..."
+                  class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-950 border border-white/10 text-xs text-white focus:outline-none focus:border-rose-500" />
+              </div>
+              <div id="people-directory-list" class="space-y-2.5"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 4: PROFILE & WALLET -->
+        <section id="tab-profile" class="p-4 space-y-4 hidden">
+          <div class="p-5 rounded-2xl bg-slate-850 border border-white/10 text-center">
+            <div class="w-20 h-20 rounded-full bg-gradient-to-br from-rose-500 via-pink-600 to-amber-500 flex items-center justify-center text-4xl mx-auto shadow-xl border-2 border-white/20" id="profile-avatar-lg">
+              😊
+            </div>
+            <h3 id="profile-name-lg" class="font-display font-bold text-lg text-white mt-3">User Name</h3>
+            <p id="profile-username-lg" class="text-xs text-slate-400">@username</p>
+            <p id="profile-meta-lg" class="text-[11px] text-slate-300 mt-1">Gender • Age • Location</p>
+            <p id="profile-bio-lg" class="text-xs text-slate-300 mt-2 max-w-xs mx-auto italic">"Dil se dosti aur pyar"</p>
+
+            <div class="mt-3.5 flex flex-wrap items-center justify-center gap-2">
+              <span id="profile-intent-pill" class="px-3 py-1 rounded-full text-xs font-semibold bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                ❤️ Dil - Just for Fun
+              </span>
+              <span id="profile-mood-pill" class="px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                Mood: 😊 Happy
+              </span>
+            </div>
+          </div>
+
+          <!-- Mood & Intent Editor -->
+          <div id="profile-mood-card" class="p-4 rounded-2xl bg-slate-850/80 border border-white/5 space-y-3">
+            <div>
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Update Your Mood</h4>
+              <div class="flex gap-2">
+                <input type="text" id="profile-mood-input" maxlength="32" placeholder="Write mood or emoji..."
+                  class="flex-1 px-3 py-2 rounded-xl bg-slate-950 border border-white/10 text-xs text-white focus:outline-none focus:border-rose-500" />
+                <button onclick="saveCustomProfileMood()" class="px-3.5 py-2 rounded-xl bg-rose-500 text-white text-xs font-bold">Save</button>
+              </div>
+            </div>
+
+            <div>
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">What are you up to?</h4>
+              <div class="grid grid-cols-3 gap-2">
+                <button onclick="updateUserIntent('Dil')" class="py-2 px-1.5 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 text-rose-300 text-[11px] font-semibold">❤️ Dil (Fun)</button>
+                <button onclick="updateUserIntent('Dosti')" class="py-2 px-1.5 rounded-xl bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-500/30 text-cyan-300 text-[11px] font-semibold">🤝 Dosti</button>
+                <button onclick="updateUserIntent('Pyar')" class="py-2 px-1.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 text-[11px] font-semibold">💕 Pyar</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Coin Wallet -->
+          <div id="profile-wallet-card" class="p-4 rounded-2xl bg-gradient-to-r from-amber-950/50 to-slate-850 border border-amber-500/25 flex items-center justify-between gap-2">
+            <div>
+              <p class="text-xs text-amber-300/80 font-medium">Coin Wallet Balance</p>
+              <div class="font-display text-2xl font-extrabold text-amber-400 mt-0.5 flex items-center gap-1.5">
+                <span id="profile-coins-lg">25</span>
+                <svg class="w-6 h-6"><use href="#icon-coin"/></svg>
+              </div>
+              <p class="text-[11px] text-slate-400 mt-0.5">Buy Coins ya Friends ko Share karein</p>
+            </div>
+            <div class="flex flex-col gap-1.5 shrink-0">
+              <button onclick="openWalletModal('buy')" class="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-lg transition">
+                + Buy Coins
+              </button>
+              <button onclick="openWalletModal('share')" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-amber-500/30 text-amber-300 font-bold text-[11px] transition">
+                ⇄ Share Coins
+              </button>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-slate-900/90 border border-white/5 space-y-2">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
+                <i data-lucide="shield" class="w-4 h-4"></i> Privacy, Rules & Help
+              </h4>
+              <button onclick="openHelpModal('terms')" class="text-[11px] text-cyan-400 font-semibold underline">
+                Read All Policies →
+              </button>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Photo/video sharing disabled hai. Mutual friends ke chat mein <strong>Limits</strong> se Call/Message control karein. P2P Coin transfer par 2% platform fee (±0.50 roundoff) laagu hoti hai.
+            </p>
+          </div>
+
+          <button onclick="handleLogout()" class="w-full py-3 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 text-rose-300 text-xs font-bold transition">
+            Logout / Exit Account
+          </button>
+        </section>
+      </main>
+
+      <!-- Bottom Navigation -->
+      <nav class="glass-panel fixed bottom-0 w-full max-w-md px-2 py-2 flex items-center justify-around z-30 border-t border-white/10">
+        <button onclick="switchMainTab('rooms')" id="nav-rooms" class="flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-rose-400 transition">
+          <i data-lucide="messages-square" class="w-5 h-5"></i>
+          <span class="text-[10px] font-semibold">Open Rooms</span>
+        </button>
+
+        <button onclick="switchMainTab('chats')" id="nav-chats" class="flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-slate-400 hover:text-slate-200 transition">
+          <i data-lucide="heart-handshake" class="w-5 h-5"></i>
+          <span class="text-[10px] font-semibold">Personal Chat</span>
+        </button>
+
+        <button onclick="switchMainTab('people')" id="nav-people" class="relative flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-slate-400 hover:text-slate-200 transition">
+          <i data-lucide="users" class="w-5 h-5"></i>
+          <span class="text-[10px] font-semibold">Dost & Requests</span>
+          <span id="nav-req-badge" class="hidden absolute top-0.5 right-2 w-4 h-4 rounded-full bg-rose-500 text-white text-[10px] font-bold flex items-center justify-center">0</span>
+        </button>
+
+        <button onclick="switchMainTab('profile')" id="nav-profile" class="flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-slate-400 hover:text-slate-200 transition">
+          <i data-lucide="user-circle" class="w-5 h-5"></i>
+          <span class="text-[10px] font-semibold">Profile</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- ==================== 3. ACTIVE CHATROOM / PERSONAL CHAT OVERLAY ==================== -->
+    <div id="chat-room-overlay" class="fixed inset-y-0 w-full max-w-md bg-slate-950 z-40 flex flex-col hidden">
+      <!-- Chat Header -->
+      <div class="glass-panel px-3 py-3 flex items-center justify-between border-b border-white/10">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <button onclick="closeChatOverlay()" class="p-2 rounded-xl hover:bg-white/10 text-slate-300">
+            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+          </button>
+          <div id="chat-header-icon" class="w-10 h-10 rounded-full bg-rose-500/20 border border-rose-500/30 flex items-center justify-center text-xl shrink-0 cursor-pointer">
+            ❤️
+          </div>
+          <div class="min-w-0">
+            <h3 id="chat-header-title" class="font-display font-bold text-sm text-white truncate">Room Name</h3>
+            <p id="chat-header-sub" class="text-[11px] text-slate-400 truncate">Room description</p>
+          </div>
+        </div>
+
+        <!-- Personal Chat Actions (Send Coins + Call + Privacy Limits Shield) -->
+        <div id="private-chat-actions" class="hidden flex items-center gap-1.5 shrink-0">
+          <button onclick="openQuickSendCoinsToPeer()"
+            class="p-2.5 rounded-xl bg-amber-500/15 text-amber-300 border border-amber-500/30 hover:bg-amber-500/25 transition" title="Send Coins">
+            <svg class="w-4 h-4"><use href="#icon-coin"/></svg>
+          </button>
+          <button id="btn-start-voice-call" onclick="initiateVoiceCall()"
+            class="p-2.5 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/30 transition" title="Voice Call">
+            <i data-lucide="phone" class="w-4 h-4"></i>
+          </button>
+          <button onclick="openFriendPrivacyModal()"
+            class="px-2.5 py-2 rounded-xl bg-slate-800 text-slate-200 border border-white/10 hover:bg-slate-700 transition flex items-center gap-1 text-xs font-semibold" title="Privacy Limits">
+            <i data-lucide="shield-alert" class="w-4 h-4 text-amber-400"></i>
+            <span>Limits</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Permission Restriction Notice -->
+      <div id="chat-permission-banner" class="hidden px-4 py-2 bg-amber-500/15 border-b border-amber-500/25 text-[11px] text-amber-200 flex items-center justify-between">
+        <span id="chat-permission-text">Permission notice</span>
+        <button onclick="openFriendPrivacyModal()" class="underline font-semibold text-amber-300 ml-2 shrink-0">My Limits</button>
+      </div>
+
+      <!-- Messages Feed -->
+      <div id="chat-messages-feed" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
+
+      <!-- Voice Recording Bar -->
+      <div id="recording-bar" class="hidden px-4 py-3 bg-rose-950/90 border-t border-rose-500/30 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <span class="w-3 h-3 rounded-full bg-rose-500 animate-ping"></span>
+          <span class="text-xs font-semibold text-rose-200">Recording Voice... <span id="rec-timer">00:00</span></span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="cancelVoiceRecording()" class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 text-xs font-semibold">Cancel</button>
+          <button onclick="stopAndSendVoiceRecording()" class="px-3.5 py-1.5 rounded-lg bg-rose-500 text-white text-xs font-bold shadow">Send Voice</button>
+        </div>
+      </div>
+
+      <!-- Text + Voice Note Composer ONLY (No Photo/Video) -->
+      <div id="chat-composer-bar" class="glass-panel p-3 border-t border-white/10">
+        <form onsubmit="handleSendTextMessage(event)" class="flex items-center gap-2">
+          <button type="button" id="btn-mic-record" onclick="startVoiceRecording()"
+            class="p-3 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/30 text-rose-400 transition shrink-0" title="Record Voice Note">
+            <i data-lucide="mic" class="w-5 h-5"></i>
+          </button>
+
+          <input type="text" id="chat-message-input" placeholder="Dil ki baat likhein ya mic dabayein..." autocomplete="off"
+            class="flex-1 px-4 py-2.5 rounded-xl bg-slate-900 border border-white/10 text-sm text-white focus:outline-none focus:border-rose-500" />
+
+          <button type="submit" id="btn-send-msg"
+            class="p-3 rounded-xl bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-lg shadow-rose-500/20 hover:opacity-95 transition shrink-0">
+            <i data-lucide="send" class="w-5 h-5"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ==================== 4. USER PROFILE CARD & FLAG MODAL ==================== -->
+    <div id="modal-user-detail" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-4 hidden">
+      <div class="w-full max-w-sm bg-slate-900 border border-white/10 rounded-3xl p-5 space-y-4 shadow-2xl">
+        <div class="flex items-start justify-between">
+          <div class="flex items-center gap-3">
+            <div id="detail-user-avatar" class="w-14 h-14 rounded-2xl bg-gradient-to-br from-rose-500 to-amber-500 flex items-center justify-center text-3xl shadow-lg">
+              😊
+            </div>
+            <div>
+              <h4 id="detail-user-name" class="font-display font-bold text-base text-white">User Name</h4>
+              <p id="detail-user-username" class="text-xs text-slate-400">@username</p>
+              <p id="detail-user-meta" class="text-[11px] text-slate-300 mt-0.5">Male • 24 • India</p>
+            </div>
+          </div>
+          <button onclick="closeModal('modal-user-detail')" class="p-1.5 rounded-lg bg-slate-800 text-slate-400 hover:text-white">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <div class="flex flex-wrap gap-2">
+          <span id="detail-user-intent" class="px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-500/20 text-rose-300 border border-rose-500/30">
+            ❤️ Dil - Just for Fun
+          </span>
+          <span id="detail-user-mood" class="px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+            Mood: 😊 Happy
+          </span>
+        </div>
+
+        <p id="detail-user-bio" class="text-xs text-slate-300 bg-slate-950/70 p-3 rounded-xl border border-white/5 italic">
+          "Bio"
+        </p>
+
+        <div id="detail-user-actions" class="pt-1"></div>
+      </div>
+    </div>
+
+    <!-- ==================== 5. FLAG / REPORT MODAL ==================== -->
+    <div id="modal-flag-report" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-4 hidden">
+      <div class="w-full max-w-sm bg-slate-900 border border-rose-500/30 rounded-3xl p-5 space-y-4 shadow-2xl">
+        <div class="flex items-center justify-between">
+          <h4 class="font-display font-bold text-base text-rose-300 flex items-center gap-2">
+            <i data-lucide="flag" class="w-4 h-4"></i> Flag / Report to Admin
+          </h4>
+          <button onclick="closeModal('modal-flag-report')" class="p-1.5 rounded-lg bg-slate-800 text-slate-400">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <div class="p-3 rounded-xl bg-slate-950 border border-white/5 text-xs text-slate-300">
+          <p class="text-[11px] text-slate-400 mb-1">Reported Content:</p>
+          <p id="flag-target-preview" class="font-medium text-white line-clamp-2"></p>
+        </div>
+
+        <form onsubmit="submitFlagReport(event)" class="space-y-3">
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1.5">Reason for Reporting</label>
+            <select id="flag-reason-select" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-white/10 text-xs text-white focus:outline-none focus:border-rose-500">
+              <option value="Abusive / Inappropriate Language">Abusive / Inappropriate Language</option>
+              <option value="Spam / Unwanted Links">Spam / Unwanted Links</option>
+              <option value="Fake Profile / Impersonation">Fake Profile / Impersonation</option>
+              <option value="Harassment / Bullying">Harassment / Bullying</option>
+            </select>
+          </div>
+          <button type="submit" class="w-full py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow-lg">
+            Submit Report to Admin 🚩
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ==================== 6. PER-FRIEND PRIVACY LIMITS MODAL ==================== -->
+    <div id="modal-friend-privacy" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-4 hidden">
+      <div class="w-full max-w-sm bg-slate-900 border border-white/10 rounded-3xl p-5 space-y-4 shadow-2xl">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <span id="priv-friend-avatar" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-xl">😊</span>
+            <div>
+              <h4 id="priv-friend-name" class="font-display font-bold text-sm text-white">Friend Name</h4>
+              <p class="text-[11px] text-slate-400">Set Privacy Limits for this Friend</p>
+            </div>
+          </div>
+          <button onclick="closeModal('modal-friend-privacy')" class="p-1.5 rounded-lg bg-slate-800 text-slate-400 hover:text-white">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <p class="text-xs text-slate-300 bg-slate-950/80 p-3 rounded-xl border border-white/5">
+          Yeh friend aapko kya kar sakta hai? Changes turant apply honge:
+        </p>
+
+        <div class="space-y-2">
+          <button onclick="saveFriendPermission('both')" data-perm="both"
+            class="perm-option-btn w-full p-3 rounded-xl border text-left flex items-center justify-between transition">
+            <div>
+              <p class="text-xs font-bold text-white">📞💬 Both (Call & Message)</p>
+              <p class="text-[11px] text-slate-400">Text, Voice Notes & Voice Calls allowed</p>
+            </div>
+            <span class="perm-check text-emerald-400 font-bold text-sm hidden">✓</span>
+          </button>
+
+          <button onclick="saveFriendPermission('message_only')" data-perm="message_only"
+            class="perm-option-btn w-full p-3 rounded-xl border text-left flex items-center justify-between transition">
+            <div>
+              <p class="text-xs font-bold text-white">💬 Message Only (No Calls)</p>
+              <p class="text-[11px] text-slate-400">Text & Voice Notes allowed, Voice Calls disabled</p>
+            </div>
+            <span class="perm-check text-emerald-400 font-bold text-sm hidden">✓</span>
+          </button>
+
+          <button onclick="saveFriendPermission('call_only')" data-perm="call_only"
+            class="perm-option-btn w-full p-3 rounded-xl border text-left flex items-center justify-between transition">
+            <div>
+              <p class="text-xs font-bold text-white">📞 Call Only (No Messages)</p>
+              <p class="text-[11px] text-slate-400">Only Voice Calls allowed, Text/Voice Notes blocked</p>
+            </div>
+            <span class="perm-check text-emerald-400 font-bold text-sm hidden">✓</span>
+          </button>
+
+          <button onclick="saveFriendPermission('none')" data-perm="none"
+            class="perm-option-btn w-full p-3 rounded-xl border text-left flex items-center justify-between transition">
+            <div>
+              <p class="text-xs font-bold text-rose-300">🚫 None (Muted / Blocked)</p>
+              <p class="text-[11px] text-slate-400">Neither Calls nor Messages allowed</p>
+            </div>
+            <span class="perm-check text-rose-400 font-bold text-sm hidden">✓</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 7. CREATE CUSTOM ROOM MODAL ==================== -->
+    <div id="modal-create-room" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-4 hidden">
+      <div class="w-full max-w-sm bg-slate-900 border border-white/10 rounded-3xl p-5 space-y-4 shadow-2xl">
+        <div class="flex items-center justify-between">
+          <h4 class="font-display font-bold text-base text-white">Create Custom Open Room</h4>
+          <button onclick="closeModal('modal-create-room')" class="p-1.5 rounded-lg bg-slate-800 text-slate-400">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/25 flex items-center justify-between text-xs">
+          <span class="text-amber-200">Room Creation Fee:</span>
+          <span class="font-bold text-amber-400 flex items-center gap-1">50 Coins <svg class="w-4 h-4"><use href="#icon-coin"/></svg></span>
+        </div>
+
+        <form onsubmit="handleCreateCustomRoom(event)" class="space-y-3">
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1">Room Name *</label>
+            <input type="text" id="new-room-name" required maxlength="28" placeholder="e.g. Late Night Shayari Club"
+              class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-white/10 text-sm text-white focus:outline-none focus:border-amber-500" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1">Room Icon & Category</label>
+            <select id="new-room-category" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-white/10 text-sm text-white focus:outline-none focus:border-amber-500">
+              <option value="❤️|DIL">❤️ DIL (Shayari & Feelings)</option>
+              <option value="🤝|DOSTI">🤝 DOSTI (Chill & Hangout)</option>
+              <option value="💕|PYAR">💕 PYAR (Romance & Dating)</option>
+              <option value="💡|INFOTALK">💡 INFOTALK (Tech & Ideas)</option>
+              <option value="🍵|CHUGLI">🍵 CHUGLI (Gossip & Fun)</option>
+              <option value="🔥|BHADAAS">🔥 BHADAAS (Vent & Rant)</option>
+              <option value="🌐|General">🌐 General (Open Lounge)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1">Topic / Description *</label>
+            <input type="text" id="new-room-topic" required maxlength="65" placeholder="e.g. Dil ki baatein aur voice notes"
+              class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-white/10 text-sm text-white focus:outline-none focus:border-amber-500" />
+          </div>
+
+          <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-bold text-sm shadow-lg flex items-center justify-center gap-1.5">
+            <span>Launch Room (50 Coins</span>
+            <svg class="w-4 h-4"><use href="#icon-coin"/></svg>
+            <span>)</span>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ==================== 8. COIN WALLET, BUY PACKS & P2P SHARE MODAL ==================== -->
+    <div id="modal-wallet" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-3 hidden">
+      <div class="w-full max-w-md bg-slate-900 border border-white/10 rounded-3xl p-4 sm:p-5 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <svg class="w-6 h-6"><use href="#icon-coin"/></svg>
+            <h4 class="font-display font-bold text-base text-white">Coin Wallet & Store</h4>
+          </div>
+          <button onclick="closeModal('modal-wallet')" class="p-1.5 rounded-lg bg-slate-800 text-slate-400 hover:text-white">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <!-- Balance Banner -->
+        <div class="p-3.5 rounded-2xl bg-gradient-to-r from-amber-950/70 via-slate-950 to-amber-950/50 border border-amber-500/25 flex items-center justify-between">
+          <div>
+            <p class="text-[11px] text-amber-200/80">Available Balance</p>
+            <div class="font-display text-2xl font-extrabold text-amber-400 flex items-center gap-1.5 mt-0.5">
+              <span id="modal-wallet-balance">25</span>
+              <svg class="w-5 h-5"><use href="#icon-coin"/></svg>
+            </div>
+          </div>
+          <div class="text-right text-[10px] text-slate-400">
+            <p>Custom Room = 50 Coins</p>
+            <p class="text-amber-300 mt-0.5">P2P Share Fee = 2% (±0.50)</p>
+          </div>
+        </div>
+
+        <!-- Wallet Sub-Tabs -->
+        <div class="grid grid-cols-3 gap-1.5 bg-slate-950 p-1 rounded-xl border border-white/10">
+          <button type="button" onclick="switchWalletTab('buy')" id="wallet-tab-buy"
+            class="py-2 rounded-lg text-xs font-bold bg-amber-500 text-slate-950 shadow transition">
+            Buy Coins
+          </button>
+          <button type="button" onclick="switchWalletTab('share')" id="wallet-tab-share"
+            class="py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition">
+            Share Coins
+          </button>
+          <button type="button" onclick="switchWalletTab('history')" id="wallet-tab-history"
+            class="py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition">
+            History
+          </button>
+        </div>
+
+        <!-- SUB-TAB 1: BUY COINS STORE -->
+        <div id="wallet-panel-buy" class="space-y-2.5">
+          <p class="text-[11px] text-slate-400">Apna Coin Pack chunein aur UPI se instant top-up karein:</p>
+
+          <div id="coin-packs-container" class="space-y-2">
+            <!-- Pack 1: ₹5 -> 10 Coins -->
+            <div class="p-3 rounded-2xl bg-slate-850 border border-white/10 hover:border-amber-500/40 flex items-center justify-between transition">
+              <div class="flex items-center gap-2.5">
+                <svg class="w-7 h-7 shrink-0"><use href="#icon-coin"/></svg>
+                <div>
+                  <p class="text-sm font-bold text-white">10 Coins</p>
+                  <p class="text-[11px] text-slate-400">Starter Mini Pack</p>
+                </div>
+              </div>
+              <button onclick="openUpiCheckout(5, 10)" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs shadow">
+                ₹5 Buy
+              </button>
+            </div>
+
+            <!-- Pack 2: ₹10 -> 25 Coins -->
+            <div class="p-3 rounded-2xl bg-slate-850 border border-white/10 hover:border-amber-500/40 flex items-center justify-between transition">
+              <div class="flex items-center gap-2.5">
+                <svg class="w-7 h-7 shrink-0"><use href="#icon-coin"/></svg>
+                <div>
+                  <div class="flex items-center gap-1.5">
+                    <p class="text-sm font-bold text-white">25 Coins</p>
+                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">+25% EXTRA</span>
+                  </div>
+                  <p class="text-[11px] text-slate-400">Popular Basic Pack</p>
+                </div>
+              </div>
+              <button onclick="openUpiCheckout(10, 25)" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs shadow">
+                ₹10 Buy
+              </button>
+            </div>
+
+            <!-- Pack 3: ₹20 -> 60 Coins -->
+            <div class="p-3 rounded-2xl bg-slate-850 border border-cyan-500/30 hover:border-cyan-400 flex items-center justify-between transition">
+              <div class="flex items-center gap-2.5">
+                <svg class="w-7 h-7 shrink-0"><use href="#icon-coin"/></svg>
+                <div>
+                  <div class="flex items-center gap-1.5">
+                    <p class="text-sm font-bold text-white">60 Coins</p>
+                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-bold">1 ROOM READY</span>
+                  </div>
+                  <p class="text-[11px] text-slate-400">Create 1 Custom Room + Extra</p>
+                </div>
+              </div>
+              <button onclick="openUpiCheckout(20, 60)" class="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 font-extrabold text-xs shadow">
+                ₹20 Buy
+              </button>
+            </div>
+
+            <!-- Pack 4: ₹50 -> 150 Coins -->
+            <div class="p-3 rounded-2xl bg-slate-850 border border-rose-500/30 hover:border-rose-400 flex items-center justify-between transition">
+              <div class="flex items-center gap-2.5">
+                <svg class="w-7 h-7 shrink-0"><use href="#icon-coin"/></svg>
+                <div>
+                  <div class="flex items-center gap-1.5">
+                    <p class="text-sm font-bold text-white">150 Coins</p>
+                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold">BEST SELLER</span>
+                  </div>
+                  <p class="text-[11px] text-slate-400">3 Custom Rooms + Sharing</p>
+                </div>
+              </div>
+              <button onclick="openUpiCheckout(50, 150)" class="px-4 py-2 rounded-xl bg-gradient-to-r from-rose-500 to-pink-600 text-white font-extrabold text-xs shadow">
+                ₹50 Buy
+              </button>
+            </div>
+
+            <!-- Pack 5: ₹100 -> 500 Coins -->
+            <div class="p-3 rounded-2xl bg-gradient-to-r from-amber-950/60 to-slate-850 border border-amber-400/50 flex items-center justify-between transition">
+              <div class="flex items-center gap-2.5">
+                <svg class="w-7 h-7 shrink-0"><use href="#icon-coin"/></svg>
+                <div>
+                  <div class="flex items-center gap-1.5">
+                    <p class="text-sm font-extrabold text-amber-300">500 Coins</p>
+                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-500 text-slate-950 font-extrabold">MEGA 2.5X</span>
+                  </div>
+                  <p class="text-[11px] text-slate-300">10 Custom Rooms • Super Value</p>
+                </div>
+              </div>
+              <button onclick="openUpiCheckout(100, 500)" class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 font-extrabold text-xs shadow-lg">
+                ₹100 Buy
+              </button>
+            </div>
+          </div>
+
+          <!-- Simulated UPI Checkout Box -->
+          <div id="upi-checkout-box" class="hidden p-4 rounded-2xl bg-slate-950 border border-emerald-500/40 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-emerald-400">UPI Instant Payment</span>
+              <button type="button" onclick="cancelUpiCheckout()" class="text-[11px] text-slate-400 hover:text-white">Cancel</button>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-900 border border-white/10 text-center space-y-1">
+              <p class="text-xs text-slate-300">Paying <strong id="upi-pay-rupees" class="text-white">₹10</strong> for <strong id="upi-pay-coins" class="text-amber-400">25 Coins</strong></p>
+              <p class="text-[11px] font-mono text-cyan-300 bg-slate-950 py-1 px-2 rounded inline-block">UPI ID: dildostipyar@upi</p>
+            </div>
+            <button type="button" onclick="confirmUpiPurchase()"
+              class="w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs shadow-lg transition">
+              ✓ Confirm Payment & Credit Coins
+            </button>
+          </div>
+        </div>
+
+        <!-- SUB-TAB 2: PEER-TO-PEER SHARE COINS (2% FEE ±0.50 ROUNDOFF) -->
+        <div id="wallet-panel-share" class="space-y-3 hidden">
+          <div class="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/25 text-[11px] text-cyan-200 space-y-1">
+            <p class="font-bold text-cyan-300">Peer-to-Peer Coin Sharing Rules:</p>
+            <p>Doosre registered user ko coins bhejne par <strong>2% Platform Fee</strong> lagegi (standard <strong>±0.50 roundoff</strong> ke saath — jaise 0.49 → 0, aur 0.50 → 1 coin).</p>
+          </div>
+
+          <form onsubmit="handleShareCoins(event)" class="space-y-3">
+            <div>
+              <label class="block text-xs font-medium text-slate-300 mb-1">Recipient Username *</label>
+              <input type="text" id="share-coin-username" required placeholder="e.g. priya_dil (ya list se chunein)"
+                list="registered-usernames-datalist"
+                class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-white/10 text-xs text-white focus:outline-none focus:border-amber-500" />
+              <datalist id="registered-usernames-datalist"></datalist>
+            </div>
+
+            <div>
+              <label class="block text-xs font-medium text-slate-300 mb-1">Coins to Send *</label>
+              <input type="number" id="share-coin-amount" required min="1" max="10000" value="25" oninput="updateShareFeePreview()"
+                class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-white/10 text-sm font-bold text-amber-300 focus:outline-none focus:border-amber-500" />
+            </div>
+
+            <!-- Live 2% Fee & ±0.50 Roundoff Breakdown -->
+            <div class="p-3 rounded-xl bg-slate-950 border border-white/10 space-y-1.5 text-xs">
+              <div class="flex justify-between text-slate-300">
+                <span>Recipient ko milenge:</span>
+                <span class="font-bold text-emerald-400"><span id="calc-net-receive">25</span> Coins</span>
+              </div>
+              <div class="flex justify-between text-slate-400">
+                <span>2% Platform Fee (exact <span id="calc-exact-fee">0.50</span> → roundoff):</span>
+                <span class="font-semibold text-rose-400">+<span id="calc-rounded-fee">1</span> Coins</span>
+              </div>
+              <div class="border-t border-white/10 pt-1.5 flex justify-between font-bold text-white">
+                <span>Aapke Wallet se Deduct honge:</span>
+                <span class="text-amber-400"><span id="calc-total-deduct">26</span> Coins</span>
+              </div>
+            </div>
+
+            <button type="submit"
+              class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-extrabold text-xs shadow-lg hover:opacity-95 transition">
+              Send Coins Now ⇄
+            </button>
+          </form>
+        </div>
+
+        <!-- SUB-TAB 3: TRANSACTION HISTORY -->
+        <div id="wallet-panel-history" class="space-y-2 hidden">
+          <div id="wallet-history-list" class="space-y-2 max-h-60 overflow-y-auto"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 9. COMPREHENSIVE HELP & POLICIES MODAL ==================== -->
+    <div id="modal-help-policies" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-3 hidden">
+      <div class="w-full max-w-md bg-slate-900 border border-white/15 rounded-3xl p-4 sm:p-5 space-y-3.5 shadow-2xl max-h-[90vh] flex flex-col">
+        <div class="flex items-center justify-between shrink-0">
+          <div class="flex items-center gap-2">
+            <i data-lucide="book-open-check" class="w-5 h-5 text-cyan-400"></i>
+            <h4 class="font-display font-bold text-base text-white">Help Center & App Policies</h4>
+          </div>
+          <button onclick="closeModal('modal-help-policies')" class="p-1.5 rounded-lg bg-slate-800 text-slate-400 hover:text-white">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <!-- Horizontal Policy Topic Pills -->
+        <div class="flex gap-1.5 overflow-x-auto pb-1 shrink-0">
+          <button type="button" onclick="switchHelpSection('terms')" id="help-tab-terms"
+            class="help-tab-btn px-3 py-1.5 rounded-xl text-[11px] font-bold bg-cyan-500 text-slate-950 shrink-0">
+            Terms & Conditions
+          </button>
+          <button type="button" onclick="switchHelpSection('usage')" id="help-tab-usage"
+            class="help-tab-btn px-3 py-1.5 rounded-xl text-[11px] font-bold bg-slate-850 text-slate-300 shrink-0">
+            Usage Policy
+          </button>
+          <button type="button" onclick="switchHelpSection('fup')" id="help-tab-fup"
+            class="help-tab-btn px-3 py-1.5 rounded-xl text-[11px] font-bold bg-slate-850 text-slate-300 shrink-0">
+            Fair Usage (FUP)
+          </button>
+          <button type="button" onclick="switchHelpSection('privacy')" id="help-tab-privacy"
+            class="help-tab-btn px-3 py-1.5 rounded-xl text-[11px] font-bold bg-slate-850 text-slate-300 shrink-0">
+            Privacy & Safety
+          </button>
+          <button type="button" onclick="switchHelpSection('coins')" id="help-tab-coins"
+            class="help-tab-btn px-3 py-1.5 rounded-xl text-[11px] font-bold bg-slate-850 text-slate-300 shrink-0">
+            Coins & Fee Rules
+          </button>
+          <button type="button" onclick="switchHelpSection('faq')" id="help-tab-faq"
+            class="help-tab-btn px-3 py-1.5 rounded-xl text-[11px] font-bold bg-slate-850 text-slate-300 shrink-0">
+            FAQs & Help
+          </button>
+        </div>
+
+        <!-- Policy Content Scroll Body -->
+        <div id="help-policy-content" class="flex-1 overflow-y-auto space-y-3 pr-1 text-xs text-slate-300 leading-relaxed">
+          <!-- Populated dynamically via switchHelpSection() -->
+        </div>
+
+        <div class="pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-slate-400 shrink-0">
+          <span>Support: help@dildostipyar.app</span>
+          <button onclick="closeModal('modal-help-policies')" class="px-4 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold">
+            Samajh Gaya ✓
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 10. VOICE CALL OVERLAY ==================== -->
+    <div id="voice-call-overlay" class="fixed inset-0 bg-slate-950/95 backdrop-blur-xl z-50 flex flex-col items-center justify-between p-8 hidden">
+      <div class="text-center mt-8">
+        <span class="px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
+          🔒 Encrypted Voice Call
+        </span>
+      </div>
+
+      <div class="flex flex-col items-center text-center">
+        <div class="w-28 h-28 rounded-full bg-gradient-to-br from-rose-500 via-pink-600 to-amber-500 flex items-center justify-center text-5xl shadow-2xl pulse-ring" id="call-peer-avatar">
+          😊
+        </div>
+        <h3 id="call-peer-name" class="font-display font-bold text-2xl text-white mt-6">Friend Name</h3>
+        <p id="call-status-text" class="text-sm text-emerald-400 font-medium mt-1">Ringing...</p>
+        <p id="call-duration-timer" class="text-xs text-slate-400 font-mono mt-1 hidden">00:00</p>
+      </div>
+
+      <div class="flex items-center gap-6 mb-8">
+        <button onclick="toggleCallMute()" id="btn-toggle-mute"
+          class="w-14 h-14 rounded-full bg-slate-800 border border-white/10 text-white flex items-center justify-center hover:bg-slate-700 transition">
+          <i data-lucide="mic" class="w-6 h-6"></i>
+        </button>
+
+        <button onclick="endVoiceCall()"
+          class="w-16 h-16 rounded-full bg-rose-600 hover:bg-rose-500 text-white shadow-xl shadow-rose-600/40 flex items-center justify-center transition active:scale-95">
+          <i data-lucide="phone-off" class="w-7 h-7"></i>
+        </button>
+
+        <button onclick="toggleCallSpeaker()" id="btn-toggle-speaker"
+          class="w-14 h-14 rounded-full bg-slate-800 border border-white/10 text-white flex items-center justify-center hover:bg-slate-700 transition">
+          <i data-lucide="volume-2" class="w-6 h-6"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- ==================== 11. FULL-ACCESS ADMIN DASHBOARD ==================== -->
+    <div id="admin-dashboard-view" class="flex-1 flex flex-col h-screen bg-slate-950 hidden">
+      <header class="glass-panel px-4 py-3 flex items-center justify-between border-b border-amber-500/20 sticky top-0 z-30">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-slate-950 font-bold shadow-lg overflow-hidden border border-amber-300/40 shrink-0">
+            <img id="admin-header-avatar-img" alt="Admin" class="w-full h-full object-cover hidden" />
+            <svg id="admin-header-avatar-svg" class="w-5 h-5"><use href="#icon-shield"/></svg>
+          </div>
+          <div>
+            <h2 class="font-display font-bold text-sm text-white leading-none">Admin Control Center</h2>
+            <p class="text-[11px] text-amber-400 mt-0.5">Full Moderation & PWA Studio • DIL - DOSTI - PYAR</p>
+          </div>
+        </div>
+        <button onclick="handleAdminLogout()" class="px-3 py-1.5 rounded-xl bg-rose-500/20 border border-rose-500/30 text-rose-300 text-xs font-bold hover:bg-rose-500/30 transition">
+          Exit Admin
+        </button>
+      </header>
+
+      <!-- Overview Stats -->
+      <div class="grid grid-cols-4 gap-2 p-3 bg-slate-900/80 border-b border-white/5">
+        <div class="p-2.5 rounded-xl bg-slate-950 border border-white/5 text-center">
+          <p id="admin-stat-users" class="font-display text-lg font-extrabold text-white">0</p>
+          <p class="text-[10px] text-slate-400">Users/Guests</p>
+        </div>
+        <div class="p-2.5 rounded-xl bg-slate-950 border border-white/5 text-center">
+          <p id="admin-stat-rooms" class="font-display text-lg font-extrabold text-cyan-400">7</p>
+          <p class="text-[10px] text-slate-400">Open Rooms</p>
+        </div>
+        <div class="p-2.5 rounded-xl bg-slate-950 border border-white/5 text-center">
+          <p id="admin-stat-flags" class="font-display text-lg font-extrabold text-rose-400">0</p>
+          <p class="text-[10px] text-slate-400">Flags</p>
+        </div>
+        <div class="p-2.5 rounded-xl bg-slate-950 border border-white/5 text-center">
+          <p id="admin-stat-fees" class="font-display text-lg font-extrabold text-amber-400">0</p>
+          <p class="text-[10px] text-slate-400">Fee Coins</p>
+        </div>
+      </div>
+
+      <!-- Admin Sub-Tabs (4 Tabs including PWA & Branding) -->
+      <div class="grid grid-cols-4 gap-1 p-2.5 bg-slate-900/50 border-b border-white/5">
+        <button onclick="switchAdminSubTab('flags')" id="admin-sub-btn-flags"
+          class="py-2 px-1 rounded-xl text-[11px] font-bold bg-rose-500 text-white shadow transition">
+          Flags
+        </button>
+        <button onclick="switchAdminSubTab('users')" id="admin-sub-btn-users"
+          class="py-2 px-1 rounded-xl text-[11px] font-bold bg-slate-850 text-slate-400 hover:text-white transition">
+          Users
+        </button>
+        <button onclick="switchAdminSubTab('rooms')" id="admin-sub-btn-rooms"
+          class="py-2 px-1 rounded-xl text-[11px] font-bold bg-slate-850 text-slate-400 hover:text-white transition">
+          Rooms
+        </button>
+        <button onclick="switchAdminSubTab('pwa')" id="admin-sub-btn-pwa"
+          class="py-2 px-1 rounded-xl text-[11px] font-bold bg-slate-850 text-slate-400 hover:text-white transition">
+          PWA & Icons
+        </button>
+      </div>
+
+      <div class="flex-1 overflow-y-auto p-4 space-y-4">
+        <!-- Sub-Tab 1: Flagged Content -->
+        <div id="admin-panel-flags" class="space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-rose-400">Reported Messages & Profiles</h3>
+            <span id="admin-flags-badge" class="text-[11px] text-slate-400">0 Pending</span>
+          </div>
+          <div id="admin-flags-list" class="space-y-2.5"></div>
+        </div>
+
+        <!-- Sub-Tab 2: Registered & Guest Users -->
+        <div id="admin-panel-users" class="space-y-3 hidden">
+          <div class="relative">
+            <i data-lucide="search" class="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+            <input type="text" id="admin-user-search" oninput="renderAdminUsers()" placeholder="Search registered or guest users..."
+              class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-900 border border-white/10 text-xs text-white focus:outline-none focus:border-amber-500" />
+          </div>
+          <div id="admin-users-list" class="space-y-2.5"></div>
+        </div>
+
+        <!-- Sub-Tab 3: Rooms & Live Message Moderation -->
+        <div id="admin-panel-rooms" class="space-y-4 hidden">
+          <div>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Inspect Any Room</h4>
+            <div id="admin-rooms-selector" class="space-y-2"></div>
+          </div>
+
+          <div id="admin-room-inspector" class="p-3.5 rounded-2xl bg-slate-900 border border-white/10 space-y-3 hidden">
+            <div class="flex items-center justify-between border-b border-white/10 pb-2.5">
+              <div>
+                <h5 id="admin-inspector-title" class="font-display font-bold text-sm text-white">Room Messages</h5>
+                <p class="text-[11px] text-slate-400">Delete individual messages or custom room</p>
+              </div>
+              <button id="admin-delete-room-btn" onclick="adminDeleteCurrentCustomRoom()" class="hidden px-3 py-1.5 rounded-xl bg-rose-600 text-white text-xs font-bold">
+                Delete Room
+              </button>
+            </div>
+            <div id="admin-inspector-messages" class="space-y-2 max-h-80 overflow-y-auto"></div>
+          </div>
+        </div>
+
+        <!-- Sub-Tab 4: Admin Profile Picture, App Icons/Favicon & PWA Files (manifest.json, sw.js, Code.gs) -->
+        <div id="admin-panel-pwa" class="space-y-4 hidden">
+
+          <!-- 1. Exclusive Admin Profile Picture Card -->
+          <div class="p-4 rounded-2xl bg-slate-900 border border-amber-500/30 space-y-3">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="font-display font-bold text-sm text-amber-300">Admin Profile Picture (Admin Only)</h4>
+                <p class="text-[11px] text-slate-400">Normal users ke liye photo disabled hai; sirf Admin profile photo set kar sakta hai.</p>
+              </div>
+              <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[10px] font-bold">EXCLUSIVE</span>
+            </div>
+
+            <div class="flex items-center gap-3.5">
+              <div class="w-16 h-16 rounded-2xl bg-slate-950 border-2 border-amber-500/40 flex items-center justify-center overflow-hidden shrink-0 shadow-lg">
+                <img id="admin-profile-preview-img" alt="Admin DP" class="w-full h-full object-cover hidden" />
+                <svg id="admin-profile-preview-svg" class="w-8 h-8 text-amber-400"><use href="#icon-shield"/></svg>
+              </div>
+              <div class="flex-1 space-y-2">
+                <label class="block w-full py-2 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold text-center cursor-pointer transition shadow">
+                  📷 Upload Admin Photo
+                  <input type="file" accept="image/*" onchange="handleAdminAvatarUpload(event)" class="hidden" />
+                </label>
+                <button type="button" onclick="resetAdminAvatar()"
+                  class="w-full py-1.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-semibold transition">
+                  Remove Photo
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Live App Logo & Favicon Updater -->
+          <div class="p-4 rounded-2xl bg-slate-900 border border-rose-500/30 space-y-3">
+            <div>
+              <h4 class="font-display font-bold text-sm text-rose-300">App Logo & Favicon Updater</h4>
+              <p class="text-[11px] text-slate-400">Top-left header logo aur browser tab favicon ko live update karein.</p>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <div class="w-14 h-14 rounded-2xl bg-slate-950 border border-white/15 flex items-center justify-center overflow-hidden shrink-0">
+                <img id="admin-appicon-preview-img" alt="App Logo" class="w-full h-full object-cover hidden" />
+                <svg id="admin-appicon-preview-svg" class="w-full h-full"><use href="#icon-ddp-logo"/></svg>
+              </div>
+              <div class="flex-1 space-y-2">
+                <label class="block w-full py-2 px-3 rounded-xl bg-gradient-to-r from-rose-500 to-pink-600 text-white text-xs font-bold text-center cursor-pointer transition shadow">
+                  🖼️ Upload New Icon / Favicon (PNG/SVG)
+                  <input type="file" accept="image/*" onchange="handleAppIconUpload(event)" class="hidden" />
+                </label>
+                <button type="button" onclick="resetAppIconToDefault()"
+                  class="w-full py-1.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-semibold transition">
+                  Reset to Default Romantic Icon
+                </button>
+              </div>
+            </div>
+
+            <div class="flex gap-2">
+              <input type="url" id="admin-appicon-url-input" placeholder="Ya direct Icon/Favicon URL paste karein..."
+                class="flex-1 px-3 py-2 rounded-xl bg-slate-950 border border-white/10 text-xs text-white focus:outline-none focus:border-rose-500" />
+              <button type="button" onclick="saveAppIconFromUrl()"
+                class="px-3.5 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-bold shrink-0">
+                Apply
+              </button>
+            </div>
+          </div>
+
+          <!-- 3. PWA & Backend Deployment Files (manifest.json, sw.js, Code.gs) -->
+          <div class="p-4 rounded-2xl bg-slate-900 border border-cyan-500/30 space-y-3">
+            <div>
+              <h4 class="font-display font-bold text-sm text-cyan-300">PWA & Google Apps Script Files</h4>
+              <p class="text-[11px] text-slate-400">VaniSetu ki tarah yahan se teeno deployment files copy ya download karein:</p>
+            </div>
+
+            <div class="grid grid-cols-3 gap-1.5 bg-slate-950 p-1 rounded-xl border border-white/10">
+              <button type="button" onclick="selectAdminCodeFile('manifest')" id="code-tab-manifest"
+                class="py-2 rounded-lg text-[11px] font-bold bg-cyan-500 text-slate-950 transition">
+                manifest.json
+              </button>
+              <button type="button" onclick="selectAdminCodeFile('sw')" id="code-tab-sw"
+                class="py-2 rounded-lg text-[11px] font-bold text-slate-400 hover:text-white transition">
+                sw.js
+              </button>
+              <button type="button" onclick="selectAdminCodeFile('codegs')" id="code-tab-codegs"
+                class="py-2 rounded-lg text-[11px] font-bold text-slate-400 hover:text-white transition">
+                Code.gs
+              </button>
+            </div>
+
+            <div class="relative">
+              <textarea id="admin-code-viewer" readonly rows="10"
+                class="w-full p-3 rounded-xl bg-slate-950 border border-white/10 font-mono text-[11px] text-emerald-300 leading-relaxed focus:outline-none resize-none"></textarea>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button" onclick="copyAdminCodeFile()"
+                class="py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-white/10 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition">
+                <i data-lucide="copy" class="w-3.5 h-3.5 text-cyan-400"></i>
+                <span>Copy Code</span>
+              </button>
+              <button type="button" onclick="downloadAdminCodeFile()"
+                class="py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow transition">
+                <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                <span id="btn-download-filename">Download manifest.json</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ==================== FIREBASE & APP LOGIC ==================== -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import {
+      getFirestore, doc, getDoc, setDoc, addDoc, updateDoc, deleteDoc,
+      collection, onSnapshot
+    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'dil-dosti-pyar-app';
+    let firebaseConfig = typeof __firebase_config !== 'undefined'
+      ? JSON.parse(__firebase_config)
+      : null;
+
+    // Allow custom Firebase config saved via Admin Panel for external hosting (e.g., GitHub Pages)
+    if (!firebaseConfig) {
+      try {
+        const savedCustomFb = sessionStorage.getItem('ddp_custom_firebase_config');
+        if (savedCustomFb) firebaseConfig = JSON.parse(savedCustomFb);
+      } catch (e) {}
+    }
+
+    if (!firebaseConfig) {
+      firebaseConfig = { apiKey: "demo-key", authDomain: "demo.firebaseapp.com", projectId: "demo-project" };
+    }
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // ==================== GLOBAL STATE & CONSTANTS ====================
+    let currentAuthUser = null;
+    let currentProfile = null;
+    let allUsersMap = {};
+    let guestProfilesMap = {};
+    let customRooms = [];
+    let friendships = [];
+    let friendRequests = [];
+    let flaggedItems = [];
+    let coinTransactions = [];
+    let roomMessageCounts = {};
+    let appBrandingConfig = { appIconUrl: '', adminAvatarUrl: '' };
+
+    let activeChat = null;
+    let unsubscribeMessages = null;
+    let unsubscribeAdminInspector = null;
+    let adminInspectedRoom = null;
+    let pendingFlagPayload = null;
+    let pendingUpiPack = null;
+    let selectedAdminFileKey = 'manifest';
+
+    let mediaRecorder = null;
+    let audioChunks = [];
+    let recordingInterval = null;
+    let recordingSeconds = 0;
+
+    let callTimerInterval = null;
+    let callSeconds = 0;
+    let isMuted = false;
+    let isSpeaker = false;
+
+    const AVATAR_OPTIONS = ['😊', '🥰', '😎', '🌹', '🎧', '✨', '🦋', '🔥', '💫', '🎭', '🌙', '💖'];
+    let selectedAvatar = '😊';
+
+    const INTENT_LABELS = {
+      Dil: '❤️ Dil - Just for Fun',
+      Dosti: '🤝 Dosti - Looking for Friends',
+      Pyar: '💕 Pyar - Seeking a Serious Relationship'
+    };
+
+    const PREMADE_ROOMS = {
+      DIL: { id: 'DIL', name: 'DIL', icon: '❤️', category: 'DIL', badgeClass: 'bg-rose-500/20 text-rose-300', topic: 'Dil ki baatein, shayari aur emotional vibes' },
+      DOSTI: { id: 'DOSTI', name: 'DOSTI', icon: '🤝', category: 'DOSTI', badgeClass: 'bg-cyan-500/20 text-cyan-300', topic: 'Naye dost banayein aur chill hangouts karein' },
+      PYAR: { id: 'PYAR', name: 'PYAR', icon: '💕', category: 'PYAR', badgeClass: 'bg-amber-500/20 text-amber-300', topic: 'Meaningful connections aur pyar bhari baatein' },
+      INFOTALK: { id: 'INFOTALK', name: 'INFOTALK', icon: '💡', category: 'INFOTALK', badgeClass: 'bg-indigo-500/20 text-indigo-300', topic: 'Knowledge, career, tech aur smart discussions' },
+      CHUGLI: { id: 'CHUGLI', name: 'CHUGLI', icon: '🍵', category: 'CHUGLI', badgeClass: 'bg-fuchsia-500/20 text-fuchsia-300', topic: 'Lighthearted gossip, college/office stories & fun' },
+      BHADAAS: { id: 'BHADAAS', name: 'BHADAAS', icon: '🔥', category: 'BHADAAS', badgeClass: 'bg-orange-500/20 text-orange-300', topic: 'Din bhar ka stress aur frustration halka karein' },
+      General: { id: 'General', name: 'General', icon: '🌐', category: 'General', badgeClass: 'bg-emerald-500/20 text-emerald-300', topic: 'Sabhi ke liye open lounge — kuch bhi share karein' }
+    };
+
+    // ==================== INITIALIZE AVATAR SELECTOR ====================
+    function initAvatarSelector() {
+      const container = document.getElementById('avatar-selector');
+      if (!container) return;
+      container.innerHTML = AVATAR_OPTIONS.map(av => `
+        <button type="button" onclick="selectRegAvatar('${av}')" data-av="${av}"
+          class="av-btn py-1.5 rounded-lg text-lg flex items-center justify-center transition ${av === selectedAvatar ? 'bg-rose-500/30 border border-rose-500' : 'hover:bg-slate-800 border border-transparent'}">
+          ${av}
+        </button>
+      `).join('');
+    }
+
+    window.selectRegAvatar = (av) => {
+      selectedAvatar = av;
+      document.querySelectorAll('.av-btn').forEach(btn => {
+        btn.className = btn.dataset.av === av
+          ? 'av-btn py-1.5 rounded-lg text-lg flex items-center justify-center transition bg-rose-500/30 border border-rose-500'
+          : 'av-btn py-1.5 rounded-lg text-lg flex items-center justify-center transition hover:bg-slate-800 border border-transparent';
+      });
+    };
+
+    window.setMoodPreset = (mood) => {
+      const input = document.getElementById('reg-mood-text');
+      if (input) input.value = mood;
+    };
+
+    // ==================== TOAST NOTIFICATIONS ====================
+    window.showToast = (message, type = 'info') => {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+      const colors = {
+        success: 'bg-emerald-950/95 border-emerald-500/50 text-emerald-200',
+        error: 'bg-rose-950/95 border-rose-500/50 text-rose-200',
+        warn: 'bg-amber-950/95 border-amber-500/50 text-amber-200',
+        info: 'bg-slate-900/95 border-cyan-500/40 text-slate-100'
+      };
+      const el = document.createElement('div');
+      el.className = `px-4 py-3 rounded-2xl border shadow-xl text-xs font-semibold backdrop-blur-md transition-all ${colors[type] || colors.info}`;
+      el.textContent = message;
+      container.appendChild(el);
+      setTimeout(() => {
+        el.style.opacity = '0';
+        setTimeout(() => el.remove(), 300);
+      }, 3200);
+    };
+
+    // ==================== AUTH TABS & HANDLERS ====================
+    window.switchAuthTab = (tab) => {
+      ['register', 'login', 'guest', 'admin'].forEach(t => {
+        const form = document.getElementById(`form-${t}`);
+        if (form) form.classList.toggle('hidden', t !== tab);
+
+        const btn = document.getElementById(`tab-btn-${t}`);
+        if (btn) {
+          btn.className = t === tab
+            ? 'py-2.5 text-xs font-bold rounded-xl transition-all bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-lg'
+            : 'py-2.5 text-xs font-bold rounded-xl transition-all text-slate-400 hover:text-white';
+        }
+      });
+      lucide.createIcons();
+    };
+
+    async function bootstrapAuth() {
+      initAvatarSelector();
+      renderPremadeRooms();
+
+      try {
+        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+          await signInWithCustomToken(auth, __initial_auth_token);
+        } else {
+          await signInAnonymously(auth);
+        }
+      } catch (err) {
+        console.warn('Auth fallback:', err.message);
+      }
+
+      onAuthStateChanged(auth, async (user) => {
+        currentAuthUser = user;
+        setupRealtimeListeners();
+
+        const savedSession = sessionStorage.getItem('ddp_active_session');
+        if (savedSession) {
+          try {
+            const parsed = JSON.parse(savedSession);
+            if (parsed.isAdmin) {
+              enterAdminDashboard();
+              return;
+            }
+            if (parsed.isGuest) {
+              currentProfile = parsed;
+              enterMainApp();
+              return;
+            }
+            if (parsed.uid) {
+              const snap = await getDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', parsed.uid));
+              if (snap.exists()) {
+                currentProfile = { uid: snap.id, ...snap.data() };
+                enterMainApp();
+              }
+            }
+          } catch (e) {}
+        }
+      });
+      lucide.createIcons();
+    }
+
+    window.handleRegister = async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('reg-name').value.trim();
+      const username = document.getElementById('reg-username').value.trim().toLowerCase().replace(/[^a-z0-9_]/g, '');
+      const gender = document.getElementById('reg-gender').value;
+      const age = parseInt(document.getElementById('reg-age').value, 10);
+      const pin = document.getElementById('reg-pin').value.trim();
+      const location = document.getElementById('reg-location').value.trim();
+      const moodText = document.getElementById('reg-mood-text').value.trim();
+      const intent = document.querySelector('input[name="reg-intent"]:checked')?.value || 'Dil';
+      const bio = document.getElementById('reg-bio').value.trim();
+
+      if (!username || username.length < 3) {
+        showToast('Username kam se kam 3 characters ka rakhein (a-z, 0-9, _)', 'error');
+        return;
+      }
+      if (age < 18) {
+        showToast('Registration ke liye 18+ hona zaroori hai!', 'error');
+        return;
+      }
+
+      const btn = document.getElementById('btn-register-submit');
+      btn.disabled = true;
+
+      try {
+        const usernameRef = doc(db, 'artifacts', appId, 'public', 'data', 'usernames', username);
+        const existingSnap = await getDoc(usernameRef);
+        if (existingSnap.exists()) {
+          showToast(`Username "@${username}" pehle se liya ja chuka hai!`, 'error');
+          btn.disabled = false;
+          return;
+        }
+
+        const uid = `user_${username}_${Date.now().toString(36)}`;
+        const userDoc = {
+          uid,
+          name,
+          username,
+          gender,
+          age,
+          pin,
+          location,
+          avatar: selectedAvatar,
+          moodText,
+          intent,
+          bio,
+          coins: 25,
+          isGuest: false,
+          createdAt: Date.now()
+        };
+
+        await setDoc(usernameRef, { uid, username, createdAt: Date.now() });
+        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', uid), userDoc);
+
+        currentProfile = userDoc;
+        sessionStorage.setItem('ddp_active_session', JSON.stringify({ uid }));
+        showToast(`Swagat hai ${name}! +25 Free Coins mile hain 🎉`, 'success');
+        enterMainApp();
+      } catch (err) {
+        showToast('Account create karne mein error aaya', 'error');
+      } finally {
+        btn.disabled = false;
+      }
+    };
+
+    window.handleLogin = async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('login-username').value.trim().toLowerCase().replace(/^@/, '');
+      const pin = document.getElementById('login-pin').value.trim();
+
+      const btn = document.getElementById('btn-login-submit');
+      btn.disabled = true;
+
+      try {
+        const usernameSnap = await getDoc(doc(db, 'artifacts', appId, 'public', 'data', 'usernames', username));
+        if (!usernameSnap.exists()) {
+          showToast(`Username "@${username}" nahi mila!`, 'error');
+          btn.disabled = false;
+          return;
+        }
+
+        const { uid } = usernameSnap.data();
+        const userSnap = await getDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', uid));
+        if (!userSnap.exists()) {
+          showToast('User profile nahi mili', 'error');
+          btn.disabled = false;
+          return;
+        }
+
+        const userData = userSnap.data();
+        if (String(userData.pin) !== String(pin)) {
+          showToast('Galat PIN / Password! Dobara try karein.', 'error');
+          btn.disabled = false;
+          return;
+        }
+
+        currentProfile = { uid, ...userData };
+        sessionStorage.setItem('ddp_active_session', JSON.stringify({ uid }));
+        showToast(`Welcome back, ${userData.name}! ❤️`, 'success');
+        enterMainApp();
+      } catch (err) {
+        showToast('Login mein error aaya', 'error');
+      } finally {
+        btn.disabled = false;
+      }
+    };
+
+    window.handleGuestEntry = async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('guest-name').value.trim();
+      const age = parseInt(document.getElementById('guest-age').value, 10);
+      const gender = document.getElementById('guest-gender').value;
+
+      if (age < 18) {
+        showToast('Guest entry ke liye 18+ hona zaroori hai!', 'error');
+        return;
+      }
+
+      const guestUid = `guest_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`;
+      const guestObj = {
+        uid: guestUid,
+        name,
+        username: name.toLowerCase().replace(/[^a-z0-9_]/g, '') || 'guest',
+        age,
+        gender,
+        avatar: '🎧',
+        coins: 0,
+        isGuest: true,
+        createdAt: Date.now()
+      };
+
+      try {
+        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'guest_sessions', guestUid), guestObj);
+      } catch (err) {}
+
+      currentProfile = guestObj;
+      sessionStorage.setItem('ddp_active_session', JSON.stringify(guestObj));
+      showToast(`Guest "${name}" ke roop mein entry ho gayi! 🎧`, 'success');
+      enterMainApp();
+    };
+
+    window.handleAdminLogin = (e) => {
+      e.preventDefault();
+      const id = document.getElementById('admin-id-input').value.trim();
+      const pass = document.getElementById('admin-pass-input').value.trim();
+
+      if (id === 'admin' && pass === 'admin123') {
+        sessionStorage.setItem('ddp_active_session', JSON.stringify({ isAdmin: true }));
+        showToast('Admin Control Center unlocked! 🛡️', 'success');
+        enterAdminDashboard();
+      } else {
+        showToast('Galat Admin ID ya Passcode!', 'error');
+      }
+    };
+
+    window.handleAdminLogout = () => {
+      sessionStorage.removeItem('ddp_active_session');
+      document.getElementById('admin-dashboard-view').classList.add('hidden');
+      document.getElementById('auth-view').classList.remove('hidden');
+      switchAuthTab('register');
+    };
+
+    window.handleLogout = () => {
+      sessionStorage.removeItem('ddp_active_session');
+      currentProfile = null;
+      closeChatOverlay();
+      document.getElementById('main-view').classList.add('hidden');
+      document.getElementById('auth-view').classList.remove('hidden');
+      switchAuthTab('login');
+      showToast('Logged out successfully', 'info');
+    };
+
+    window.logoutAndSwitchToRegister = () => {
+      sessionStorage.removeItem('ddp_active_session');
+      currentProfile = null;
+      closeChatOverlay();
+      document.getElementById('main-view').classList.add('hidden');
+      document.getElementById('auth-view').classList.remove('hidden');
+      switchAuthTab('register');
+    };
+
+    // ==================== MAIN APP ENTRY & UI SYNC ====================
+    function enterMainApp() {
+      document.getElementById('auth-view').classList.add('hidden');
+      document.getElementById('admin-dashboard-view').classList.add('hidden');
+      document.getElementById('main-view').classList.remove('hidden');
+
+      updateProfileUI();
+      renderPremadeRooms();
+      renderCustomRooms();
+      renderFriendsChatList();
+      renderFriendRequests();
+      renderPeopleDirectory();
+      switchMainTab('rooms');
+      lucide.createIcons();
+    }
+
+    function updateProfileUI() {
+      if (!currentProfile) return;
+      const isGuest = !!currentProfile.isGuest;
+
+      document.getElementById('header-avatar').textContent = currentProfile.avatar || (isGuest ? '🎧' : '😊');
+      document.getElementById('header-name').textContent = currentProfile.name;
+      document.getElementById('header-badge').textContent = isGuest ? 'GUEST' : (currentProfile.intent || 'DIL').toUpperCase();
+      document.getElementById('header-subtitle').textContent = isGuest
+        ? `${currentProfile.gender} • ${currentProfile.age} yrs`
+        : (currentProfile.moodText || 'Online');
+      document.getElementById('header-coins').textContent = isGuest ? 'Guest' : (currentProfile.coins ?? 25);
+
+      document.getElementById('profile-avatar-lg').textContent = currentProfile.avatar || (isGuest ? '🎧' : '😊');
+      document.getElementById('profile-name-lg').textContent = currentProfile.name + (isGuest ? ' (Guest)' : '');
+      document.getElementById('profile-username-lg').textContent = `@${currentProfile.username}`;
+      document.getElementById('profile-meta-lg').textContent = `${currentProfile.gender || ''} • ${currentProfile.age || 18} yrs${currentProfile.location ? ` • ${currentProfile.location}` : ''}`;
+      document.getElementById('profile-bio-lg').textContent = isGuest
+        ? '"Guest Explorer — Open Chatrooms Only"'
+        : `"${currentProfile.bio || 'Dil se dosti aur pyar'}"`;
+
+      document.getElementById('profile-intent-pill').textContent = isGuest
+        ? '🎧 Guest Mode'
+        : (INTENT_LABELS[currentProfile.intent] || INTENT_LABELS.Dil);
+      document.getElementById('profile-mood-pill').textContent = isGuest
+        ? 'Open Rooms Active'
+        : `Mood: ${currentProfile.moodText || '😊 Happy'}`;
+      document.getElementById('profile-coins-lg').textContent = isGuest ? '0' : (currentProfile.coins ?? 25);
+
+      document.getElementById('guest-lock-chats').classList.toggle('hidden', !isGuest);
+      document.getElementById('friends-chat-list').classList.toggle('hidden', isGuest);
+      document.getElementById('guest-lock-people').classList.toggle('hidden', !isGuest);
+      document.getElementById('registered-people-content').classList.toggle('hidden', isGuest);
+      document.getElementById('profile-mood-card').classList.toggle('hidden', isGuest);
+      document.getElementById('profile-wallet-card').classList.toggle('hidden', isGuest);
+    }
+
+    // ==================== REAL-TIME FIRESTORE SYNC ====================
+    let listenersInitialized = false;
+    function setupRealtimeListeners() {
+      if (listenersInitialized) return;
+      listenersInitialized = true;
+
+      // 1. Registered Users
+      onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'users'), (snap) => {
+        allUsersMap = {};
+        snap.docs.forEach(d => {
+          allUsersMap[d.id] = { uid: d.id, ...d.data() };
+        });
+        if (currentProfile && !currentProfile.isGuest && allUsersMap[currentProfile.uid]) {
+          currentProfile = allUsersMap[currentProfile.uid];
+          updateProfileUI();
+        }
+        renderPeopleDirectory();
+        renderFriendsChatList();
+        renderFriendRequests();
+        renderAdminUsers();
+        updateAdminStats();
+      });
+
+      // 2. Guest Sessions
+      onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'guest_sessions'), (snap) => {
+        guestProfilesMap = {};
+        snap.docs.forEach(d => {
+          guestProfilesMap[d.id] = { uid: d.id, ...d.data() };
+        });
+        renderAdminUsers();
+        updateAdminStats();
+      });
+
+      // 3. Custom Open Rooms
+      onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'custom_rooms'), (snap) => {
+        customRooms = snap.docs.map(d => ({ id: d.id, ...d.data() }))
+          .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+        renderCustomRooms();
+        renderAdminRoomsList();
+        updateAdminStats();
+      });
+
+      // 4. Friend Requests
+      onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'friend_requests'), (snap) => {
+        friendRequests = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        renderFriendRequests();
+        renderPeopleDirectory();
+      });
+
+      // 5. Mutual Friendships & Per-Friend Privacy Limits
+      onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'friendships'), (snap) => {
+        friendships = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        renderFriendsChatList();
+        renderPeopleDirectory();
+        if (activeChat && activeChat.type === 'private') {
+          const updated = friendships.find(f => f.id === activeChat.id);
+          if (updated) {
+            activeChat.friendshipDoc = updated;
+            applyPrivateChatPermissions();
+          }
+        }
+      });
+
+      // 6. Flagged Reports
+      onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'flagged_items'), (snap) => {
+        flaggedItems = snap.docs.map(d => ({ id: d.id, ...d.data() }))
+          .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+        renderAdminFlags();
+        updateAdminStats();
+      });
+
+      // 7. Coin Transactions
+      onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'coin_transactions'), (snap) => {
+        coinTransactions = snap.docs.map(d => ({ id: d.id, ...d.data() }))
+          .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+        renderWalletHistory();
+        updateAdminStats();
+      });
+
+      // 8. Branding & Admin DP Config
+      onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'branding'), (snap) => {
+        if (snap.exists()) {
+          appBrandingConfig = snap.data();
+          applyBrandingToUI();
+        }
+      });
+
+      // 9. Live Message Counts for 7 Pre-Defined Open Rooms
+      Object.keys(PREMADE_ROOMS).forEach(roomId => {
+        onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', `open_rooms_${roomId}`), (snap) => {
+          roomMessageCounts[roomId] = snap.size;
+          renderPremadeRooms();
+        });
+      });
+    }
+
+    function renderPremadeRooms() {
+      const container = document.getElementById('premade-rooms-list');
+      if (!container) return;
+
+      container.innerHTML = Object.values(PREMADE_ROOMS).map(room => {
+        const count = roomMessageCounts[room.id] || 0;
+        return `
+          <div onclick="enterOpenRoom('${room.id}', false)"
+            class="p-3.5 rounded-2xl bg-slate-850/90 hover:bg-slate-800 border border-white/10 cursor-pointer transition flex items-center justify-between group">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="w-11 h-11 rounded-2xl bg-slate-900 border border-white/10 flex items-center justify-center text-xl shrink-0">
+                ${room.icon}
+              </div>
+              <div class="min-w-0">
+                <div class="flex items-center gap-2">
+                  <h5 class="font-display font-bold text-sm text-white group-hover:text-rose-300 transition">${room.name}</h5>
+                  <span class="text-[10px] px-2 py-0.5 rounded-full ${room.badgeClass} font-semibold">${room.category}</span>
+                  <span class="text-[10px] px-1.5 py-0.5 rounded-md bg-slate-900 text-slate-400 font-medium">${count} msgs</span>
+                </div>
+                <p class="text-xs text-slate-400 mt-0.5 line-clamp-1">${room.topic}</p>
+              </div>
+            </div>
+            <i data-lucide="chevron-right" class="w-5 h-5 text-slate-500 group-hover:text-rose-400 transition shrink-0"></i>
+          </div>
+        `;
+      }).join('');
+      lucide.createIcons();
+    }
+
+    // ==================== NAVIGATION ====================
+    window.switchMainTab = (tabName) => {
+      ['rooms', 'chats', 'people', 'profile'].forEach(t => {
+        document.getElementById(`tab-${t}`).classList.toggle('hidden', t !== tabName);
+        const navBtn = document.getElementById(`nav-${t}`);
+        navBtn.className = t === tabName
+          ? 'relative flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-rose-400 transition'
+          : 'relative flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-slate-400 hover:text-slate-200 transition';
+      });
+      lucide.createIcons();
+    };
+
+    // ==================== CUSTOM ROOMS & COIN WALLET ====================
+    function renderCustomRooms() {
+      const container = document.getElementById('custom-rooms-list');
+      document.getElementById('custom-rooms-count').textContent = `${customRooms.length} Rooms`;
+
+      if (customRooms.length === 0) {
+        container.innerHTML = `
+          <div class="p-6 rounded-2xl bg-slate-900/60 border border-white/5 text-center text-xs text-slate-400">
+            Abhi koi custom room nahi bana hai. 50 Coins se pehla room banayein!
+          </div>`;
+        return;
+      }
+
+      const catBadges = {
+        DIL: 'bg-rose-500/20 text-rose-300',
+        DOSTI: 'bg-cyan-500/20 text-cyan-300',
+        PYAR: 'bg-amber-500/20 text-amber-300',
+        INFOTALK: 'bg-indigo-500/20 text-indigo-300',
+        CHUGLI: 'bg-fuchsia-500/20 text-fuchsia-300',
+        BHADAAS: 'bg-orange-500/20 text-orange-300',
+        General: 'bg-emerald-500/20 text-emerald-300'
+      };
+
+      container.innerHTML = customRooms.map(room => `
+        <div onclick="enterOpenRoom('${room.id}', true)"
+          class="p-3.5 rounded-2xl bg-slate-850/90 hover:bg-slate-800 border border-white/10 cursor-pointer transition flex items-center justify-between group">
+          <div class="flex items-center gap-3 min-w-0">
+            <div class="w-11 h-11 rounded-2xl bg-slate-900 border border-white/10 flex items-center justify-center text-xl shrink-0">
+              ${room.icon || '💬'}
+            </div>
+            <div class="min-w-0">
+              <div class="flex items-center gap-2">
+                <h5 class="font-display font-bold text-sm text-white truncate">${escapeHtml(room.name)}</h5>
+                <span class="text-[10px] px-2 py-0.5 rounded-full font-semibold ${catBadges[room.category] || 'bg-slate-700 text-slate-300'}">${room.category}</span>
+              </div>
+              <p class="text-xs text-slate-400 mt-0.5 truncate">${escapeHtml(room.topic)}</p>
+              <p class="text-[10px] text-slate-500 mt-0.5">Host: ${escapeHtml(room.hostName || 'Member')}</p>
+            </div>
+          </div>
+          <i data-lucide="chevron-right" class="w-5 h-5 text-slate-500 group-hover:text-amber-400 shrink-0"></i>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    window.openCreateRoomModal = () => {
+      if (currentProfile?.isGuest) {
+        showToast('Guest users custom room nahi bana sakte. Pehle Register karein!', 'warn');
+        return;
+      }
+      document.getElementById('modal-create-room').classList.remove('hidden');
+    };
+
+    window.openWalletOrUpgrade = () => {
+      if (currentProfile?.isGuest) {
+        logoutAndSwitchToRegister();
+      } else {
+        openWalletModal('buy');
+      }
+    };
+
+    window.openWalletModal = (defaultTab = 'buy', prefillUsername = '') => {
+      if (currentProfile?.isGuest) {
+        showToast('Guest users wallet use nahi kar sakte. Register karein!', 'warn');
+        return;
+      }
+      document.getElementById('modal-wallet-balance').textContent = currentProfile?.coins ?? 0;
+      populateShareUserDatalist();
+      if (prefillUsername) {
+        document.getElementById('share-coin-username').value = prefillUsername;
+      }
+      updateShareFeePreview();
+      renderWalletHistory();
+      switchWalletTab(defaultTab);
+      document.getElementById('modal-wallet').classList.remove('hidden');
+    };
+
+    window.switchWalletTab = (tab) => {
+      ['buy', 'share', 'history'].forEach(t => {
+        document.getElementById(`wallet-panel-${t}`).classList.toggle('hidden', t !== tab);
+        const btn = document.getElementById(`wallet-tab-${t}`);
+        btn.className = t === tab
+          ? 'py-2 rounded-lg text-xs font-bold bg-amber-500 text-slate-950 shadow transition'
+          : 'py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition';
+      });
+    };
+
+    window.openUpiCheckout = (rupees, coins) => {
+      pendingUpiPack = { rupees, coins };
+      document.getElementById('upi-pay-rupees').textContent = `₹${rupees}`;
+      document.getElementById('upi-pay-coins').textContent = `${coins} Coins`;
+      document.getElementById('upi-checkout-box').classList.remove('hidden');
+    };
+
+    window.cancelUpiCheckout = () => {
+      pendingUpiPack = null;
+      document.getElementById('upi-checkout-box').classList.add('hidden');
+    };
+
+    window.confirmUpiPurchase = async () => {
+      if (!pendingUpiPack || !currentProfile || currentProfile.isGuest) return;
+      const { rupees, coins } = pendingUpiPack;
+      const newBalance = (currentProfile.coins || 0) + coins;
+
+      try {
+        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', currentProfile.uid), {
+          coins: newBalance
+        });
+        await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'coin_transactions'), {
+          type: 'purchase',
+          toUid: currentProfile.uid,
+          toUsername: currentProfile.username,
+          rupees,
+          amount: coins,
+          fee: 0,
+          note: `Purchased ${coins} Coins for ₹${rupees}`,
+          createdAt: Date.now()
+        });
+        document.getElementById('modal-wallet-balance').textContent = newBalance;
+        cancelUpiCheckout();
+        showToast(`₹${rupees} payment successful! +${coins} Coins credited.`, 'success');
+      } catch (err) {
+        showToast('Purchase complete karne mein error aaya', 'error');
+      }
+    };
+
+    function populateShareUserDatalist() {
+      const dl = document.getElementById('registered-usernames-datalist');
+      if (!dl) return;
+      dl.innerHTML = Object.values(allUsersMap)
+        .filter(u => !u.isGuest && u.uid !== currentProfile?.uid)
+        .map(u => `<option value="${u.username}">${escapeHtml(u.name)} (@${u.username})</option>`)
+        .join('');
+    }
+
+    window.updateShareFeePreview = () => {
+      const amount = Math.max(0, parseInt(document.getElementById('share-coin-amount')?.value || '0', 10));
+      const exactFee = amount * 0.02;
+      // Standard +/- 0.50 roundoff: < 0.50 rounds down, >= 0.50 rounds up
+      const roundedFee = Math.round(exactFee);
+      const totalDeduct = amount + roundedFee;
+
+      document.getElementById('calc-net-receive').textContent = amount;
+      document.getElementById('calc-exact-fee').textContent = exactFee.toFixed(2);
+      document.getElementById('calc-rounded-fee').textContent = roundedFee;
+      document.getElementById('calc-total-deduct').textContent = totalDeduct;
+    };
+
+    window.openQuickSendCoinsToPeer = () => {
+      if (!activeChat || activeChat.type !== 'private') return;
+      const peer = allUsersMap[activeChat.peerUid];
+      openWalletModal('share', peer?.username || '');
+    };
+
+    window.handleShareCoins = async (e) => {
+      e.preventDefault();
+      if (!currentProfile || currentProfile.isGuest) return;
+
+      const targetUsername = document.getElementById('share-coin-username').value.trim().toLowerCase().replace(/^@/, '');
+      const amount = parseInt(document.getElementById('share-coin-amount').value, 10);
+
+      if (!targetUsername || isNaN(amount) || amount < 1) {
+        showToast('Sahi username aur kam se kam 1 coin daalein', 'error');
+        return;
+      }
+
+      if (targetUsername === currentProfile.username) {
+        showToast('Aap khud ko coins nahi bhej sakte!', 'error');
+        return;
+      }
+
+      const recipient = Object.values(allUsersMap).find(u => !u.isGuest && u.username === targetUsername);
+      if (!recipient) {
+        showToast(`User "@${targetUsername}" nahi mila! Sirf registered users ko coins bhej sakte hain.`, 'error');
+        return;
+      }
+
+      // 2% Platform fee with +/- 0.50 roundoff
+      const fee = Math.round(amount * 0.02);
+      const totalDeduct = amount + fee;
+      const senderBalance = currentProfile.coins || 0;
+
+      if (senderBalance < totalDeduct) {
+        showToast(`Insufficient Balance! Total ${totalDeduct} Coins chahiye (${amount} + ${fee} fee).`, 'error');
+        return;
+      }
+
+      try {
+        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', currentProfile.uid), {
+          coins: senderBalance - totalDeduct
+        });
+        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', recipient.uid), {
+          coins: (recipient.coins || 0) + amount
+        });
+        await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'coin_transactions'), {
+          type: 'p2p_transfer',
+          fromUid: currentProfile.uid,
+          fromUsername: currentProfile.username,
+          toUid: recipient.uid,
+          toUsername: recipient.username,
+          amount,
+          fee,
+          totalDeduct,
+          note: `Sent ${amount} Coins to @${recipient.username} (2% Fee: ${fee})`,
+          createdAt: Date.now()
+        });
+
+        document.getElementById('modal-wallet-balance').textContent = senderBalance - totalDeduct;
+        document.getElementById('share-coin-username').value = '';
+        showToast(`@${recipient.username} ko ${amount} Coins bhej diye gaye! (Fee: ${fee} Coins)`, 'success');
+        switchWalletTab('history');
+      } catch (err) {
+        showToast('Coin transfer fail ho gaya', 'error');
+      }
+    };
+
+    function renderWalletHistory() {
+      const container = document.getElementById('wallet-history-list');
+      if (!container || !currentProfile) return;
+
+      const myTxs = coinTransactions.filter(t => t.fromUid === currentProfile.uid || t.toUid === currentProfile.uid);
+      if (myTxs.length === 0) {
+        container.innerHTML = `<p class="text-xs text-slate-500 text-center py-6">Abhi koi coin transaction nahi hai.</p>`;
+        return;
+      }
+
+      container.innerHTML = myTxs.map(t => {
+        const isOutgoing = t.fromUid === currentProfile.uid;
+        const deltaText = isOutgoing ? `-${t.totalDeduct || t.amount}` : `+${t.amount}`;
+        const badgeColor = isOutgoing ? 'text-rose-400' : 'text-emerald-400';
+        const timeStr = t.createdAt ? new Date(t.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+
+        return `
+          <div class="p-3 rounded-xl bg-slate-950 border border-white/5 flex items-center justify-between gap-2">
+            <div class="min-w-0">
+              <p class="text-xs font-semibold text-white truncate">${escapeHtml(t.note || t.type)}</p>
+              <p class="text-[10px] text-slate-500 mt-0.5">${timeStr}${t.fee ? ` • Platform Fee: ${t.fee} Coins` : ''}</p>
+            </div>
+            <span class="font-display font-bold text-xs ${badgeColor} shrink-0">${deltaText} Coins</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    window.closeModal = (id) => {
+      document.getElementById(id).classList.add('hidden');
+    };
+
+    window.addCoinsToWallet = async (amount) => {
+      if (!currentProfile || currentProfile.isGuest) return;
+      const newBalance = (currentProfile.coins || 0) + amount;
+      await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', currentProfile.uid), {
+        coins: newBalance
+      });
+      document.getElementById('modal-wallet-balance').textContent = newBalance;
+      showToast(`+${amount} Coins wallet mein add ho gaye! 🪙`, 'success');
+    };
+
+    window.handleCreateCustomRoom = async (e) => {
+      e.preventDefault();
+      if (!currentProfile || currentProfile.isGuest) return;
+
+      const currentCoins = currentProfile.coins || 0;
+      if (currentCoins < 50) {
+        showToast('Insufficient Coins! Kam se kam 50 Coins chahiye.', 'error');
+        closeModal('modal-create-room');
+        openWalletModal();
+        return;
+      }
+
+      const name = document.getElementById('new-room-name').value.trim();
+      const catRaw = document.getElementById('new-room-category').value;
+      const [icon, category] = catRaw.split('|');
+      const topic = document.getElementById('new-room-topic').value.trim();
+
+      try {
+        await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'custom_rooms'), {
+          name,
+          icon: icon || '💬',
+          category: category || 'General',
+          topic,
+          hostUid: currentProfile.uid,
+          hostName: currentProfile.name,
+          createdAt: Date.now()
+        });
+
+        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', currentProfile.uid), {
+          coins: currentCoins - 50
+        });
+
+        document.getElementById('new-room-name').value = '';
+        document.getElementById('new-room-topic').value = '';
+        closeModal('modal-create-room');
+        showToast('Aapka Open Room live ho gaya hai! 🎉', 'success');
+      } catch (err) {
+        showToast('Room banane mein error aaya', 'error');
+      }
+    };
+
+    window.saveCustomProfileMood = async () => {
+      if (!currentProfile || currentProfile.isGuest) return;
+      const val = document.getElementById('profile-mood-input').value.trim();
+      if (!val) return;
+      await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', currentProfile.uid), {
+        moodText: val
+      });
+      showToast('Mood update ho gaya! ✨', 'success');
+    };
+
+    window.updateUserIntent = async (newIntent) => {
+      if (!currentProfile || currentProfile.isGuest) return;
+      await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', currentProfile.uid), {
+        intent: newIntent
+      });
+      showToast(`Status updated: "${INTENT_LABELS[newIntent]}"`, 'success');
+    };
+
+    // ==================== USER PROFILE CARD & REPORTING ====================
+    window.openUserDetailModal = (targetUid) => {
+      const u = allUsersMap[targetUid] || guestProfilesMap[targetUid];
+      if (!u) {
+        showToast('User ki profile details available nahi hain', 'info');
+        return;
+      }
+
+      document.getElementById('detail-user-avatar').textContent = u.avatar || (u.isGuest ? '🎧' : '😊');
+      document.getElementById('detail-user-name').textContent = u.name + (u.isGuest ? ' (Guest)' : '');
+      document.getElementById('detail-user-username').textContent = `@${u.username}`;
+      document.getElementById('detail-user-meta').textContent = `${u.gender || 'Member'} • ${u.age || 18} yrs • ${u.location || 'India'}`;
+      document.getElementById('detail-user-intent').textContent = u.isGuest ? '🎧 Guest Explorer' : (INTENT_LABELS[u.intent] || '❤️ Dil - Just for Fun');
+      document.getElementById('detail-user-mood').textContent = `Mood: ${u.moodText || '😊 Happy'}`;
+      document.getElementById('detail-user-bio').textContent = `"${u.bio || 'Dil se dosti aur pyar'}"`;
+
+      const actionsEl = document.getElementById('detail-user-actions');
+      if (currentProfile && u.uid === currentProfile.uid) {
+        actionsEl.innerHTML = `<span class="text-xs text-slate-400 block text-center">Yeh aapki apni profile hai</span>`;
+      } else if (u.isGuest) {
+        actionsEl.innerHTML = `
+          <div class="w-full space-y-2">
+            <p class="text-[11px] text-cyan-300 text-center">Guest user ko friend request nahi bheji ja sakti.</p>
+            <button onclick="closeModal('modal-user-detail'); openFlagModal('profile', '${u.uid}', '', '${escapeAttr(u.name)} (Guest)', '${u.uid}')"
+              class="w-full py-2.5 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 text-rose-300 text-xs font-bold flex items-center justify-center gap-1.5 transition">
+              <i data-lucide="flag" class="w-3.5 h-3.5"></i> Flag Guest
+            </button>
+          </div>
+        `;
+      } else {
+        const canAddFriend = currentProfile && !currentProfile.isGuest;
+        const isFriend = canAddFriend && friendships.some(f => f.users.includes(currentProfile.uid) && f.users.includes(u.uid));
+        const sentReq = canAddFriend && friendRequests.find(r => r.fromUid === currentProfile.uid && r.toUid === u.uid && r.status === 'pending');
+
+        let friendBtnHtml = '';
+        if (canAddFriend && !isFriend && !sentReq) {
+          friendBtnHtml = `
+            <button onclick="sendFriendRequest('${u.uid}'); closeModal('modal-user-detail');"
+              class="w-full py-2.5 rounded-xl bg-gradient-to-r from-rose-500 to-pink-600 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow">
+              <i data-lucide="user-plus" class="w-3.5 h-3.5"></i> Send Friend Request
+            </button>`;
+        } else if (isFriend) {
+          friendBtnHtml = `<div class="text-center text-xs text-emerald-400 font-semibold py-1">✓ Mutual Friends</div>`;
+        } else if (sentReq) {
+          friendBtnHtml = `<div class="text-center text-xs text-slate-400 font-semibold py-1">Friend Request Sent</div>`;
+        }
+
+        actionsEl.innerHTML = `
+          <div class="w-full space-y-2">
+            ${friendBtnHtml}
+            ${canAddFriend ? `
+              <button onclick="closeModal('modal-user-detail'); openWalletModal('share', '${escapeAttr(u.username)}')"
+                class="w-full py-2.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 text-xs font-bold flex items-center justify-center gap-1.5 transition">
+                <svg class="w-4 h-4"><use href="#icon-coin"/></svg>
+                <span>Share Coins with @${escapeHtml(u.username)}</span>
+              </button>` : ''
+            }
+            <button onclick="closeModal('modal-user-detail'); openFlagModal('profile', '${u.uid}', '', '${escapeAttr(u.name)} (@${escapeAttr(u.username)})', '${u.uid}')"
+              class="w-full py-2.5 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 text-rose-300 text-xs font-bold flex items-center justify-center gap-1.5 transition">
+              <i data-lucide="flag" class="w-3.5 h-3.5"></i> Flag Profile
+            </button>
+          </div>
+        `;
+      }
+
+      document.getElementById('modal-user-detail').classList.remove('hidden');
+      lucide.createIcons();
+    };
+
+    window.openFlagModal = (targetType, targetId, channelKey, previewText, targetOwnerUid) => {
+      pendingFlagPayload = { targetType, targetId, channelKey, previewText, targetOwnerUid };
+      document.getElementById('flag-target-preview').textContent = previewText;
+      document.getElementById('modal-flag-report').classList.remove('hidden');
+      lucide.createIcons();
+    };
+
+    window.submitFlagReport = async (e) => {
+      e.preventDefault();
+      if (!pendingFlagPayload) return;
+
+      const reason = document.getElementById('flag-reason-select').value;
+      try {
+        await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'flagged_items'), {
+          ...pendingFlagPayload,
+          reason,
+          reporterUid: currentProfile?.uid || 'anon',
+          reporterName: currentProfile?.name || 'User',
+          createdAt: Date.now()
+        });
+        pendingFlagPayload = null;
+        closeModal('modal-flag-report');
+        showToast('Report Admin ko bhej diya gaya hai! 🚩', 'success');
+      } catch (err) {
+        showToast('Report submit karne mein error aaya', 'error');
+      }
+    };
+
+    // ==================== HELP & POLICIES CONTENT ====================
+    const HELP_POLICIES_DATA = {
+      terms: `
+        <div class="p-3.5 rounded-2xl bg-slate-950 border border-white/10 space-y-2">
+          <h5 class="font-display font-bold text-sm text-cyan-300">1. Terms & Conditions (Niyam aur Shartein)</h5>
+          <p><strong>1.1 Eligibility (18+ Only):</strong> "DIL - DOSTI - PYAR" ka upyog karne ke liye aapki aayu kam se kam 18 varsh honi anivarya hai. Galat umra darj karne par account bina kisi purva soochna ke suspend kiya ja sakta hai.</p>
+          <p><strong>1.2 Account Types:</strong> Platform do modes pradan karta hai — <em>Guest Mode</em> (keval Open Chatrooms ke liye) aur <em>Registered Member Account</em> (Personal Chat, Voice Call, Custom Room aur Coin Wallet ke liye).</p>
+          <p><strong>1.3 User Responsibility:</strong> Aap apne username, PIN aur bheje gaye text ya voice notes ke liye swayam zimmedar hain. Apna login PIN kisi ke saath share na karein.</p>
+          <p><strong>1.4 Moderation Rights:</strong> Admin team ko kisi bhi niyam ke ullanghan par chat delete karne, custom room hatane ya user profile ko sthayi roop se ban karne ka poora adhikar hai.</p>
+        </div>
+      `,
+      usage: `
+        <div class="p-3.5 rounded-2xl bg-slate-950 border border-white/10 space-y-2">
+          <h5 class="font-display font-bold text-sm text-rose-300">2. Community & Usage Policy</h5>
+          <p><strong>2.1 Respectful Communication:</strong> Sabhi Open Rooms (DIL, DOSTI, PYAR, INFOTALK, CHUGLI, BHADAAS, General) mein ek-doosre ka sammaan karein. BHADAAS room mein stress halka karne ki azaadi hai, par kisi vyakti vishesh ko gaali dena ya dhamkana sakht mana hai.</p>
+          <p><strong>2.2 Zero Tolerance Violations:</strong></p>
+          <ul class="list-disc pl-4 space-y-1 text-slate-300">
+            <li>Abusive, ashleel, ya hate-speech wale text aur voice notes.</li>
+            <li>Kisi aur ki pehchan chori karna (Impersonation) ya fake details bharna.</li>
+            <li>Spam links, promotional ads, ya financial fraud/scam ki koshish.</li>
+            <li>Harassment, stalking, ya bina anumati personal details (phone number/address) maangna.</li>
+          </ul>
+          <p><strong>2.3 Flag & Report System:</strong> Kisi bhi galat message ya profile ke paas bane <strong>Flag icon</strong> par click karke turant Admin ko report karein.</p>
+        </div>
+      `,
+      fup: `
+        <div class="p-3.5 rounded-2xl bg-slate-950 border border-white/10 space-y-2">
+          <h5 class="font-display font-bold text-sm text-amber-300">3. Fair Usage Policy (FUP)</h5>
+          <p><strong>3.1 Voice Note Fair Usage:</strong> Sabhi users ko smooth experience dene ke liye ek voice note ki adhiktam avadhi <strong>15 seconds</strong> rakhi gayi hai. Lagatar khali ya noise clips bhej kar room spam na karein.</p>
+          <p><strong>3.2 Custom Room Fair Usage:</strong> 50 Coins se banaye gaye Custom Open Rooms ka naam aur topic community guidelines ke anuroop hona chahiye. Vulgar ya misleading naam wale rooms Admin dwara bina refund ke delete kar diye jayenge.</p>
+          <p><strong>3.3 Coin Sharing Fair Usage:</strong> P2P coin transfer keval doston aur community members ko appreciate karne ke liye hai. Kisi bhi tarah ki illegal betting ya external cash trading ke liye coins ka upyog pratibandhit hai.</p>
+        </div>
+      `,
+      privacy: `
+        <div class="p-3.5 rounded-2xl bg-slate-950 border border-white/10 space-y-2">
+          <h5 class="font-display font-bold text-sm text-emerald-300">4. Privacy & Safety Policy</h5>
+          <p><strong>4.1 Zero-Media Architecture:</strong> Aapki privacy ki suraksha ke liye is app mein <strong>Photo aur Video upload/camera poori tarah disabled</strong> hai. Keval Text aur Voice sharing hi uplabdh hai.</p>
+          <p><strong>4.2 Mutual Consent Personal Chat:</strong> Koi bhi anjaan user aapko seedha personal message ya call nahi kar sakta. Pehle Friend Request bhejni hogi aur aapke Accept karne par hi personal chat khulegi.</p>
+          <p><strong>4.3 Granular Friend Limits:</strong> Personal chat ke upar <strong>Limits (Shield)</strong> button se aap har friend ke liye alag-alag set kar sakte hain: <em>Both (Call & Message)</em>, <em>Message Only</em>, <em>Call Only</em>, ya <em>None (Block)</em>.</p>
+        </div>
+      `,
+      coins: `
+        <div class="p-3.5 rounded-2xl bg-slate-950 border border-white/10 space-y-2">
+          <h5 class="font-display font-bold text-sm text-amber-400">5. Coin Economy, Purchase & 2% Fee Policy</h5>
+          <p><strong>5.1 Welcome Bonus:</strong> Naya account register karne par har user ko <strong>25 Free Coins</strong> milte hain.</p>
+          <p><strong>5.2 Official Coin Recharge Packs:</strong></p>
+          <ul class="list-disc pl-4 space-y-1 text-slate-300">
+            <li>₹5 = 10 Coins</li>
+            <li>₹10 = 25 Coins</li>
+            <li>₹20 = 60 Coins</li>
+            <li>₹50 = 150 Coins</li>
+            <li>₹100 = 500 Coins</li>
+          </ul>
+          <p><strong>5.3 P2P Coin Transfer & 2% Platform Fee (±0.50 Roundoff):</strong> Jab aap kisi doosre registered user ko coins bhejte hain, toh transfer amount par <strong>2% platform fee</strong> lagti hai. Is fee ko nearest integer par roundoff kiya jaata hai (agar dashamlav <code>&lt; 0.50</code> ho toh neeche, aur <code>&ge; 0.50</code> ho toh upar — jaise 25 coins par 2% = 0.50 → 1 coin fee).</p>
+          <p><strong>5.4 Non-Refundable Virtual Currency:</strong> Kharide gaye ya transfer kiye gaye coins virtual in-app utility ke liye hain aur inhe wapas cash mein convert nahi kiya ja sakta.</p>
+        </div>
+      `,
+      faq: `
+        <div class="p-3.5 rounded-2xl bg-slate-950 border border-white/10 space-y-2.5">
+          <h5 class="font-display font-bold text-sm text-cyan-300">6. Frequently Asked Questions (FAQs)</h5>
+          <div>
+            <p class="font-bold text-white">Q1. Guest aur Registered account mein kya antar hai?</p>
+            <p class="text-slate-400">Guest user sirf naam, umra aur gender daalkar 7 Open Chatrooms mein baat kar sakta hai. Registered user ko 25 free coins, personal chat, voice call, friend request aur custom room banane ki suvidha milti hai.</p>
+          </div>
+          <div>
+            <p class="font-bold text-white">Q2. Kisi friend ki call ya message kaise rokein?</p>
+            <p class="text-slate-400">Us friend ki personal chat kholein aur upar right side mein <strong>Limits</strong> button par tap karke <em>Message Only</em>, <em>Call Only</em>, ya <em>None</em> chunein.</p>
+          </div>
+          <div>
+            <p class="font-bold text-white">Q3. Apna khud ka Open Chatroom kaise banayein?</p>
+            <p class="text-slate-400">Open Rooms tab mein upar <strong>"Apna Room (50 Coins)"</strong> button par click karein, room ka naam aur topic likhein aur launch karein.</p>
+          </div>
+        </div>
+      `
+    };
+
+    window.openHelpModal = (section = 'terms') => {
+      switchHelpSection(section);
+      document.getElementById('modal-help-policies').classList.remove('hidden');
+      lucide.createIcons();
+    };
+
+    window.switchHelpSection = (section) => {
+      document.querySelectorAll('.help-tab-btn').forEach(btn => {
+        const isActive = btn.id === `help-tab-${section}`;
+        btn.className = isActive
+          ? 'help-tab-btn px-3 py-1.5 rounded-xl text-[11px] font-bold bg-cyan-500 text-slate-950 shrink-0 transition'
+          : 'help-tab-btn px-3 py-1.5 rounded-xl text-[11px] font-bold bg-slate-850 text-slate-300 hover:text-white shrink-0 transition';
+      });
+      const contentEl = document.getElementById('help-policy-content');
+      if (contentEl) {
+        contentEl.innerHTML = HELP_POLICIES_DATA[section] || HELP_POLICIES_DATA.terms;
+        contentEl.scrollTop = 0;
+      }
+    };
+
+    // ==================== FULL-ACCESS ADMIN PANEL ====================
+    function enterAdminDashboard() {
+      document.getElementById('auth-view').classList.add('hidden');
+      document.getElementById('main-view').classList.add('hidden');
+      document.getElementById('admin-dashboard-view').classList.remove('hidden');
+
+      setupRealtimeListeners();
+      switchAdminSubTab('flags');
+      renderAdminRoomsList();
+      updateAdminStats();
+      lucide.createIcons();
+    }
+
+    function updateAdminStats() {
+      const totalUsers = Object.keys(allUsersMap).length + Object.keys(guestProfilesMap).length;
+      document.getElementById('admin-stat-users').textContent = totalUsers;
+      document.getElementById('admin-stat-rooms').textContent = Object.keys(PREMADE_ROOMS).length + customRooms.length;
+      document.getElementById('admin-stat-flags').textContent = flaggedItems.length;
+      const totalFeeRevenue = coinTransactions.reduce((sum, tx) => sum + (tx.fee || 0), 0);
+      document.getElementById('admin-stat-fees').textContent = totalFeeRevenue;
+    }
+
+    // ==================== FRIEND REQUESTS & DIRECTORY ====================
+    window.renderPeopleDirectory = () => {
+      if (!currentProfile || currentProfile.isGuest) return;
+
+      const query = (document.getElementById('people-search-input')?.value || '').toLowerCase();
+      const container = document.getElementById('people-directory-list');
+
+      const otherUsers = Object.values(allUsersMap).filter(u =>
+        u.uid !== currentProfile.uid &&
+        !u.isGuest &&
+        (
+          u.name.toLowerCase().includes(query) ||
+          u.username.toLowerCase().includes(query) ||
+          (u.location || '').toLowerCase().includes(query)
+        )
+      );
+
+      if (otherUsers.length === 0) {
+        container.innerHTML = `
+          <div class="p-5 rounded-2xl bg-slate-950/60 border border-white/5 text-center text-xs text-slate-400">
+            Abhi koi aur registered user nahi mila. Doosre tab se naya account banakar test karein!
+          </div>`;
+        return;
+      }
+
+      container.innerHTML = otherUsers.map(u => {
+        const isFriend = friendships.some(f => f.users.includes(currentProfile.uid) && f.users.includes(u.uid));
+        const sentReq = friendRequests.find(r => r.fromUid === currentProfile.uid && r.toUid === u.uid && r.status === 'pending');
+        const receivedReq = friendRequests.find(r => r.fromUid === u.uid && r.toUid === currentProfile.uid && r.status === 'pending');
+
+        let actionHtml = '';
+        if (isFriend) {
+          actionHtml = `<span class="px-3 py-1.5 rounded-xl bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 text-xs font-semibold">✓ Friends</span>`;
+        } else if (sentReq) {
+          actionHtml = `<span class="px-3 py-1.5 rounded-xl bg-slate-800 text-slate-400 text-xs font-semibold">Sent</span>`;
+        } else if (receivedReq) {
+          actionHtml = `<button onclick="acceptFriendRequest('${receivedReq.id}', '${u.uid}')" class="px-3 py-1.5 rounded-xl bg-rose-500 text-white text-xs font-bold shadow">Accept</button>`;
+        } else {
+          actionHtml = `<button onclick="sendFriendRequest('${u.uid}')" class="px-3 py-1.5 rounded-xl bg-rose-500/20 hover:bg-rose-500 text-rose-300 hover:text-white border border-rose-500/30 text-xs font-bold transition">+ Add Friend</button>`;
+        }
+
+        const intentBadge = u.intent === 'Dil' ? 'bg-rose-500/20 text-rose-300' : u.intent === 'Pyar' ? 'bg-amber-500/20 text-amber-300' : 'bg-cyan-500/20 text-cyan-300';
+
+        return `
+          <div class="p-3.5 rounded-2xl bg-slate-850 border border-white/5 flex items-center justify-between gap-2.5">
+            <div onclick="openUserDetailModal('${u.uid}')" class="flex items-center gap-3 min-w-0 cursor-pointer flex-1">
+              <div class="w-11 h-11 rounded-full bg-slate-900 border border-white/10 flex items-center justify-center text-xl shrink-0">
+                ${u.avatar || '😊'}
+              </div>
+              <div class="min-w-0">
+                <div class="flex items-center gap-1.5">
+                  <h5 class="font-display font-bold text-sm text-white truncate">${escapeHtml(u.name)}</h5>
+                  <span class="text-[10px] px-1.5 py-0.5 rounded font-semibold ${intentBadge}">${u.intent || 'Dil'}</span>
+                </div>
+                <p class="text-[11px] text-slate-400 truncate">${u.gender || ''} • ${u.age || 18} • ${escapeHtml(u.location || '')}</p>
+                <p class="text-[10px] text-indigo-300 truncate mt-0.5">${escapeHtml(u.moodText || '')}</p>
+              </div>
+            </div>
+            <div class="shrink-0">${actionHtml}</div>
+          </div>
+        `;
+      }).join('');
+    };
+
+    window.sendFriendRequest = async (toUid) => {
+      if (!currentProfile || currentProfile.isGuest) return;
+      try {
+        await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'friend_requests'), {
+          fromUid: currentProfile.uid,
+          toUid,
+          status: 'pending',
+          createdAt: Date.now()
+        });
+        showToast('Friend request bhej di gayi hai! 💌', 'success');
+      } catch (err) {
+        showToast('Request bhejne mein error aaya', 'error');
+      }
+    };
+
+    function renderFriendRequests() {
+      if (!currentProfile || currentProfile.isGuest) return;
+
+      const incoming = friendRequests.filter(r => r.toUid === currentProfile.uid && r.status === 'pending');
+      const countEl = document.getElementById('incoming-req-count');
+      const navBadge = document.getElementById('nav-req-badge');
+
+      countEl.textContent = incoming.length;
+      if (incoming.length > 0) {
+        navBadge.textContent = incoming.length;
+        navBadge.classList.remove('hidden');
+      } else {
+        navBadge.classList.add('hidden');
+      }
+
+      const container = document.getElementById('incoming-requests-list');
+      if (incoming.length === 0) {
+        container.innerHTML = `<p class="text-xs text-slate-500 bg-slate-950/50 p-3.5 rounded-xl border border-white/5">Koi nayi friend request nahi hai.</p>`;
+        return;
+      }
+
+      container.innerHTML = incoming.map(req => {
+        const sender = allUsersMap[req.fromUid] || { name: 'Member', username: 'user', avatar: '😊', intent: 'Dosti' };
+        return `
+          <div class="p-3.5 rounded-2xl bg-rose-950/25 border border-rose-500/25 flex items-center justify-between gap-2">
+            <div onclick="openUserDetailModal('${req.fromUid}')" class="flex items-center gap-2.5 min-w-0 cursor-pointer">
+              <span class="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center text-xl shrink-0">${sender.avatar}</span>
+              <div class="min-w-0">
+                <h5 class="font-bold text-sm text-white truncate">${escapeHtml(sender.name)}</h5>
+                <p class="text-[11px] text-rose-300">@${escapeHtml(sender.username)} • ${sender.intent || 'Dosti'}</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0">
+              <button onclick="declineFriendRequest('${req.id}')" class="px-2.5 py-1.5 rounded-xl bg-slate-800 text-slate-300 text-xs font-semibold">Decline</button>
+              <button onclick="acceptFriendRequest('${req.id}', '${req.fromUid}')" class="px-3 py-1.5 rounded-xl bg-emerald-500 text-slate-950 text-xs font-bold">Accept</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    window.acceptFriendRequest = async (reqId, fromUid) => {
+      if (!currentProfile) return;
+      try {
+        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'friend_requests', reqId), {
+          status: 'accepted'
+        });
+
+        const pair = [currentProfile.uid, fromUid].sort();
+        const friendshipId = `${pair[0]}_${pair[1]}`;
+
+        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'friendships', friendshipId), {
+          users: pair,
+          permissions: {
+            [pair[0]]: 'both',
+            [pair[1]]: 'both'
+          },
+          createdAt: Date.now()
+        });
+
+        showToast('Request accept ho gayi! Ab personal chat & call open hai 🎉', 'success');
+      } catch (err) {
+        showToast('Request accept karne mein samasya aayi', 'error');
+      }
+    };
+
+    window.declineFriendRequest = async (reqId) => {
+      await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'friend_requests', reqId));
+      showToast('Request decline kar di gayi', 'info');
+    };
+
+    // ==================== PERSONAL CHATS & PRIVACY LIMITS ====================
+    function renderFriendsChatList() {
+      if (!currentProfile || currentProfile.isGuest) return;
+
+      const myFriendships = friendships.filter(f => f.users && f.users.includes(currentProfile.uid));
+      const container = document.getElementById('friends-chat-list');
+
+      if (myFriendships.length === 0) {
+        container.innerHTML = `
+          <div class="p-6 rounded-2xl bg-slate-850/70 border border-white/5 text-center space-y-2.5">
+            <p class="text-sm font-semibold text-slate-300">Abhi aapka koi mutual friend nahi hai</p>
+            <p class="text-xs text-slate-400">"Dost & Requests" tab mein jaakar logon ko friend request bhejein.</p>
+            <button onclick="switchMainTab('people')" class="mt-2 px-4 py-2 rounded-xl bg-rose-500/20 text-rose-300 border border-rose-500/30 text-xs font-bold">
+              Naye Dost Dhoondhein →
+            </button>
+          </div>`;
+        return;
+      }
+
+      const permLabels = {
+        both: '📞💬 Call & Msg Allowed',
+        message_only: '💬 Message Only',
+        call_only: '📞 Call Only',
+        none: '🚫 Muted / Blocked'
+      };
+
+      container.innerHTML = myFriendships.map(f => {
+        const peerUid = f.users.find(uid => uid !== currentProfile.uid);
+        const peer = allUsersMap[peerUid] || { name: 'Friend', username: 'friend', avatar: '😊' };
+
+        const allowedForMe = (f.permissions && f.permissions[peerUid]) || 'both';
+        const myRuleForPeer = (f.permissions && f.permissions[currentProfile.uid]) || 'both';
+
+        return `
+          <div onclick="enterPrivateChat('${f.id}', '${peerUid}')"
+            class="p-3.5 rounded-2xl bg-slate-850 hover:bg-slate-800 border border-white/10 cursor-pointer transition flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-rose-500/30 to-amber-500/30 border border-white/15 flex items-center justify-center text-2xl shrink-0">
+                ${peer.avatar || '😊'}
+              </div>
+              <div class="min-w-0">
+                <h5 class="font-display font-bold text-sm text-white truncate">${escapeHtml(peer.name)}</h5>
+                <p class="text-[11px] text-emerald-400 font-medium mt-0.5">${permLabels[allowedForMe]}</p>
+                <p class="text-[10px] text-slate-500 mt-0.5">Your Limit: ${permLabels[myRuleForPeer]}</p>
+              </div>
+            </div>
+            <i data-lucide="chevron-right" class="w-5 h-5 text-slate-500 shrink-0"></i>
+          </div>
+        `;
+      }).join('');
+      lucide.createIcons();
+    }
+
+    window.enterOpenRoom = (roomId, isCustom = false) => {
+      let roomMeta = PREMADE_ROOMS[roomId];
+      if (isCustom) {
+        const found = customRooms.find(r => r.id === roomId);
+        if (!found) return;
+        roomMeta = {
+          id: found.id,
+          name: found.name,
+          icon: found.icon || '💬',
+          topic: found.topic
+        };
+      }
+
+      activeChat = {
+        type: 'open',
+        id: roomMeta.id,
+        title: roomMeta.name,
+        icon: roomMeta.icon,
+        sub: roomMeta.topic
+      };
+
+      openChatOverlayUI();
+      subscribeToChatMessages(`open_rooms_${roomMeta.id}`);
+    };
+
+    window.enterPrivateChat = (friendshipId, peerUid) => {
+      const friendshipDoc = friendships.find(f => f.id === friendshipId);
+      const peer = allUsersMap[peerUid] || { name: 'Friend', avatar: '😊', username: 'friend' };
+
+      activeChat = {
+        type: 'private',
+        id: friendshipId,
+        peerUid,
+        title: peer.name,
+        icon: peer.avatar || '😊',
+        sub: `@${peer.username} • Tap avatar for profile`,
+        friendshipDoc
+      };
+
+      openChatOverlayUI();
+      applyPrivateChatPermissions();
+      subscribeToChatMessages(`private_chats_${friendshipId}`);
+    };
+
+    function openChatOverlayUI() {
+      document.getElementById('chat-room-overlay').classList.remove('hidden');
+      document.getElementById('chat-header-title').textContent = activeChat.title;
+      document.getElementById('chat-header-icon').textContent = activeChat.icon;
+      document.getElementById('chat-header-sub').textContent = activeChat.sub;
+
+      if (activeChat.type === 'private') {
+        document.getElementById('private-chat-actions').classList.remove('hidden');
+        document.getElementById('chat-header-icon').onclick = () => openUserDetailModal(activeChat.peerUid);
+      } else {
+        document.getElementById('private-chat-actions').classList.add('hidden');
+        document.getElementById('chat-permission-banner').classList.add('hidden');
+        document.getElementById('chat-header-icon').onclick = null;
+        enableChatComposer(true);
+      }
+      lucide.createIcons();
+    }
+
+    window.closeChatOverlay = () => {
+      if (unsubscribeMessages) {
+        unsubscribeMessages();
+        unsubscribeMessages = null;
+      }
+      cancelVoiceRecording();
+      activeChat = null;
+      document.getElementById('chat-room-overlay').classList.add('hidden');
+    };
+
+    function applyPrivateChatPermissions() {
+      if (!activeChat || activeChat.type !== 'private' || !activeChat.friendshipDoc || !currentProfile) return;
+
+      const f = activeChat.friendshipDoc;
+      const peerUid = activeChat.peerUid;
+
+      // peerAllowsMe: What peer allows currentProfile to do
+      const peerAllowsMe = (f.permissions && f.permissions[peerUid]) || 'both';
+      // iAllowPeer: What currentProfile allows peer to do
+      const iAllowPeer = (f.permissions && f.permissions[currentProfile.uid]) || 'both';
+
+      const canCall = (peerAllowsMe === 'both' || peerAllowsMe === 'call_only');
+      const canMessage = (peerAllowsMe === 'both' || peerAllowsMe === 'message_only');
+
+      const callBtn = document.getElementById('btn-start-voice-call');
+      if (canCall) {
+        callBtn.disabled = false;
+        callBtn.className = 'p-2.5 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/30 transition';
+      } else {
+        callBtn.disabled = true;
+        callBtn.className = 'p-2.5 rounded-xl bg-slate-900 text-slate-600 border border-white/5 cursor-not-allowed opacity-50';
+      }
+
+      enableChatComposer(canMessage, peerAllowsMe);
+
+      const banner = document.getElementById('chat-permission-banner');
+      const bannerText = document.getElementById('chat-permission-text');
+
+      if (peerAllowsMe !== 'both' || iAllowPeer !== 'both') {
+        banner.classList.remove('hidden');
+        const mapText = {
+          both: 'Both (Call & Msg)',
+          message_only: 'Message Only',
+          call_only: 'Call Only',
+          none: 'None (Blocked)'
+        };
+        bannerText.textContent = `Their Limit for You: ${mapText[peerAllowsMe]} | Your Limit: ${mapText[iAllowPeer]}`;
+      } else {
+        banner.classList.add('hidden');
+      }
+    }
+
+    function enableChatComposer(enabled, reason = '') {
+      const input = document.getElementById('chat-message-input');
+      const micBtn = document.getElementById('btn-mic-record');
+      const sendBtn = document.getElementById('btn-send-msg');
+
+      input.disabled = !enabled;
+      micBtn.disabled = !enabled;
+      sendBtn.disabled = !enabled;
+
+      if (enabled) {
+        input.placeholder = 'Dil ki baat likhein ya mic dabayein...';
+        micBtn.classList.remove('opacity-40', 'cursor-not-allowed');
+        sendBtn.classList.remove('opacity-40', 'cursor-not-allowed');
+      } else {
+        input.value = '';
+        input.placeholder = reason === 'call_only'
+          ? '🚫 Unhone sirf Voice Call allow kiya hai'
+          : '🚫 Unhone messages band kiye hue hain';
+        micBtn.classList.add('opacity-40', 'cursor-not-allowed');
+        sendBtn.classList.add('opacity-40', 'cursor-not-allowed');
+      }
+    }
+
+    window.openFriendPrivacyModal = () => {
+      if (!activeChat || activeChat.type !== 'private' || !currentProfile) return;
+      const peer = allUsersMap[activeChat.peerUid] || { name: 'Friend', avatar: '😊' };
+      const currentRule = (activeChat.friendshipDoc?.permissions?.[currentProfile.uid]) || 'both';
+
+      document.getElementById('priv-friend-avatar').textContent = peer.avatar || '😊';
+      document.getElementById('priv-friend-name').textContent = peer.name;
+
+      document.querySelectorAll('.perm-option-btn').forEach(btn => {
+        const perm = btn.dataset.perm;
+        const check = btn.querySelector('.perm-check');
+        if (perm === currentRule) {
+          btn.className = 'perm-option-btn w-full p-3 rounded-xl border border-rose-500 bg-rose-500/15 text-left flex items-center justify-between transition';
+          check.classList.remove('hidden');
+        } else {
+          btn.className = 'perm-option-btn w-full p-3 rounded-xl border border-white/10 bg-slate-950/70 hover:bg-slate-800 text-left flex items-center justify-between transition';
+          check.classList.add('hidden');
+        }
+      });
+
+      document.getElementById('modal-friend-privacy').classList.remove('hidden');
+    };
+
+    window.saveFriendPermission = async (permValue) => {
+      if (!activeChat || activeChat.type !== 'private' || !currentProfile) return;
+      try {
+        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'friendships', activeChat.id), {
+          [`permissions.${currentProfile.uid}`]: permValue
+        });
+        closeModal('modal-friend-privacy');
+        showToast('Privacy limits updated! 🔒', 'success');
+      } catch (err) {
+        showToast('Settings update karne mein error aaya', 'error');
+      }
+    };
+
+    // ==================== MESSAGES (TEXT & VOICE NOTES) ====================
+    function subscribeToChatMessages(channelKey) {
+      if (unsubscribeMessages) unsubscribeMessages();
+
+      const feed = document.getElementById('chat-messages-feed');
+      feed.innerHTML = `<div class="text-center text-xs text-slate-500 py-8">Messages load ho rahe hain...</div>`;
+
+      unsubscribeMessages = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', channelKey), (snapshot) => {
+        const msgs = snapshot.docs.map(d => ({ id: d.id, ...d.data() }))
+          .sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
+        renderMessages(msgs, channelKey);
+      }, (err) => console.error('Messages listener:', err));
+    }
+
+    function renderMessages(msgs, channelKey) {
+      const feed = document.getElementById('chat-messages-feed');
+      if (msgs.length === 0) {
+        feed.innerHTML = `
+          <div class="text-center py-12 px-4 space-y-2">
+            <div class="text-3xl">${activeChat?.icon || '💬'}</div>
+            <p class="text-sm font-semibold text-slate-300">Pehli baat aap shuru karein!</p>
+            <p class="text-xs text-slate-500">Text likhein ya mic dabakar voice note bhejein.</p>
+          </div>`;
+        return;
+      }
+
+      feed.innerHTML = msgs.map(m => {
+        const isMe = m.senderUid === currentProfile?.uid;
+        const timeStr = m.createdAt ? new Date(m.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+        const previewSummary = m.msgType === 'voice'
+          ? `[Voice Note by ${m.senderName}]`
+          : `${m.senderName}: "${m.text || ''}"`;
+
+        let contentHtml = '';
+        if (m.msgType === 'voice') {
+          contentHtml = `
+            <div class="flex items-center gap-2.5 min-w-[195px]">
+              <div class="w-8 h-8 rounded-full ${isMe ? 'bg-white/20' : 'bg-rose-500/20 text-rose-400'} flex items-center justify-center shrink-0">
+                <i data-lucide="volume-2" class="w-4 h-4"></i>
+              </div>
+              <div class="flex-1">
+                <p class="text-[11px] font-semibold mb-1">Voice Note (${m.duration || '0:03'})</p>
+                ${m.audioData
+                  ? `<audio controls src="${m.audioData}" class="w-full h-7 rounded-lg"></audio>`
+                  : `<div class="flex items-center gap-1 h-5">
+                      <span class="w-1 bg-current rounded-full wave-bar"></span>
+                      <span class="w-1 bg-current rounded-full wave-bar" style="animation-delay:0.2s"></span>
+                      <span class="w-1 bg-current rounded-full wave-bar" style="animation-delay:0.4s"></span>
+                      <span class="text-[10px] ml-1 opacity-80">Voice Clip</span>
+                    </div>`
+                }
+              </div>
+            </div>`;
+        } else {
+          contentHtml = `<p class="text-sm leading-relaxed break-words">${escapeHtml(m.text || '')}</p>`;
+        }
+
+        return `
+          <div class="flex flex-col ${isMe ? 'items-end' : 'items-start'}">
+            ${!isMe ? `
+              <div class="flex items-center gap-1.5 mb-1 ml-1">
+                <button type="button" onclick="openUserDetailModal('${m.senderUid}')" class="flex items-center gap-1.5 hover:underline">
+                  <span class="text-xs">${m.senderAvatar || '😊'}</span>
+                  <span class="text-[11px] font-semibold text-slate-300">${escapeHtml(m.senderName || 'User')}</span>
+                </button>
+                ${m.isGuest ? `<span class="text-[9px] px-1.5 rounded bg-slate-800 text-slate-400">Guest</span>` : ''}
+                <button type="button" onclick="openFlagModal('message', '${m.id}', '${channelKey}', '${escapeAttr(previewSummary)}', '${m.senderUid}')"
+                  class="ml-1 text-slate-500 hover:text-rose-400 transition p-0.5" title="Flag Message">
+                  <i data-lucide="flag" class="w-3 h-3"></i>
+                </button>
+              </div>` : ''
+            }
+            <div class="max-w-[82%] px-3.5 py-2.5 rounded-2xl shadow ${
+              isMe
+                ? 'bg-gradient-to-r from-rose-600 to-pink-600 text-white rounded-br-sm'
+                : 'bg-slate-850 border border-white/10 text-slate-100 rounded-bl-sm'
+            }">
+              ${contentHtml}
+              <p class="text-[10px] mt-1 text-right ${isMe ? 'text-rose-200/80' : 'text-slate-500'}">${timeStr}</p>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+      feed.scrollTop = feed.scrollHeight;
+    }
+
+    window.handleSendTextMessage = async (e) => {
+      e.preventDefault();
+      if (!activeChat || !currentProfile) return;
+
+      const input = document.getElementById('chat-message-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      input.value = '';
+      const channelKey = activeChat.type === 'open'
+        ? `open_rooms_${activeChat.id}`
+        : `private_chats_${activeChat.id}`;
+
+      try {
+        await addDoc(collection(db, 'artifacts', appId, 'public', 'data', channelKey), {
+          msgType: 'text',
+          text,
+          senderUid: currentProfile.uid,
+          senderName: currentProfile.name,
+          senderAvatar: currentProfile.avatar || '😊',
+          isGuest: !!currentProfile.isGuest,
+          createdAt: Date.now()
+        });
+      } catch (err) {
+        showToast('Message send nahi ho paya', 'error');
+      }
+    };
+
+    // ==================== VOICE NOTE RECORDING (MediaRecorder API) ====================
+    window.startVoiceRecording = async () => {
+      if (!activeChat || !currentProfile) return;
+
+      recordingSeconds = 0;
+      document.getElementById('rec-timer').textContent = '00:00';
+      document.getElementById('recording-bar').classList.remove('hidden');
+      document.getElementById('chat-composer-bar').classList.add('hidden');
+
+      recordingInterval = setInterval(() => {
+        recordingSeconds++;
+        const mins = String(Math.floor(recordingSeconds / 60)).padStart(2, '0');
+        const secs = String(recordingSeconds % 60).padStart(2, '0');
+        document.getElementById('rec-timer').textContent = `${mins}:${secs}`;
+        if (recordingSeconds >= 15) stopAndSendVoiceRecording();
+      }, 1000);
+
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        audioChunks = [];
+        mediaRecorder = new MediaRecorder(stream);
+        mediaRecorder.ondataavailable = (e) => { if (e.data.size > 0) audioChunks.push(e.data); };
+        mediaRecorder.start();
+      } catch (err) {
+        mediaRecorder = null;
+      }
+    };
+
+    window.cancelVoiceRecording = () => {
+      clearInterval(recordingInterval);
+      if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+        mediaRecorder.stop();
+        mediaRecorder.stream.getTracks().forEach(t => t.stop());
+      }
+      mediaRecorder = null;
+      audioChunks = [];
+      document.getElementById('recording-bar').classList.add('hidden');
+      document.getElementById('chat-composer-bar').classList.remove('hidden');
+    };
+
+    window.stopAndSendVoiceRecording = async () => {
+      clearInterval(recordingInterval);
+      const durationStr = document.getElementById('rec-timer').textContent;
+
+      document.getElementById('recording-bar').classList.add('hidden');
+      document.getElementById('chat-composer-bar').classList.remove('hidden');
+
+      const channelKey = activeChat.type === 'open'
+        ? `open_rooms_${activeChat.id}`
+        : `private_chats_${activeChat.id}`;
+
+      if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+        mediaRecorder.onstop = async () => {
+          mediaRecorder.stream.getTracks().forEach(t => t.stop());
+          const blob = new Blob(audioChunks, { type: 'audio/webm' });
+          const reader = new FileReader();
+          reader.onloadend = async () => {
+            await sendVoiceDoc(channelKey, reader.result, durationStr);
+          };
+          reader.readAsDataURL(blob);
+        };
+        mediaRecorder.stop();
+      } else {
+        await sendVoiceDoc(channelKey, null, durationStr || '00:03');
+      }
+    };
+
+    async function sendVoiceDoc(channelKey, audioData, duration) {
+      try {
+        await addDoc(collection(db, 'artifacts', appId, 'public', 'data', channelKey), {
+          msgType: 'voice',
+          audioData: audioData || '',
+          duration,
+          senderUid: currentProfile.uid,
+          senderName: currentProfile.name,
+          senderAvatar: currentProfile.avatar || '😊',
+          isGuest: !!currentProfile.isGuest,
+          createdAt: Date.now()
+        });
+        showToast('Voice note bhej diya gaya! 🎙️', 'success');
+      } catch (err) {
+        showToast('Voice note bhejne mein error aaya', 'error');
+      }
+    }
+
+    // ==================== VOICE CALL SIMULATION ====================
+    window.initiateVoiceCall = () => {
+      if (!activeChat || activeChat.type !== 'private') return;
+      const peer = allUsersMap[activeChat.peerUid] || { name: 'Friend', avatar: '😊' };
+
+      document.getElementById('call-peer-avatar').textContent = peer.avatar || '😊';
+      document.getElementById('call-peer-name').textContent = peer.name;
+      document.getElementById('call-status-text').textContent = 'Ringing...';
+      document.getElementById('call-duration-timer').classList.add('hidden');
+      document.getElementById('voice-call-overlay').classList.remove('hidden');
+
+      callSeconds = 0;
+      setTimeout(() => {
+        if (document.getElementById('voice-call-overlay').classList.contains('hidden')) return;
+        document.getElementById('call-status-text').textContent = 'Connected • HD Audio';
+        document.getElementById('call-duration-timer').classList.remove('hidden');
+        document.getElementById('call-duration-timer').textContent = '00:00';
+
+        callTimerInterval = setInterval(() => {
+          callSeconds++;
+          const m = String(Math.floor(callSeconds / 60)).padStart(2, '0');
+          const s = String(callSeconds % 60).padStart(2, '0');
+          document.getElementById('call-duration-timer').textContent = `${m}:${s}`;
+        }, 1000);
+      }, 2000);
+    };
+
+    window.toggleCallMute = () => {
+      isMuted = !isMuted;
+      document.getElementById('btn-toggle-mute').className = isMuted
+        ? 'w-14 h-14 rounded-full bg-rose-500/30 border border-rose-500 text-rose-300 flex items-center justify-center transition'
+        : 'w-14 h-14 rounded-full bg-slate-800 border border-white/10 text-white flex items-center justify-center transition';
+      showToast(isMuted ? 'Mic Muted' : 'Mic Unmuted', 'info');
+    };
+
+    window.toggleCallSpeaker = () => {
+      isSpeaker = !isSpeaker;
+      document.getElementById('btn-toggle-speaker').className = isSpeaker
+        ? 'w-14 h-14 rounded-full bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 flex items-center justify-center transition'
+        : 'w-14 h-14 rounded-full bg-slate-800 border border-white/10 text-white flex items-center justify-center transition';
+    };
+
+    window.endVoiceCall = () => {
+      clearInterval(callTimerInterval);
+      document.getElementById('voice-call-overlay').classList.add('hidden');
+      showToast('Call ended', 'info');
+    };
+
+    window.switchAdminSubTab = (sub) => {
+      ['flags', 'users', 'rooms', 'pwa'].forEach(t => {
+        const panel = document.getElementById(`admin-panel-${t}`);
+        if (panel) panel.classList.toggle('hidden', t !== sub);
+
+        const btn = document.getElementById(`admin-sub-btn-${t}`);
+        if (btn) {
+          btn.className = t === sub
+            ? 'py-2 px-1 rounded-xl text-[11px] font-bold bg-rose-500 text-white shadow transition'
+            : 'py-2 px-1 rounded-xl text-[11px] font-bold bg-slate-850 text-slate-400 hover:text-white transition';
+        }
+      });
+
+      if (sub === 'flags') renderAdminFlags();
+      if (sub === 'users') renderAdminUsers();
+      if (sub === 'rooms') renderAdminRoomsList();
+      if (sub === 'pwa') {
+        applyBrandingToUI();
+        selectAdminCodeFile(selectedAdminFileKey);
+      }
+      lucide.createIcons();
+    };
+
+    // ==================== BRANDING, ADMIN DP & PWA CODE STUDIO ====================
+    function applyBrandingToUI() {
+      const iconUrl = appBrandingConfig.appIconUrl || '';
+      const adminAvatar = appBrandingConfig.adminAvatarUrl || '';
+
+      // Update Auth Header, Main Top-Left Header, and Admin Preview Icon
+      [
+        ['auth-brand-img', 'auth-brand-svg'],
+        ['main-brand-img', 'main-brand-svg'],
+        ['admin-appicon-preview-img', 'admin-appicon-preview-svg']
+      ].forEach(([imgId, svgId]) => {
+        const imgEl = document.getElementById(imgId);
+        const svgEl = document.getElementById(svgId);
+        if (!imgEl || !svgEl) return;
+        if (iconUrl) {
+          imgEl.src = iconUrl;
+          imgEl.classList.remove('hidden');
+          svgEl.classList.add('hidden');
+        } else {
+          imgEl.classList.add('hidden');
+          svgEl.classList.remove('hidden');
+        }
+      });
+
+      // Update Browser Favicon Dynamically
+      const faviconEl = document.querySelector('link[rel="icon"]');
+      if (faviconEl && iconUrl) {
+        faviconEl.href = iconUrl;
+      }
+
+      // Update Exclusive Admin Profile Picture
+      [
+        ['admin-header-avatar-img', 'admin-header-avatar-svg'],
+        ['admin-profile-preview-img', 'admin-profile-preview-svg']
+      ].forEach(([imgId, svgId]) => {
+        const imgEl = document.getElementById(imgId);
+        const svgEl = document.getElementById(svgId);
+        if (!imgEl || !svgEl) return;
+        if (adminAvatar) {
+          imgEl.src = adminAvatar;
+          imgEl.classList.remove('hidden');
+          svgEl.classList.add('hidden');
+        } else {
+          imgEl.classList.add('hidden');
+          svgEl.classList.remove('hidden');
+        }
+      });
+    }
+
+    function compressImageToDataUrl(file, maxSize = 256) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const scale = Math.min(maxSize / img.width, maxSize / img.height, 1);
+            canvas.width = Math.round(img.width * scale);
+            canvas.height = Math.round(img.height * scale);
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            resolve(canvas.toDataURL('image/png', 0.9));
+          };
+          img.onerror = reject;
+          img.src = ev.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    window.handleAdminAvatarUpload = async (e) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      try {
+        const dataUrl = await compressImageToDataUrl(file, 256);
+        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'branding'), {
+          ...appBrandingConfig,
+          adminAvatarUrl: dataUrl,
+          updatedAt: Date.now()
+        });
+        showToast('Admin Profile Picture update ho gayi! 📷', 'success');
+      } catch (err) {
+        showToast('Photo upload karne mein error aaya', 'error');
+      }
+    };
+
+    window.resetAdminAvatar = async () => {
+      await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'branding'), {
+        ...appBrandingConfig,
+        adminAvatarUrl: '',
+        updatedAt: Date.now()
+      });
+      showToast('Admin profile photo hata di gayi', 'info');
+    };
+
+    window.handleAppIconUpload = async (e) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      try {
+        const dataUrl = await compressImageToDataUrl(file, 512);
+        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'branding'), {
+          ...appBrandingConfig,
+          appIconUrl: dataUrl,
+          updatedAt: Date.now()
+        });
+        showToast('App Logo & Favicon live update ho gaya! ✨', 'success');
+      } catch (err) {
+        showToast('Icon upload error', 'error');
+      }
+    };
+
+    window.saveAppIconFromUrl = async () => {
+      const url = document.getElementById('admin-appicon-url-input').value.trim();
+      if (!url) return;
+      await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'branding'), {
+        ...appBrandingConfig,
+        appIconUrl: url,
+        updatedAt: Date.now()
+      });
+      document.getElementById('admin-appicon-url-input').value = '';
+      showToast('App Logo & Favicon URL apply ho gaya!', 'success');
+    };
+
+    window.resetAppIconToDefault = async () => {
+      await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'branding'), {
+        ...appBrandingConfig,
+        appIconUrl: '',
+        updatedAt: Date.now()
+      });
+      showToast('Default romantic icon restore ho gaya', 'info');
+    };
+
+    function getAdminCodeTemplates() {
+      const activeIcon = appBrandingConfig.appIconUrl || './icon-512.png';
+      return {
+        manifest: {
+          filename: 'manifest.json',
+          mime: 'application/json',
+          content: JSON.stringify({
+            name: "DIL - DOSTI - PYAR | Voice & Text Social PWA",
+            short_name: "DilDostiPyar",
+            description: "18+ Privacy-First Text & Voice Chatrooms, Mutual Friend Calls & Coin Economy PWA",
+            start_url: "./index.html",
+            scope: "./",
+            display: "standalone",
+            orientation: "portrait",
+            background_color: "#070b15",
+            theme_color: "#080d1a",
+            categories: ["social", "communication"],
+            icons: [
+              { src: activeIcon, sizes: "192x192", type: "image/png", purpose: "any maskable" },
+              { src: activeIcon, sizes: "512x512", type: "image/png", purpose: "any maskable" }
+            ]
+          }, null, 2)
+        },
+        sw: {
+          filename: 'sw.js',
+          mime: 'application/javascript',
+          content: `// Service Worker for DIL - DOSTI - PYAR PWA
+const CACHE_NAME = 'dil-dosti-pyar-v2';
+const PRECACHE_ASSETS = ['./', './index.html', './manifest.json'];
+
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then((cache) => cache.addAll(PRECACHE_ASSETS))
+      .then(() => self.skipWaiting())
+  );
+});
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then((keys) =>
+      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
+    ).then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener('fetch', (event) => {
+  const { request } = event;
+  if (
+    request.method !== 'GET' ||
+    request.url.includes('firestore.googleapis.com') ||
+    request.url.includes('identitytoolkit.googleapis.com')
+  ) return;
+
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      fetch(request)
+        .then((res) => {
+          const copy = res.clone();
+          caches.open(CACHE_NAME).then((c) => c.put('./index.html', copy));
+          return res;
+        })
+        .catch(() => caches.match('./index.html'))
+    );
+    return;
+  }
+
+  event.respondWith(
+    caches.match(request).then((cached) => cached || fetch(request))
+  );
+});`
+        },
+        codegs: {
+          filename: 'Code.gs',
+          mime: 'text/plain',
+          content: `/**
+ * Google Apps Script Backend Bridge for DIL - DOSTI - PYAR
+ * Deploy as Web App (Execute as: Me, Who has access: Anyone)
+ */
+const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID';
+
+function doGet(e) {
+  const action = (e && e.parameter && e.parameter.action) || 'status';
+  if (action === 'manifest') {
+    const manifest = {
+      name: 'DIL - DOSTI - PYAR',
+      short_name: 'DilDostiPyar',
+      start_url: './index.html',
+      display: 'standalone',
+      background_color: '#070b15',
+      theme_color: '#080d1a'
+    };
+    return ContentService.createTextOutput(JSON.stringify(manifest))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+  return ContentService.createTextOutput(JSON.stringify({
+    ok: true,
+    app: 'DIL - DOSTI - PYAR',
+    timestamp: new Date().toISOString()
+  })).setMimeType(ContentService.MimeType.JSON);
+}
+
+function doPost(e) {
+  try {
+    const payload = JSON.parse(e.postData.contents || '{}');
+    const ss = SpreadsheetApp.openById(SHEET_ID);
+    const sheetName = payload.collection || 'Logs';
+    let sheet = ss.getSheetByName(sheetName);
+    if (!sheet) {
+      sheet = ss.insertSheet(sheetName);
+      sheet.appendRow(['Timestamp', 'Action', 'User', 'DataJSON']);
+    }
+    sheet.appendRow([
+      new Date(),
+      payload.action || 'event',
+      payload.username || 'guest',
+      JSON.stringify(payload.data || {})
+    ]);
+    return ContentService.createTextOutput(JSON.stringify({ ok: true }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({ ok: false, error: err.message }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}`
+        }
+      };
+    }
+
+    window.selectAdminCodeFile = (key) => {
+      selectedAdminFileKey = key;
+      ['manifest', 'sw', 'codegs'].forEach(k => {
+        const btn = document.getElementById(`code-tab-${k}`);
+        if (btn) {
+          btn.className = k === key
+            ? 'py-2 rounded-lg text-[11px] font-bold bg-cyan-500 text-slate-950 transition'
+            : 'py-2 rounded-lg text-[11px] font-bold text-slate-400 hover:text-white transition';
+        }
+      });
+
+      const templates = getAdminCodeTemplates();
+      const fileObj = templates[key] || templates.manifest;
+      const viewer = document.getElementById('admin-code-viewer');
+      const dlLabel = document.getElementById('btn-download-filename');
+      if (viewer) viewer.value = fileObj.content;
+      if (dlLabel) dlLabel.textContent = `Download ${fileObj.filename}`;
+    };
+
+    window.copyAdminCodeFile = () => {
+      const viewer = document.getElementById('admin-code-viewer');
+      if (!viewer) return;
+      viewer.select();
+      document.execCommand('copy');
+      showToast('Code clipboard mein copy ho gaya! 📋', 'success');
+    };
+
+    window.downloadAdminCodeFile = () => {
+      const templates = getAdminCodeTemplates();
+      const fileObj = templates[selectedAdminFileKey] || templates.manifest;
+      const blob = new Blob([fileObj.content], { type: fileObj.mime });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileObj.filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      showToast(`${fileObj.filename} download ho gayi! ⬇️`, 'success');
+    };
+
+    function renderAdminFlags() {
+      const container = document.getElementById('admin-flags-list');
+      document.getElementById('admin-flags-badge').textContent = `${flaggedItems.length} Pending`;
+
+      if (flaggedItems.length === 0) {
+        container.innerHTML = `
+          <div class="p-6 rounded-2xl bg-slate-900 border border-white/5 text-center text-xs text-slate-400">
+            🎉 Koi bhi flagged message ya profile pending nahi hai!
+          </div>`;
+        return;
+      }
+
+      container.innerHTML = flaggedItems.map(item => `
+        <div class="p-3.5 rounded-2xl bg-slate-900 border border-rose-500/30 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="px-2 py-0.5 rounded-md text-[10px] font-bold uppercase bg-rose-500/20 text-rose-300">
+              ${item.targetType === 'profile' ? '👤 Flagged Profile' : '💬 Flagged Message'}
+            </span>
+            <span class="text-[10px] text-slate-500">${new Date(item.createdAt || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+          </div>
+
+          <div>
+            <p class="text-xs font-bold text-amber-300">Reason: ${escapeHtml(item.reason || 'Reported')}</p>
+            <p class="text-xs text-white bg-slate-950 p-2.5 rounded-xl border border-white/5 mt-1.5 break-words">
+              ${escapeHtml(item.previewText || '')}
+            </p>
+            <p class="text-[10px] text-slate-400 mt-1">Reported by: ${escapeHtml(item.reporterName || 'User')}</p>
+          </div>
+
+          <div class="grid grid-cols-3 gap-1.5 pt-1">
+            <button onclick="adminDeleteFlaggedContent('${item.id}')"
+              class="py-2 px-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-[11px] font-bold">
+              Delete Message
+            </button>
+            <button onclick="adminBanAndDeleteUser('${item.targetOwnerUid}', '${item.id}')"
+              class="py-2 px-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-[11px] font-bold">
+              Ban/Delete User
+            </button>
+            <button onclick="adminDismissFlag('${item.id}')"
+              class="py-2 px-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-semibold">
+              Dismiss Flag
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    window.adminDeleteFlaggedContent = async (flagId) => {
+      const item = flaggedItems.find(f => f.id === flagId);
+      if (!item) return;
+
+      try {
+        if (item.targetType === 'message' && item.channelKey && item.targetId) {
+          await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', item.channelKey, item.targetId));
+        } else if (item.targetType === 'profile' && item.targetOwnerUid) {
+          await adminDeleteUserRecords(item.targetOwnerUid);
+        }
+        await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'flagged_items', flagId));
+        showToast('Flagged content deleted! 🗑️', 'success');
+      } catch (err) {
+        showToast('Delete karne mein error aaya', 'error');
+      }
+    };
+
+    window.adminDismissFlag = async (flagId) => {
+      await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'flagged_items', flagId));
+      showToast('Flag dismissed', 'info');
+    };
+
+    async function adminDeleteUserRecords(targetUid) {
+      if (!targetUid) return;
+      if (targetUid.startsWith('guest_')) {
+        await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'guest_sessions', targetUid));
+        return;
+      }
+      const userObj = allUsersMap[targetUid];
+      await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', targetUid));
+      if (userObj && userObj.username) {
+        await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'usernames', userObj.username));
+      }
+    }
+
+    window.adminBanAndDeleteUser = async (targetUid, flagId = null) => {
+      try {
+        await adminDeleteUserRecords(targetUid);
+        if (flagId) {
+          await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'flagged_items', flagId));
+        }
+        showToast('User profile permanently deleted! 🚫', 'success');
+      } catch (err) {
+        showToast('User delete karne mein error aaya', 'error');
+      }
+    };
+
+    window.renderAdminUsers = () => {
+      const query = (document.getElementById('admin-user-search')?.value || '').toLowerCase();
+      const container = document.getElementById('admin-users-list');
+
+      const combinedUsers = [
+        ...Object.values(allUsersMap),
+        ...Object.values(guestProfilesMap)
+      ].filter(u =>
+        (u.name || '').toLowerCase().includes(query) ||
+        (u.username || '').toLowerCase().includes(query) ||
+        (u.location || '').toLowerCase().includes(query)
+      );
+
+      if (combinedUsers.length === 0) {
+        container.innerHTML = `<div class="p-6 rounded-2xl bg-slate-900 text-center text-xs text-slate-400">Koi user ya guest nahi mila.</div>`;
+        return;
+      }
+
+      container.innerHTML = combinedUsers.map(u => `
+        <div class="p-3.5 rounded-2xl bg-slate-900 border border-white/10 space-y-2.5">
+          <div class="flex items-start justify-between gap-2">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-xl shrink-0">${u.avatar || (u.isGuest ? '🎧' : '😊')}</span>
+              <div class="min-w-0">
+                <div class="flex items-center gap-1.5">
+                  <h5 class="font-bold text-sm text-white truncate">${escapeHtml(u.name)}</h5>
+                  ${u.isGuest
+                    ? `<span class="px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 text-[9px] font-bold">GUEST</span>`
+                    : `<span class="px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 text-[9px] font-bold">MEMBER</span>`
+                  }
+                </div>
+                <p class="text-[11px] text-slate-300">@${escapeHtml(u.username)} • ${u.gender || ''} • ${u.age || 18} yrs</p>
+                <p class="text-[11px] text-amber-300 mt-0.5">${u.isGuest ? 'Open Rooms Explorer' : `${INTENT_LABELS[u.intent] || u.intent} • ${escapeHtml(u.location || '')}`}</p>
+              </div>
+            </div>
+            ${!u.isGuest ? `<span class="px-2 py-1 rounded-lg bg-amber-500/15 text-amber-300 text-xs font-bold shrink-0">${u.coins ?? 0} 🪙</span>` : ''}
+          </div>
+
+          <div class="flex items-center justify-between gap-2 pt-1 border-t border-white/5">
+            ${!u.isGuest
+              ? `<button onclick="adminGiveBonusCoins('${u.uid}')" class="px-3 py-1.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 text-xs font-semibold">+50 Gift Coins</button>`
+              : `<span class="text-[10px] text-slate-500">Temporary Guest Session</span>`
+            }
+            <button onclick="adminBanAndDeleteUser('${u.uid}')" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold">
+              Delete Profile 🗑️
+            </button>
+          </div>
+        </div>
+      `).join('');
+    };
+
+    window.adminGiveBonusCoins = async (uid) => {
+      const u = allUsersMap[uid];
+      if (!u) return;
+      await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', uid), {
+        coins: (u.coins || 0) + 50
+      });
+      showToast(`${u.name} ko +50 Gift Coins diye gaye! 🪙`, 'success');
+    };
+
+    function renderAdminRoomsList() {
+      const container = document.getElementById('admin-rooms-selector');
+      if (!container) return;
+
+      const allRooms = [
+        ...Object.values(PREMADE_ROOMS).map(r => ({ ...r, isCustom: false })),
+        ...customRooms.map(r => ({ id: r.id, name: r.name, icon: r.icon || '💬', topic: r.topic, isCustom: true }))
+      ];
+
+      container.innerHTML = allRooms.map(r => `
+        <div onclick="adminInspectRoom('${r.id}', '${escapeAttr(r.name)}', ${r.isCustom})"
+          class="p-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-white/10 cursor-pointer flex items-center justify-between transition">
+          <div class="flex items-center gap-2.5 min-w-0">
+            <span class="text-lg">${r.icon}</span>
+            <div class="min-w-0">
+              <p class="text-xs font-bold text-white truncate">${escapeHtml(r.name)}</p>
+              <p class="text-[10px] text-slate-400 truncate">${r.isCustom ? 'Custom Room' : 'Pre-Defined Room'} • ${escapeHtml(r.topic)}</p>
+            </div>
+          </div>
+          <span class="text-xs text-amber-400 font-semibold shrink-0">Inspect →</span>
+        </div>
+      `).join('');
+    }
+
+    window.adminInspectRoom = (roomId, roomName, isCustom) => {
+      if (unsubscribeAdminInspector) unsubscribeAdminInspector();
+
+      adminInspectedRoom = { id: roomId, name: roomName, isCustom };
+      document.getElementById('admin-room-inspector').classList.remove('hidden');
+      document.getElementById('admin-inspector-title').textContent = roomName;
+      document.getElementById('admin-delete-room-btn').classList.toggle('hidden', !isCustom);
+
+      const channelKey = `open_rooms_${roomId}`;
+      unsubscribeAdminInspector = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', channelKey), (snapshot) => {
+        const msgs = snapshot.docs.map(d => ({ id: d.id, ...d.data() }))
+          .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+        const listEl = document.getElementById('admin-inspector-messages');
+        if (msgs.length === 0) {
+          listEl.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">Is room mein abhi koi message nahi hai.</p>`;
+          return;
+        }
+
+        listEl.innerHTML = msgs.map(m => `
+          <div class="p-2.5 rounded-xl bg-slate-950 border border-white/5 flex items-center justify-between gap-2">
+            <div class="min-w-0">
+              <p class="text-[11px] font-bold text-rose-300">${escapeHtml(m.senderName || 'User')} <span class="text-slate-500 font-normal">(${m.msgType})</span></p>
+              <p class="text-xs text-slate-200 break-words">${m.msgType === 'voice' ? `🎙️ Voice Note (${m.duration || '0:03'})` : escapeHtml(m.text || '')}</p>
+            </div>
+            <button onclick="adminDeleteSingleMessage('${channelKey}', '${m.id}')"
+              class="px-2.5 py-1.5 rounded-lg bg-rose-600/20 hover:bg-rose-600 text-rose-300 hover:text-white text-[11px] font-bold shrink-0 transition">
+              Delete
+            </button>
+          </div>
+        `).join('');
+      });
+    };
+
+    window.adminDeleteSingleMessage = async (channelKey, msgId) => {
+      try {
+        await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', channelKey, msgId));
+        showToast('Message deleted 🗑️', 'success');
+      } catch (err) {
+        showToast('Delete error', 'error');
+      }
+    };
+
+    window.adminDeleteCurrentCustomRoom = async () => {
+      if (!adminInspectedRoom || !adminInspectedRoom.isCustom) return;
+      try {
+        await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'custom_rooms', adminInspectedRoom.id));
+        document.getElementById('admin-room-inspector').classList.add('hidden');
+        adminInspectedRoom = null;
+        showToast('Custom room deleted!', 'success');
+      } catch (err) {
+        showToast('Room delete error', 'error');
+      }
+    };
+
+    // XSS & Attribute Escape Helpers
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function escapeAttr(str) {
+      return String(str)
+        .replace(/\\/g, '\\\\')
+        .replace(/'/g, "\\'")
+        .replace(/"/g, '&quot;');
+    }
+
+    bootstrapAuth();
+
+    // Register Service Worker for PWA Install & Offline Support
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then((reg) => console.log('SW registered:', reg.scope))
+          .catch((err) => console.warn('SW registration skipped:', err.message));
+      });
+    }
+  </script>
+</body>
+</html>
