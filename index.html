@@ -82,7 +82,7 @@
 </head>
 <body class="min-h-screen flex justify-center bg-slate-950 selection:bg-rose-500/30 selection:text-rose-200">
 
-  <!-- Reusable SVG Sprite Definitions (Prevents Windows Emoji Square Boxes) -->
+  <!-- Reusable SVG Sprite Definitions -->
   <svg class="hidden" aria-hidden="true">
     <symbol id="icon-coin" viewBox="0 0 24 24">
       <circle cx="12" cy="12" r="10" fill="#f59e0b" stroke="#fef08a" stroke-width="1.8"/>
@@ -109,18 +109,14 @@
         </linearGradient>
       </defs>
       <rect x="4" y="4" width="112" height="112" rx="28" fill="#0b1528" stroke="rgba(253,164,175,0.28)" stroke-width="2"/>
-      <!-- Sparkles -->
       <circle cx="28" cy="28" r="1.8" fill="#fde68a" opacity="0.9"/>
       <circle cx="94" cy="30" r="2" fill="#fda4af" opacity="0.9"/>
       <circle cx="92" cy="84" r="1.6" fill="#fde68a" opacity="0.8"/>
       <circle cx="26" cy="76" r="1.5" fill="#fb7185" opacity="0.8"/>
-      <!-- Outer Glowing Romantic Heart -->
       <path d="M60 95C60 95 22 72 22 45C22 33 31 24 43 24C51 24 57 28 60 34C63 28 69 24 77 24C89 24 98 33 98 45C98 72 60 95 60 95Z"
         fill="none" stroke="url(#ddp-heart-grad)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <!-- Inner Crimson Heart Ribbon -->
       <path d="M44 85C44 85 25 70 25 53C25 45 31 39 38 39C43 39 47 42 49 46C51 42 55 39 60 39C66 39 71 44 71 51"
         fill="none" stroke="url(#ddp-inner-heart)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-      <!-- Two Embracing Friendship/Love Figures -->
       <circle cx="66" cy="46" r="4.6" fill="url(#ddp-pair-grad)"/>
       <circle cx="79" cy="46" r="4.6" fill="#fda4af"/>
       <path d="M47 83C54 72 58 58 65 56C69 55 72 60 76 60C80 60 83 56 79 56C74 56 71 71 67 83"
@@ -139,7 +135,7 @@
     <!-- ==================== 1. MAIN ENTRY / AUTH VIEW ==================== -->
     <div id="auth-view" class="flex-1 flex flex-col justify-between p-5 overflow-y-auto">
       <div class="pt-1">
-        <!-- Top-Left App Brand Icon & Help Button -->
+        <!-- Top-Left App Brand Icon & Info Button -->
         <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2.5">
             <div class="w-11 h-11 rounded-2xl shadow-lg shadow-rose-500/25 shrink-0 overflow-hidden bg-slate-950 flex items-center justify-center">
@@ -164,12 +160,29 @@
           </button>
         </div>
 
-        <p class="text-slate-400 text-xs text-center mt-1 leading-relaxed">
-          Sirf <span class="text-slate-200 font-medium">Text</span> & <span class="text-slate-200 font-medium">Voice</span> • Zero Photo/Video Privacy
+        <!-- One-Tap PWA Install Banner -->
+        <div id="pwa-install-banner" class="mt-2.5 p-2.5 rounded-2xl bg-gradient-to-r from-rose-500/15 via-pink-500/10 to-amber-500/15 border border-rose-500/30 flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2 min-w-0">
+            <div class="w-7 h-7 rounded-xl bg-rose-500/20 text-rose-300 flex items-center justify-center shrink-0">
+              <i data-lucide="download" class="w-4 h-4"></i>
+            </div>
+            <div class="min-w-0">
+              <p class="text-[11px] font-bold text-white leading-tight truncate">Install DIL - DOSTI - PYAR App</p>
+              <p id="pwa-install-subtext" class="text-[10px] text-slate-400 truncate">Home screen par app ki tarah chalayein</p>
+            </div>
+          </div>
+          <button type="button" onclick="triggerPwaInstall()" id="btn-pwa-install"
+            class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-rose-500 to-pink-600 text-white text-[11px] font-extrabold shadow shrink-0 active:scale-95 transition">
+            Install App
+          </button>
+        </div>
+
+        <p class="text-slate-400 text-xs text-center mt-2.5 leading-relaxed">
+          Sirf Text & Voice Sharing • Zero Photo/Video Privacy
         </p>
 
-        <!-- 3 Prominent Entry Tabs -->
-        <div class="grid grid-cols-3 gap-1.5 bg-slate-950/90 p-1.5 rounded-2xl mt-4 border border-white/10">
+        <!-- 3 Main Entry Tabs: Register | Login | Login as GUEST -->
+        <div class="grid grid-cols-3 gap-1.5 bg-slate-950/90 p-1.5 rounded-2xl border border-white/10 mt-3">
           <button type="button" onclick="switchAuthTab('register')" id="tab-btn-register"
             class="py-2.5 text-xs font-bold rounded-xl transition-all bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-lg">
             Register
@@ -388,12 +401,6 @@
               class="w-full px-3.5 py-3 rounded-xl bg-slate-950/90 border border-white/10 text-sm text-white focus:outline-none focus:border-amber-500" />
           </div>
 
-          <div>
-            <label class="block text-xs font-medium text-slate-300 mb-1">Admin Passcode</label>
-            <input type="password" id="admin-pass-input" required value="admin123"
-              class="w-full px-3.5 py-3 rounded-xl bg-slate-950/90 border border-white/10 text-sm text-white focus:outline-none focus:border-amber-500" />
-          </div>
-
           <button type="submit"
             class="w-full py-3 rounded-xl font-bold text-sm bg-gradient-to-r from-amber-500 to-orange-600 text-slate-950 shadow-lg shadow-amber-500/25 hover:opacity-95 transition-all flex items-center justify-center gap-1.5">
             <svg class="w-4 h-4"><use href="#icon-shield"/></svg>
@@ -471,7 +478,6 @@
 
         <!-- TAB 1: OPEN CHATROOMS -->
         <section id="tab-rooms" class="p-4 space-y-5">
-          <!-- Create Custom Room Banner -->
           <div class="p-4 rounded-2xl bg-gradient-to-br from-rose-950/75 via-slate-900 to-indigo-950/75 border border-rose-500/25 flex items-center justify-between gap-3 neon-glow">
             <div>
               <h3 class="font-display font-bold text-base text-white">Open Chatrooms</h3>
@@ -486,7 +492,6 @@
             </button>
           </div>
 
-          <!-- 7 Pre-Defined Open Rooms -->
           <div>
             <div class="flex items-center justify-between mb-2.5">
               <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">7 Pre-Defined Open Rooms (Free)</h4>
@@ -495,7 +500,6 @@
             <div id="premade-rooms-list" class="space-y-2.5"></div>
           </div>
 
-          <!-- Custom Coin-Purchased Rooms -->
           <div>
             <div class="flex items-center justify-between mb-2.5">
               <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Community Custom Rooms</h4>
@@ -512,7 +516,6 @@
             <p class="text-xs text-slate-400">Mutual friends ke saath private text, voice notes & calls</p>
           </div>
 
-          <!-- Guest Lock -->
           <div id="guest-lock-chats" class="hidden p-6 rounded-2xl bg-slate-850 border border-rose-500/25 text-center space-y-3">
             <div class="w-14 h-14 rounded-full bg-rose-500/15 text-rose-400 flex items-center justify-center mx-auto">
               <i data-lucide="lock" class="w-7 h-7"></i>
@@ -533,7 +536,6 @@
 
         <!-- TAB 3: DOST & REQUESTS -->
         <section id="tab-people" class="p-4 space-y-5 hidden">
-          <!-- Guest Lock -->
           <div id="guest-lock-people" class="hidden p-6 rounded-2xl bg-slate-850 border border-cyan-500/25 text-center space-y-3">
             <div class="w-14 h-14 rounded-full bg-cyan-500/15 text-cyan-400 flex items-center justify-center mx-auto">
               <i data-lucide="user-plus" class="w-7 h-7"></i>
@@ -548,7 +550,6 @@
           </div>
 
           <div id="registered-people-content" class="space-y-5">
-            <!-- Incoming Friend Requests -->
             <div>
               <h4 class="text-xs font-bold uppercase tracking-wider text-rose-400 mb-2.5 flex items-center gap-1.5">
                 <i data-lucide="bell-ring" class="w-3.5 h-3.5"></i>
@@ -557,7 +558,6 @@
               <div id="incoming-requests-list" class="space-y-2"></div>
             </div>
 
-            <!-- Discover Registered Users -->
             <div>
               <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2.5">Discover Registered Users</h4>
               <div class="relative mb-3">
@@ -591,7 +591,6 @@
             </div>
           </div>
 
-          <!-- Mood & Intent Editor -->
           <div id="profile-mood-card" class="p-4 rounded-2xl bg-slate-850/80 border border-white/5 space-y-3">
             <div>
               <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Update Your Mood</h4>
@@ -612,7 +611,6 @@
             </div>
           </div>
 
-          <!-- Coin Wallet -->
           <div id="profile-wallet-card" class="p-4 rounded-2xl bg-gradient-to-r from-amber-950/50 to-slate-850 border border-amber-500/25 flex items-center justify-between gap-2">
             <div>
               <p class="text-xs text-amber-300/80 font-medium">Coin Wallet Balance</p>
@@ -679,7 +677,6 @@
 
     <!-- ==================== 3. ACTIVE CHATROOM / PERSONAL CHAT OVERLAY ==================== -->
     <div id="chat-room-overlay" class="fixed inset-y-0 w-full max-w-md bg-slate-950 z-40 flex flex-col hidden">
-      <!-- Chat Header -->
       <div class="glass-panel px-3 py-3 flex items-center justify-between border-b border-white/10">
         <div class="flex items-center gap-2.5 min-w-0">
           <button onclick="closeChatOverlay()" class="p-2 rounded-xl hover:bg-white/10 text-slate-300">
@@ -694,7 +691,6 @@
           </div>
         </div>
 
-        <!-- Personal Chat Actions (Send Coins + Call + Privacy Limits Shield) -->
         <div id="private-chat-actions" class="hidden flex items-center gap-1.5 shrink-0">
           <button onclick="openQuickSendCoinsToPeer()"
             class="p-2.5 rounded-xl bg-amber-500/15 text-amber-300 border border-amber-500/30 hover:bg-amber-500/25 transition" title="Send Coins">
@@ -712,16 +708,13 @@
         </div>
       </div>
 
-      <!-- Permission Restriction Notice -->
       <div id="chat-permission-banner" class="hidden px-4 py-2 bg-amber-500/15 border-b border-amber-500/25 text-[11px] text-amber-200 flex items-center justify-between">
         <span id="chat-permission-text">Permission notice</span>
         <button onclick="openFriendPrivacyModal()" class="underline font-semibold text-amber-300 ml-2 shrink-0">My Limits</button>
       </div>
 
-      <!-- Messages Feed -->
       <div id="chat-messages-feed" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
 
-      <!-- Voice Recording Bar -->
       <div id="recording-bar" class="hidden px-4 py-3 bg-rose-950/90 border-t border-rose-500/30 flex items-center justify-between">
         <div class="flex items-center gap-2.5">
           <span class="w-3 h-3 rounded-full bg-rose-500 animate-ping"></span>
@@ -733,7 +726,6 @@
         </div>
       </div>
 
-      <!-- Text + Voice Note Composer ONLY (No Photo/Video) -->
       <div id="chat-composer-bar" class="glass-panel p-3 border-t border-white/10">
         <form onsubmit="handleSendTextMessage(event)" class="flex items-center gap-2">
           <button type="button" id="btn-mic-record" onclick="startVoiceRecording()"
@@ -862,143 +854,6 @@
       </div>
     </div>
 
-    <!-- ==================== 9. COMPREHENSIVE INFO & HELP MODAL ==================== -->
-    <div id="modal-help-policies" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-3 hidden">
-      <div class="w-full max-w-md bg-slate-900 border border-white/15 rounded-3xl p-4 sm:p-5 space-y-3.5 shadow-2xl max-h-[90vh] flex flex-col">
-        <div class="flex items-center justify-between shrink-0">
-          <div class="flex items-center gap-2">
-            <i data-lucide="info" class="w-5 h-5 text-cyan-400"></i>
-            <h4 id="info-help-modal-title" class="font-display font-bold text-base text-white">Info & Help</h4>
-          </div>
-          <button onclick="closeModal('modal-help-policies')" class="p-1.5 rounded-lg bg-slate-800 text-slate-400 hover:text-white">
-            <i data-lucide="x" class="w-4 h-4"></i>
-          </button>
-        </div>
-
-        <!-- VIEW A: 6 Stacked Colorful Menu Bars (All 6 visible at once) -->
-        <div id="help-menu-bars" class="flex-1 overflow-y-auto space-y-2.5 pr-0.5">
-          <p class="text-[11px] text-slate-400">Kisi bhi topic par tap karke poori jankari padhein:</p>
-
-          <!-- 1. Terms & Conditions (Cyan/Blue Bar) -->
-          <button type="button" onclick="openHelpTopic('terms')"
-            class="w-full p-3.5 rounded-2xl bg-gradient-to-r from-cyan-600/25 to-blue-600/20 hover:from-cyan-600/35 hover:to-blue-600/30 border border-cyan-500/40 flex items-center justify-between text-left transition active:scale-[0.99]">
-            <div class="flex items-center gap-3">
-              <div class="w-9 h-9 rounded-xl bg-cyan-500/20 text-cyan-300 flex items-center justify-center shrink-0">
-                <i data-lucide="file-text" class="w-4 h-4"></i>
-              </div>
-              <div>
-                <p class="font-display font-bold text-xs text-cyan-200">1. Terms & Conditions</p>
-                <p class="text-[11px] text-slate-300/80">18+ Eligibility, Account Rules & Moderation</p>
-              </div>
-            </div>
-            <i data-lucide="chevron-right" class="w-4 h-4 text-cyan-300 shrink-0"></i>
-          </button>
-
-          <!-- 2. Usage Policy (Rose/Pink Bar) -->
-          <button type="button" onclick="openHelpTopic('usage')"
-            class="w-full p-3.5 rounded-2xl bg-gradient-to-r from-rose-600/25 to-pink-600/20 hover:from-rose-600/35 hover:to-pink-600/30 border border-rose-500/40 flex items-center justify-between text-left transition active:scale-[0.99]">
-            <div class="flex items-center gap-3">
-              <div class="w-9 h-9 rounded-xl bg-rose-500/20 text-rose-300 flex items-center justify-center shrink-0">
-                <i data-lucide="heart-handshake" class="w-4 h-4"></i>
-              </div>
-              <div>
-                <p class="font-display font-bold text-xs text-rose-200">2. Usage Policy & Guidelines</p>
-                <p class="text-[11px] text-slate-300/80">Respectful Chat, Anti-Spam & Flagging Rules</p>
-              </div>
-            </div>
-            <i data-lucide="chevron-right" class="w-4 h-4 text-rose-300 shrink-0"></i>
-          </button>
-
-          <!-- 3. Fair Usage Policy (Amber/Orange Bar) -->
-          <button type="button" onclick="openHelpTopic('fup')"
-            class="w-full p-3.5 rounded-2xl bg-gradient-to-r from-amber-600/25 to-orange-600/20 hover:from-amber-600/35 hover:to-orange-600/30 border border-amber-500/40 flex items-center justify-between text-left transition active:scale-[0.99]">
-            <div class="flex items-center gap-3">
-              <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center shrink-0">
-                <i data-lucide="scale" class="w-4 h-4"></i>
-              </div>
-              <div>
-                <p class="font-display font-bold text-xs text-amber-200">3. Fair Usage Policy (FUP)</p>
-                <p class="text-[11px] text-slate-300/80">15s Voice Note Limit, Custom Rooms & Fair Play</p>
-              </div>
-            </div>
-            <i data-lucide="chevron-right" class="w-4 h-4 text-amber-300 shrink-0"></i>
-          </button>
-
-          <!-- 4. Privacy & Safety Policy (Emerald/Teal Bar) -->
-          <button type="button" onclick="openHelpTopic('privacy')"
-            class="w-full p-3.5 rounded-2xl bg-gradient-to-r from-emerald-600/25 to-teal-600/20 hover:from-emerald-600/35 hover:to-teal-600/30 border border-emerald-500/40 flex items-center justify-between text-left transition active:scale-[0.99]">
-            <div class="flex items-center gap-3">
-              <div class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center shrink-0">
-                <i data-lucide="shield-check" class="w-4 h-4"></i>
-              </div>
-              <div>
-                <p class="font-display font-bold text-xs text-emerald-200">4. Privacy & Safety Policy</p>
-                <p class="text-[11px] text-slate-300/80">Zero Photo/Video Guarantee & Friend Limits</p>
-              </div>
-            </div>
-            <i data-lucide="chevron-right" class="w-4 h-4 text-emerald-300 shrink-0"></i>
-          </button>
-
-          <!-- 5. Coins & Fee Rules (Violet/Purple Bar) -->
-          <button type="button" onclick="openHelpTopic('coins')"
-            class="w-full p-3.5 rounded-2xl bg-gradient-to-r from-violet-600/25 to-purple-600/20 hover:from-violet-600/35 hover:to-purple-600/30 border border-violet-500/40 flex items-center justify-between text-left transition active:scale-[0.99]">
-            <div class="flex items-center gap-3">
-              <div class="w-9 h-9 rounded-xl bg-violet-500/20 text-violet-300 flex items-center justify-center shrink-0">
-                <i data-lucide="coins" class="w-4 h-4"></i>
-              </div>
-              <div>
-                <p class="font-display font-bold text-xs text-violet-200">5. Coins & 2% Fee Rules</p>
-                <p class="text-[11px] text-slate-300/80">25 Free Coins, Recharge Packs & ±0.50 Roundoff</p>
-              </div>
-            </div>
-            <i data-lucide="chevron-right" class="w-4 h-4 text-violet-300 shrink-0"></i>
-          </button>
-
-          <!-- 6. FAQs & Help Guide (Indigo/Sky Bar) -->
-          <button type="button" onclick="openHelpTopic('faq')"
-            class="w-full p-3.5 rounded-2xl bg-gradient-to-r from-indigo-600/25 to-sky-600/20 hover:from-indigo-600/35 hover:to-sky-600/30 border border-indigo-500/40 flex items-center justify-between text-left transition active:scale-[0.99]">
-            <div class="flex items-center gap-3">
-              <div class="w-9 h-9 rounded-xl bg-indigo-500/20 text-indigo-300 flex items-center justify-center shrink-0">
-                <i data-lucide="help-circle" class="w-4 h-4"></i>
-              </div>
-              <div>
-                <p class="font-display font-bold text-xs text-indigo-200">6. FAQs & Quick Help</p>
-                <p class="text-[11px] text-slate-300/80">Common Questions & Step-by-Step Guide</p>
-              </div>
-            </div>
-            <i data-lucide="chevron-right" class="w-4 h-4 text-indigo-300 shrink-0"></i>
-          </button>
-        </div>
-
-        <!-- VIEW B: Detailed Policy Reader View (with Back & I Understand buttons) -->
-        <div id="help-detail-view" class="hidden flex-1 flex flex-col overflow-hidden space-y-3">
-          <div id="help-policy-content" class="flex-1 overflow-y-auto space-y-3 pr-1 text-xs text-slate-300 leading-relaxed">
-            <!-- Populated dynamically via openHelpTopic() -->
-          </div>
-
-          <div class="pt-2.5 border-t border-white/10 grid grid-cols-2 gap-2.5 shrink-0">
-            <button type="button" onclick="backToHelpMenu()"
-              class="py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-white/10 text-slate-200 text-xs font-bold flex items-center justify-center gap-1.5 transition">
-              <i data-lucide="arrow-left" class="w-4 h-4"></i>
-              <span>Back</span>
-            </button>
-            <button type="button" onclick="backToHelpMenu()"
-              class="py-2.5 px-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-slate-950 text-xs font-extrabold flex items-center justify-center gap-1.5 shadow transition">
-              <i data-lucide="check-circle-2" class="w-4 h-4"></i>
-              <span>I Understand ✓</span>
-            </button>
-          </div>
-        </div>
-
-        <div id="help-modal-footer" class="pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-slate-400 shrink-0">
-          <span>Support: help@dildostipyar.app</span>
-          <button onclick="closeModal('modal-help-policies')" class="px-4 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold">
-            Close
-          </button>
-        </div>
-      </div>
-    </div>
-
     <!-- ==================== 7. CREATE CUSTOM ROOM MODAL ==================== -->
     <div id="modal-create-room" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-4 hidden">
       <div class="w-full max-w-sm bg-slate-900 border border-white/10 rounded-3xl p-5 space-y-4 shadow-2xl">
@@ -1062,7 +917,6 @@
           </button>
         </div>
 
-        <!-- Balance Banner -->
         <div class="p-3.5 rounded-2xl bg-gradient-to-r from-amber-950/70 via-slate-950 to-amber-950/50 border border-amber-500/25 flex items-center justify-between">
           <div>
             <p class="text-[11px] text-amber-200/80">Available Balance</p>
@@ -1077,7 +931,6 @@
           </div>
         </div>
 
-        <!-- Wallet Sub-Tabs -->
         <div class="grid grid-cols-3 gap-1.5 bg-slate-950 p-1 rounded-xl border border-white/10">
           <button type="button" onclick="switchWalletTab('buy')" id="wallet-tab-buy"
             class="py-2 rounded-lg text-xs font-bold bg-amber-500 text-slate-950 shadow transition">
@@ -1098,7 +951,6 @@
           <p class="text-[11px] text-slate-400">Apna Coin Pack chunein aur UPI se instant top-up karein:</p>
 
           <div id="coin-packs-container" class="space-y-2">
-            <!-- Pack 1: ₹5 -> 10 Coins -->
             <div class="p-3 rounded-2xl bg-slate-850 border border-white/10 hover:border-amber-500/40 flex items-center justify-between transition">
               <div class="flex items-center gap-2.5">
                 <svg class="w-7 h-7 shrink-0"><use href="#icon-coin"/></svg>
@@ -1112,7 +964,6 @@
               </button>
             </div>
 
-            <!-- Pack 2: ₹10 -> 25 Coins -->
             <div class="p-3 rounded-2xl bg-slate-850 border border-white/10 hover:border-amber-500/40 flex items-center justify-between transition">
               <div class="flex items-center gap-2.5">
                 <svg class="w-7 h-7 shrink-0"><use href="#icon-coin"/></svg>
@@ -1129,7 +980,6 @@
               </button>
             </div>
 
-            <!-- Pack 3: ₹20 -> 60 Coins -->
             <div class="p-3 rounded-2xl bg-slate-850 border border-cyan-500/30 hover:border-cyan-400 flex items-center justify-between transition">
               <div class="flex items-center gap-2.5">
                 <svg class="w-7 h-7 shrink-0"><use href="#icon-coin"/></svg>
@@ -1146,7 +996,6 @@
               </button>
             </div>
 
-            <!-- Pack 4: ₹50 -> 150 Coins -->
             <div class="p-3 rounded-2xl bg-slate-850 border border-rose-500/30 hover:border-rose-400 flex items-center justify-between transition">
               <div class="flex items-center gap-2.5">
                 <svg class="w-7 h-7 shrink-0"><use href="#icon-coin"/></svg>
@@ -1163,7 +1012,6 @@
               </button>
             </div>
 
-            <!-- Pack 5: ₹100 -> 500 Coins -->
             <div class="p-3 rounded-2xl bg-gradient-to-r from-amber-950/60 to-slate-850 border border-amber-400/50 flex items-center justify-between transition">
               <div class="flex items-center gap-2.5">
                 <svg class="w-7 h-7 shrink-0"><use href="#icon-coin"/></svg>
@@ -1181,7 +1029,6 @@
             </div>
           </div>
 
-          <!-- Simulated UPI Checkout Box -->
           <div id="upi-checkout-box" class="hidden p-4 rounded-2xl bg-slate-950 border border-emerald-500/40 space-y-3">
             <div class="flex items-center justify-between">
               <span class="text-xs font-bold text-emerald-400">UPI Instant Payment</span>
@@ -1198,7 +1045,7 @@
           </div>
         </div>
 
-        <!-- SUB-TAB 2: PEER-TO-PEER SHARE COINS (2% FEE ±0.50 ROUNDOFF) -->
+        <!-- SUB-TAB 2: PEER-TO-PEER SHARE COINS -->
         <div id="wallet-panel-share" class="space-y-3 hidden">
           <div class="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/25 text-[11px] text-cyan-200 space-y-1">
             <p class="font-bold text-cyan-300">Peer-to-Peer Coin Sharing Rules:</p>
@@ -1220,7 +1067,6 @@
                 class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-white/10 text-sm font-bold text-amber-300 focus:outline-none focus:border-amber-500" />
             </div>
 
-            <!-- Live 2% Fee & ±0.50 Roundoff Breakdown -->
             <div class="p-3 rounded-xl bg-slate-950 border border-white/10 space-y-1.5 text-xs">
               <div class="flex justify-between text-slate-300">
                 <span>Recipient ko milenge:</span>
@@ -1246,6 +1092,135 @@
         <!-- SUB-TAB 3: TRANSACTION HISTORY -->
         <div id="wallet-panel-history" class="space-y-2 hidden">
           <div id="wallet-history-list" class="space-y-2 max-h-60 overflow-y-auto"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 9. COMPREHENSIVE INFO & HELP MODAL ==================== -->
+    <div id="modal-help-policies" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-3 hidden">
+      <div class="w-full max-w-md bg-slate-900 border border-white/15 rounded-3xl p-4 sm:p-5 space-y-3.5 shadow-2xl max-h-[90vh] flex flex-col">
+        <div class="flex items-center justify-between shrink-0">
+          <div class="flex items-center gap-2">
+            <i data-lucide="info" class="w-5 h-5 text-cyan-400"></i>
+            <h4 id="info-help-modal-title" class="font-display font-bold text-base text-white">Info & Help</h4>
+          </div>
+          <button onclick="closeModal('modal-help-policies')" class="p-1.5 rounded-lg bg-slate-800 text-slate-400 hover:text-white">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <!-- VIEW A: 6 Stacked Colorful Menu Bars -->
+        <div id="help-menu-bars" class="flex-1 overflow-y-auto space-y-2.5 pr-0.5">
+          <p class="text-[11px] text-slate-400">Kisi bhi topic par tap karke poori jankari padhein:</p>
+
+          <button type="button" onclick="openHelpTopic('terms')"
+            class="w-full p-3.5 rounded-2xl bg-gradient-to-r from-cyan-600/25 to-blue-600/20 hover:from-cyan-600/35 hover:to-blue-600/30 border border-cyan-500/40 flex items-center justify-between text-left transition active:scale-[0.99]">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-xl bg-cyan-500/20 text-cyan-300 flex items-center justify-center shrink-0">
+                <i data-lucide="file-text" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <p class="font-display font-bold text-xs text-cyan-200">1. Terms & Conditions</p>
+                <p class="text-[11px] text-slate-300/80">18+ Eligibility, Account Rules & Moderation</p>
+              </div>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-cyan-300 shrink-0"></i>
+          </button>
+
+          <button type="button" onclick="openHelpTopic('usage')"
+            class="w-full p-3.5 rounded-2xl bg-gradient-to-r from-rose-600/25 to-pink-600/20 hover:from-rose-600/35 hover:to-pink-600/30 border border-rose-500/40 flex items-center justify-between text-left transition active:scale-[0.99]">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-xl bg-rose-500/20 text-rose-300 flex items-center justify-center shrink-0">
+                <i data-lucide="heart-handshake" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <p class="font-display font-bold text-xs text-rose-200">2. Usage Policy & Guidelines</p>
+                <p class="text-[11px] text-slate-300/80">Respectful Chat, Anti-Spam & Flagging Rules</p>
+              </div>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-rose-300 shrink-0"></i>
+          </button>
+
+          <button type="button" onclick="openHelpTopic('fup')"
+            class="w-full p-3.5 rounded-2xl bg-gradient-to-r from-amber-600/25 to-orange-600/20 hover:from-amber-600/35 hover:to-orange-600/30 border border-amber-500/40 flex items-center justify-between text-left transition active:scale-[0.99]">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center shrink-0">
+                <i data-lucide="scale" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <p class="font-display font-bold text-xs text-amber-200">3. Fair Usage Policy (FUP)</p>
+                <p class="text-[11px] text-slate-300/80">15s Voice Note Limit, Custom Rooms & Fair Play</p>
+              </div>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-amber-300 shrink-0"></i>
+          </button>
+
+          <button type="button" onclick="openHelpTopic('privacy')"
+            class="w-full p-3.5 rounded-2xl bg-gradient-to-r from-emerald-600/25 to-teal-600/20 hover:from-emerald-600/35 hover:to-teal-600/30 border border-emerald-500/40 flex items-center justify-between text-left transition active:scale-[0.99]">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center shrink-0">
+                <i data-lucide="shield-check" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <p class="font-display font-bold text-xs text-emerald-200">4. Privacy & Safety Policy</p>
+                <p class="text-[11px] text-slate-300/80">Zero Photo/Video Guarantee & Friend Limits</p>
+              </div>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-emerald-300 shrink-0"></i>
+          </button>
+
+          <button type="button" onclick="openHelpTopic('coins')"
+            class="w-full p-3.5 rounded-2xl bg-gradient-to-r from-violet-600/25 to-purple-600/20 hover:from-violet-600/35 hover:to-purple-600/30 border border-violet-500/40 flex items-center justify-between text-left transition active:scale-[0.99]">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-xl bg-violet-500/20 text-violet-300 flex items-center justify-center shrink-0">
+                <i data-lucide="coins" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <p class="font-display font-bold text-xs text-violet-200">5. Coins & 2% Fee Rules</p>
+                <p class="text-[11px] text-slate-300/80">25 Free Coins, Recharge Packs & ±0.50 Roundoff</p>
+              </div>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-violet-300 shrink-0"></i>
+          </button>
+
+          <button type="button" onclick="openHelpTopic('faq')"
+            class="w-full p-3.5 rounded-2xl bg-gradient-to-r from-indigo-600/25 to-sky-600/20 hover:from-indigo-600/35 hover:to-sky-600/30 border border-indigo-500/40 flex items-center justify-between text-left transition active:scale-[0.99]">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-xl bg-indigo-500/20 text-indigo-300 flex items-center justify-center shrink-0">
+                <i data-lucide="help-circle" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <p class="font-display font-bold text-xs text-indigo-200">6. FAQs & Quick Help</p>
+                <p class="text-[11px] text-slate-300/80">Common Questions & Step-by-Step Guide</p>
+              </div>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-indigo-300 shrink-0"></i>
+          </button>
+        </div>
+
+        <!-- VIEW B: Detailed Policy Reader View -->
+        <div id="help-detail-view" class="hidden flex-1 flex flex-col overflow-hidden space-y-3">
+          <div id="help-policy-content" class="flex-1 overflow-y-auto space-y-3 pr-1 text-xs text-slate-300 leading-relaxed"></div>
+
+          <div class="pt-2.5 border-t border-white/10 grid grid-cols-2 gap-2.5 shrink-0">
+            <button type="button" onclick="backToHelpMenu()"
+              class="py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-white/10 text-slate-200 text-xs font-bold flex items-center justify-center gap-1.5 transition">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              <span>Back</span>
+            </button>
+            <button type="button" onclick="backToHelpMenu()"
+              class="py-2.5 px-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-slate-950 text-xs font-extrabold flex items-center justify-center gap-1.5 shadow transition">
+              <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+              <span>I Understand ✓</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="help-modal-footer" class="pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-slate-400 shrink-0">
+          <span>Support: help@dildostipyar.app</span>
+          <button onclick="closeModal('modal-help-policies')" class="px-4 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold">
+            Close
+          </button>
         </div>
       </div>
     </div>
@@ -1303,7 +1278,6 @@
         </button>
       </header>
 
-      <!-- Overview Stats -->
       <div class="grid grid-cols-4 gap-2 p-3 bg-slate-900/80 border-b border-white/5">
         <div class="p-2.5 rounded-xl bg-slate-950 border border-white/5 text-center">
           <p id="admin-stat-users" class="font-display text-lg font-extrabold text-white">0</p>
@@ -1323,7 +1297,6 @@
         </div>
       </div>
 
-      <!-- Admin Sub-Tabs (4 Tabs including PWA & Branding) -->
       <div class="grid grid-cols-4 gap-1 p-2.5 bg-slate-900/50 border-b border-white/5">
         <button onclick="switchAdminSubTab('flags')" id="admin-sub-btn-flags"
           class="py-2 px-1 rounded-xl text-[11px] font-bold bg-rose-500 text-white shadow transition">
@@ -1384,9 +1357,8 @@
           </div>
         </div>
 
-        <!-- Sub-Tab 4: Admin Profile Picture, App Icons/Favicon & PWA Files (manifest.json, sw.js, Code.gs) -->
+        <!-- Sub-Tab 4: Admin Profile Picture, App Icons/Favicon & PWA Files -->
         <div id="admin-panel-pwa" class="space-y-4 hidden">
-
           <!-- 1. Exclusive Admin Profile Picture Card -->
           <div class="p-4 rounded-2xl bg-slate-900 border border-amber-500/30 space-y-3">
             <div class="flex items-center justify-between">
@@ -1519,7 +1491,6 @@
               </button>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -1540,7 +1511,6 @@
       ? JSON.parse(__firebase_config)
       : null;
 
-    // Allow custom Firebase config saved via Admin Panel for external hosting (e.g., GitHub Pages)
     if (!firebaseConfig) {
       try {
         const savedCustomFb = sessionStorage.getItem('ddp_custom_firebase_config');
@@ -1577,6 +1547,7 @@
     let pendingFlagPayload = null;
     let pendingUpiPack = null;
     let selectedAdminFileKey = 'manifest';
+    let deferredInstallPrompt = null;
 
     let mediaRecorder = null;
     let audioChunks = [];
@@ -1978,7 +1949,6 @@
       if (listenersInitialized) return;
       listenersInitialized = true;
 
-      // 1. Registered Users
       onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'users'), (snap) => {
         allUsersMap = {};
         snap.docs.forEach(d => {
@@ -1995,7 +1965,6 @@
         updateAdminStats();
       });
 
-      // 2. Guest Sessions
       onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'guest_sessions'), (snap) => {
         guestProfilesMap = {};
         snap.docs.forEach(d => {
@@ -2005,7 +1974,6 @@
         updateAdminStats();
       });
 
-      // 3. Custom Open Rooms
       onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'custom_rooms'), (snap) => {
         customRooms = snap.docs.map(d => ({ id: d.id, ...d.data() }))
           .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
@@ -2014,14 +1982,12 @@
         updateAdminStats();
       });
 
-      // 4. Friend Requests
       onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'friend_requests'), (snap) => {
         friendRequests = snap.docs.map(d => ({ id: d.id, ...d.data() }));
         renderFriendRequests();
         renderPeopleDirectory();
       });
 
-      // 5. Mutual Friendships & Per-Friend Privacy Limits
       onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'friendships'), (snap) => {
         friendships = snap.docs.map(d => ({ id: d.id, ...d.data() }));
         renderFriendsChatList();
@@ -2035,7 +2001,6 @@
         }
       });
 
-      // 6. Flagged Reports
       onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'flagged_items'), (snap) => {
         flaggedItems = snap.docs.map(d => ({ id: d.id, ...d.data() }))
           .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
@@ -2043,7 +2008,6 @@
         updateAdminStats();
       });
 
-      // 7. Coin Transactions
       onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'coin_transactions'), (snap) => {
         coinTransactions = snap.docs.map(d => ({ id: d.id, ...d.data() }))
           .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
@@ -2051,7 +2015,6 @@
         updateAdminStats();
       });
 
-      // 8. Branding & Admin DP Config
       onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'branding'), (snap) => {
         if (snap.exists()) {
           appBrandingConfig = snap.data();
@@ -2059,7 +2022,6 @@
         }
       });
 
-      // 8B. Dynamic Admin Credentials Sync
       onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'admin_auth'), (snap) => {
         if (snap.exists()) {
           const data = snap.data();
@@ -2073,7 +2035,6 @@
         }
       });
 
-      // 9. Live Message Counts for 7 Pre-Defined Open Rooms
       Object.keys(PREMADE_ROOMS).forEach(roomId => {
         onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', `open_rooms_${roomId}`), (snap) => {
           roomMessageCounts[roomId] = snap.size;
@@ -2261,7 +2222,6 @@
     window.updateShareFeePreview = () => {
       const amount = Math.max(0, parseInt(document.getElementById('share-coin-amount')?.value || '0', 10));
       const exactFee = amount * 0.02;
-      // Standard +/- 0.50 roundoff: < 0.50 rounds down, >= 0.50 rounds up
       const roundedFee = Math.round(exactFee);
       const totalDeduct = amount + roundedFee;
 
@@ -2300,7 +2260,6 @@
         return;
       }
 
-      // 2% Platform fee with +/- 0.50 roundoff
       const fee = Math.round(amount * 0.02);
       const totalDeduct = amount + fee;
       const senderBalance = currentProfile.coins || 0;
@@ -2369,16 +2328,6 @@
 
     window.closeModal = (id) => {
       document.getElementById(id).classList.add('hidden');
-    };
-
-    window.addCoinsToWallet = async (amount) => {
-      if (!currentProfile || currentProfile.isGuest) return;
-      const newBalance = (currentProfile.coins || 0) + amount;
-      await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', currentProfile.uid), {
-        coins: newBalance
-      });
-      document.getElementById('modal-wallet-balance').textContent = newBalance;
-      showToast(`+${amount} Coins wallet mein add ho gaye! 🪙`, 'success');
     };
 
     window.handleCreateCustomRoom = async (e) => {
@@ -2613,24 +2562,44 @@
       `
     };
 
-    window.openHelpModal = (section = 'terms') => {
-      switchHelpSection(section);
+    window.openHelpModal = (section = null) => {
       document.getElementById('modal-help-policies').classList.remove('hidden');
+      if (section) {
+        openHelpTopic(section);
+      } else {
+        backToHelpMenu();
+      }
       lucide.createIcons();
     };
 
-    window.switchHelpSection = (section) => {
-      document.querySelectorAll('.help-tab-btn').forEach(btn => {
-        const isActive = btn.id === `help-tab-${section}`;
-        btn.className = isActive
-          ? 'help-tab-btn px-3 py-1.5 rounded-xl text-[11px] font-bold bg-cyan-500 text-slate-950 shrink-0 transition'
-          : 'help-tab-btn px-3 py-1.5 rounded-xl text-[11px] font-bold bg-slate-850 text-slate-300 hover:text-white shrink-0 transition';
-      });
+    window.backToHelpMenu = () => {
+      document.getElementById('help-menu-bars').classList.remove('hidden');
+      document.getElementById('help-modal-footer').classList.remove('hidden');
+      document.getElementById('help-detail-view').classList.add('hidden');
+      document.getElementById('info-help-modal-title').textContent = 'Info & Help';
+      lucide.createIcons();
+    };
+
+    window.openHelpTopic = (section) => {
+      const titles = {
+        terms: 'Terms & Conditions',
+        usage: 'Usage Policy & Guidelines',
+        fup: 'Fair Usage Policy (FUP)',
+        privacy: 'Privacy & Safety Policy',
+        coins: 'Coins & 2% Fee Rules',
+        faq: 'FAQs & Quick Help'
+      };
+      document.getElementById('info-help-modal-title').textContent = titles[section] || 'Info & Help';
+      document.getElementById('help-menu-bars').classList.add('hidden');
+      document.getElementById('help-modal-footer').classList.add('hidden');
+      document.getElementById('help-detail-view').classList.remove('hidden');
+
       const contentEl = document.getElementById('help-policy-content');
       if (contentEl) {
         contentEl.innerHTML = HELP_POLICIES_DATA[section] || HELP_POLICIES_DATA.terms;
         contentEl.scrollTop = 0;
       }
+      lucide.createIcons();
     };
 
     // ==================== FULL-ACCESS ADMIN PANEL ====================
@@ -2941,9 +2910,7 @@
       const f = activeChat.friendshipDoc;
       const peerUid = activeChat.peerUid;
 
-      // peerAllowsMe: What peer allows currentProfile to do
       const peerAllowsMe = (f.permissions && f.permissions[peerUid]) || 'both';
-      // iAllowPeer: What currentProfile allows peer to do
       const iAllowPeer = (f.permissions && f.permissions[currentProfile.uid]) || 'both';
 
       const canCall = (peerAllowsMe === 'both' || peerAllowsMe === 'call_only');
@@ -3152,7 +3119,7 @@
       }
     };
 
-    // ==================== VOICE NOTE RECORDING (MediaRecorder API) ====================
+    // ==================== VOICE NOTE RECORDING ====================
     window.startVoiceRecording = async () => {
       if (!activeChat || !currentProfile) return;
 
@@ -3307,59 +3274,156 @@
       lucide.createIcons();
     };
 
-    window.openHelpModal = (section = null) => {
-      document.getElementById('modal-help-policies').classList.remove('hidden');
-      if (section) {
-        openHelpTopic(section);
-      } else {
-        backToHelpMenu();
-      }
-      lucide.createIcons();
-    };
-
-    window.backToHelpMenu = () => {
-      document.getElementById('help-menu-bars').classList.remove('hidden');
-      document.getElementById('help-modal-footer').classList.remove('hidden');
-      document.getElementById('help-detail-view').classList.add('hidden');
-      document.getElementById('info-help-modal-title').textContent = 'Info & Help';
-      lucide.createIcons();
-    };
-
-    window.openHelpTopic = (section) => {
-      const titles = {
-        terms: 'Terms & Conditions',
-        usage: 'Usage Policy & Guidelines',
-        fup: 'Fair Usage Policy (FUP)',
-        privacy: 'Privacy & Safety Policy',
-        coins: 'Coins & 2% Fee Rules',
-        faq: 'FAQs & Quick Help'
-      };
-      document.getElementById('info-help-modal-title').textContent = titles[section] || 'Info & Help';
-      document.getElementById('help-menu-bars').classList.add('hidden');
-      document.getElementById('help-modal-footer').classList.add('hidden');
-      document.getElementById('help-detail-view').classList.remove('hidden');
-
-      const contentEl = document.getElementById('help-policy-content');
-      if (contentEl) {
-        contentEl.innerHTML = HELP_POLICIES_DATA[section] || HELP_POLICIES_DATA.terms;
-        contentEl.scrollTop = 0;
-      }
-      lucide.createIcons();
-    };
-
     // ==================== BRANDING, ADMIN DP & PWA CODE STUDIO ====================
+    function generatePngDataUrlFromLogo(size = 512, customImgSrc = '') {
+      return new Promise((resolve) => {
+        const canvas = document.createElement('canvas');
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext('2d');
+
+        ctx.fillStyle = '#0b1528';
+        ctx.fillRect(0, 0, size, size);
+
+        if (customImgSrc) {
+          const img = new Image();
+          img.crossOrigin = 'anonymous';
+          img.onload = () => {
+            ctx.drawImage(img, 0, 0, size, size);
+            resolve(canvas.toDataURL('image/png'));
+          };
+          img.onerror = () => resolve(drawDefaultRomanticPng(canvas, ctx, size));
+          img.src = customImgSrc;
+        } else {
+          resolve(drawDefaultRomanticPng(canvas, ctx, size));
+        }
+      });
+    }
+
+    function drawDefaultRomanticPng(canvas, ctx, size) {
+      const s = size / 120;
+      ctx.save();
+      ctx.scale(s, s);
+
+      const grad = ctx.createLinearGradient(20, 20, 100, 100);
+      grad.addColorStop(0, '#f43f5e');
+      grad.addColorStop(0.5, '#fda4af');
+      grad.addColorStop(1, '#fde68a');
+
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 6;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.beginPath();
+      ctx.moveTo(60, 95);
+      ctx.bezierCurveTo(60, 95, 22, 72, 22, 45);
+      ctx.bezierCurveTo(22, 33, 31, 24, 43, 24);
+      ctx.bezierCurveTo(51, 24, 57, 28, 60, 34);
+      ctx.bezierCurveTo(63, 28, 69, 24, 77, 24);
+      ctx.bezierCurveTo(89, 24, 98, 33, 98, 45);
+      ctx.bezierCurveTo(98, 72, 60, 95, 60, 95);
+      ctx.stroke();
+
+      ctx.fillStyle = '#fcd34d';
+      ctx.beginPath();
+      ctx.arc(66, 46, 5, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = '#fda4af';
+      ctx.beginPath();
+      ctx.arc(79, 46, 5, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore();
+      return canvas.toDataURL('image/png');
+    }
+
+    async function injectDynamicPngManifest() {
+      try {
+        const png192 = await generatePngDataUrlFromLogo(192, appBrandingConfig.appIconUrl || '');
+        const png512 = await generatePngDataUrlFromLogo(512, appBrandingConfig.appIconUrl || '');
+        const baseUrl = window.location.href.split('#')[0].split('?')[0];
+
+        const manifestObj = {
+          name: "DIL - DOSTI - PYAR | Voice & Text Social PWA",
+          short_name: "DilDostiPyar",
+          description: "18+ Privacy-First Text & Voice Chatrooms, Mutual Friend Calls & Coin Economy PWA",
+          start_url: baseUrl,
+          scope: baseUrl.substring(0, baseUrl.lastIndexOf('/') + 1),
+          display: "standalone",
+          orientation: "portrait",
+          background_color: "#070b15",
+          theme_color: "#080d1a",
+          icons: [
+            { src: png192, sizes: "192x192", type: "image/png", purpose: "any" },
+            { src: png512, sizes: "512x512", type: "image/png", purpose: "any" },
+            { src: png512, sizes: "512x512", type: "image/png", purpose: "maskable" }
+          ]
+        };
+
+        const blob = new Blob([JSON.stringify(manifestObj)], { type: 'application/manifest+json' });
+        const manifestUrl = URL.createObjectURL(blob);
+        let linkEl = document.querySelector('link[rel="manifest"]');
+        if (!linkEl) {
+          linkEl = document.createElement('link');
+          linkEl.rel = 'manifest';
+          document.head.appendChild(linkEl);
+        }
+        linkEl.href = manifestUrl;
+      } catch (e) {
+        console.warn('Dynamic PNG manifest error:', e);
+      }
+    }
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredInstallPrompt = e;
+      const sub = document.getElementById('pwa-install-subtext');
+      if (sub) sub.textContent = 'Ready to install • One-tap mein install karein!';
+    });
+
+    window.addEventListener('appinstalled', () => {
+      deferredInstallPrompt = null;
+      const banner = document.getElementById('pwa-install-banner');
+      if (banner) banner.classList.add('hidden');
+      showToast('DIL - DOSTI - PYAR app successfully install ho gayi! 🎉', 'success');
+    });
+
+    window.triggerPwaInstall = async () => {
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        const { outcome } = await deferredInstallPrompt.userChoice;
+        if (outcome === 'accepted') {
+          deferredInstallPrompt = null;
+        }
+        return;
+      }
+
+      if (window.self !== window.top) {
+        showToast('Preview iFrame mein install block hota hai. GitHub Pages HTTPS URL par kholkar Install dabayein!', 'warn');
+        return;
+      }
+
+      const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+      if (isIos) {
+        showToast('iPhone/Safari mein neeche Share (↑) dabakar "Add to Home Screen" chunein!', 'info');
+      } else {
+        showToast('Browser menu (⋮) kholein aur "Install app" ya "Add to Home screen" par tap karein!', 'info');
+      }
+    };
+
     function applyBrandingToUI() {
       const iconUrl = appBrandingConfig.appIconUrl || '';
       const adminAvatar = appBrandingConfig.adminAvatarUrl || '';
 
-      // Update Auth Header, Main Top-Left Header, and Admin Preview Icon
+      // Update App Logo in Auth Header, Main Header, and Admin Preview
       [
-        ['auth-brand-img', 'auth-brand-svg'],
-        ['main-brand-img', 'main-brand-svg'],
-        ['admin-appicon-preview-img', 'admin-appicon-preview-svg']
-      ].forEach(([imgId, svgId]) => {
-        const imgEl = document.getElementById(imgId);
-        const svgEl = document.getElementById(svgId);
+        { img: 'auth-brand-img', svg: 'auth-brand-svg' },
+        { img: 'main-brand-img', svg: 'main-brand-svg' },
+        { img: 'admin-appicon-preview-img', svg: 'admin-appicon-preview-svg' }
+      ].forEach(({ img, svg }) => {
+        const imgEl = document.getElementById(img);
+        const svgEl = document.getElementById(svg);
         if (!imgEl || !svgEl) return;
         if (iconUrl) {
           imgEl.src = iconUrl;
@@ -3371,19 +3435,19 @@
         }
       });
 
-      // Update Browser Favicon Dynamically
-      const faviconEl = document.querySelector('link[rel="icon"]');
-      if (faviconEl && iconUrl) {
-        faviconEl.href = iconUrl;
+      // Update Browser Tab Favicon
+      if (iconUrl) {
+        let fav = document.querySelector('link[rel="icon"]');
+        if (fav) fav.href = iconUrl;
       }
 
-      // Update Exclusive Admin Profile Picture
+      // Update Admin Avatar in Header & Preview
       [
-        ['admin-header-avatar-img', 'admin-header-avatar-svg'],
-        ['admin-profile-preview-img', 'admin-profile-preview-svg']
-      ].forEach(([imgId, svgId]) => {
-        const imgEl = document.getElementById(imgId);
-        const svgEl = document.getElementById(svgId);
+        { img: 'admin-header-avatar-img', svg: 'admin-header-avatar-svg' },
+        { img: 'admin-profile-preview-img', svg: 'admin-profile-preview-svg' }
+      ].forEach(({ img, svg }) => {
+        const imgEl = document.getElementById(img);
+        const svgEl = document.getElementById(svg);
         if (!imgEl || !svgEl) return;
         if (adminAvatar) {
           imgEl.src = adminAvatar;
@@ -3394,20 +3458,24 @@
           svgEl.classList.remove('hidden');
         }
       });
+
+      injectDynamicPngManifest();
+      if (selectedAdminFileKey === 'manifest') {
+        selectAdminCodeFile('manifest');
+      }
     }
 
-    function compressImageToDataUrl(file, maxSize = 256) {
+    function compressImageFileToDataUrl(file, maxSize = 256) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = (ev) => {
           const img = new Image();
           img.onload = () => {
             const canvas = document.createElement('canvas');
-            const scale = Math.min(maxSize / img.width, maxSize / img.height, 1);
-            canvas.width = Math.round(img.width * scale);
-            canvas.height = Math.round(img.height * scale);
+            canvas.width = maxSize;
+            canvas.height = maxSize;
             const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0, maxSize, maxSize);
             resolve(canvas.toDataURL('image/png', 0.9));
           };
           img.onerror = reject;
@@ -3422,62 +3490,68 @@
       const file = e.target.files?.[0];
       if (!file) return;
       try {
-        const dataUrl = await compressImageToDataUrl(file, 256);
+        const dataUrl = await compressImageFileToDataUrl(file, 256);
         await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'branding'), {
           ...appBrandingConfig,
-          adminAvatarUrl: dataUrl,
-          updatedAt: Date.now()
+          adminAvatarUrl: dataUrl
         });
-        showToast('Admin Profile Picture update ho gayi! 📷', 'success');
+        showToast('Admin profile picture update ho gayi! 📷', 'success');
       } catch (err) {
         showToast('Photo upload karne mein error aaya', 'error');
       }
     };
 
     window.resetAdminAvatar = async () => {
-      await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'branding'), {
-        ...appBrandingConfig,
-        adminAvatarUrl: '',
-        updatedAt: Date.now()
-      });
-      showToast('Admin profile photo hata di gayi', 'info');
+      try {
+        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'branding'), {
+          ...appBrandingConfig,
+          adminAvatarUrl: ''
+        });
+        showToast('Admin profile picture hata di gayi', 'info');
+      } catch (err) {}
     };
 
     window.handleAppIconUpload = async (e) => {
       const file = e.target.files?.[0];
       if (!file) return;
       try {
-        const dataUrl = await compressImageToDataUrl(file, 512);
+        const dataUrl = await compressImageFileToDataUrl(file, 512);
         await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'branding'), {
           ...appBrandingConfig,
-          appIconUrl: dataUrl,
-          updatedAt: Date.now()
+          appIconUrl: dataUrl
         });
-        showToast('App Logo & Favicon live update ho gaya! ✨', 'success');
+        showToast('App Icon aur Favicon live update ho gaye! 🖼️', 'success');
       } catch (err) {
-        showToast('Icon upload error', 'error');
+        showToast('Icon upload karne mein error aaya', 'error');
       }
     };
 
     window.saveAppIconFromUrl = async () => {
-      const url = document.getElementById('admin-appicon-url-input').value.trim();
-      if (!url) return;
-      await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'branding'), {
-        ...appBrandingConfig,
-        appIconUrl: url,
-        updatedAt: Date.now()
-      });
-      document.getElementById('admin-appicon-url-input').value = '';
-      showToast('App Logo & Favicon URL apply ho gaya!', 'success');
+      const url = document.getElementById('admin-appicon-url-input')?.value.trim();
+      if (!url) {
+        showToast('Pehle valid image URL paste karein', 'warn');
+        return;
+      }
+      try {
+        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'branding'), {
+          ...appBrandingConfig,
+          appIconUrl: url
+        });
+        document.getElementById('admin-appicon-url-input').value = '';
+        showToast('Naya App Icon URL apply ho gaya! ✨', 'success');
+      } catch (err) {
+        showToast('URL save karne mein error aaya', 'error');
+      }
     };
 
     window.resetAppIconToDefault = async () => {
-      await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'branding'), {
-        ...appBrandingConfig,
-        appIconUrl: '',
-        updatedAt: Date.now()
-      });
-      showToast('Default romantic icon restore ho gaya', 'info');
+      try {
+        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'branding'), {
+          ...appBrandingConfig,
+          appIconUrl: ''
+        });
+        showToast('Default romantic icon restore ho gaya ❤️', 'info');
+      } catch (err) {}
     };
 
     function getAdminCodeTemplates() {
@@ -3498,8 +3572,9 @@
             theme_color: "#080d1a",
             categories: ["social", "communication"],
             icons: [
-              { src: activeIcon, sizes: "192x192", type: "image/png", purpose: "any maskable" },
-              { src: activeIcon, sizes: "512x512", type: "image/png", purpose: "any maskable" }
+              { src: activeIcon, sizes: "192x192", type: "image/png", purpose: "any" },
+              { src: activeIcon, sizes: "512x512", type: "image/png", purpose: "any" },
+              { src: activeIcon, sizes: "512x512", type: "image/png", purpose: "maskable" }
             ]
           }, null, 2)
         },
@@ -3902,9 +3977,10 @@ function doPost(e) {
     }
 
     bootstrapAuth();
+    injectDynamicPngManifest();
 
     // Register Service Worker for PWA Install & Offline Support
-    if ('serviceWorker' in navigator) {
+    if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost')) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js')
           .then((reg) => console.log('SW registered:', reg.scope))
