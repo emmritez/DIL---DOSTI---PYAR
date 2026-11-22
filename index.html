@@ -372,13 +372,19 @@
               <button type="button" onclick="switchAuthTab('register')" class="text-[11px] underline text-amber-300">← Back</button>
             </div>
             <p class="text-amber-200/80 text-[11px]">
-              Default ID: <code class="px-1.5 py-0.5 rounded bg-slate-950 text-amber-300 font-mono">admin</code> | Passcode: <code class="px-1.5 py-0.5 rounded bg-slate-950 text-amber-300 font-mono">admin123</code>
+              Apne Admin ID aur Passcode se login karein (Admin panel se aap inhe kabhi bhi change kar sakte hain).
             </p>
           </div>
 
           <div>
             <label class="block text-xs font-medium text-slate-300 mb-1">Admin ID</label>
-            <input type="text" id="admin-id-input" required value="admin"
+            <input type="text" id="admin-id-input" required placeholder="Enter Admin ID"
+              class="w-full px-3.5 py-3 rounded-xl bg-slate-950/90 border border-white/10 text-sm text-white focus:outline-none focus:border-amber-500" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1">Admin Passcode</label>
+            <input type="password" id="admin-pass-input" required placeholder="Enter Passcode"
               class="w-full px-3.5 py-3 rounded-xl bg-slate-950/90 border border-white/10 text-sm text-white focus:outline-none focus:border-amber-500" />
           </div>
 
@@ -1346,12 +1352,35 @@
             </div>
           </div>
 
-          <!-- 2. Live App Logo & Favicon Updater -->
-          <div class="p-4 rounded-2xl bg-slate-900 border border-rose-500/30 space-y-3">
-            <div>
-              <h4 class="font-display font-bold text-sm text-rose-300">App Logo & Favicon Updater</h4>
-              <p class="text-[11px] text-slate-400">Top-left header logo aur browser tab favicon ko live update karein.</p>
+          <!-- 1B. Change Admin Login Credentials Card -->
+          <div class="p-4 rounded-2xl bg-slate-900 border border-emerald-500/30 space-y-3">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="font-display font-bold text-sm text-emerald-300">Change Admin ID & Passcode</h4>
+                <p class="text-[11px] text-slate-400">Naya Admin ID aur Passcode set karein (turant sabhi devices par sync hoga).</p>
+              </div>
+              <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-bold">SECURITY</span>
             </div>
+
+            <form onsubmit="handleUpdateAdminCredentials(event)" class="space-y-2.5">
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-[11px] font-medium text-slate-300 mb-1">New Admin ID *</label>
+                  <input type="text" id="new-admin-id-input" required minlength="3" maxlength="24" placeholder="e.g. boss_admin"
+                    class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-white/10 text-xs text-white focus:outline-none focus:border-emerald-500" />
+                </div>
+                <div>
+                  <label class="block text-[11px] font-medium text-slate-300 mb-1">New Passcode *</label>
+                  <input type="text" id="new-admin-pass-input" required minlength="4" maxlength="32" placeholder="Min 4 chars"
+                    class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-white/10 text-xs text-white focus:outline-none focus:border-emerald-500" />
+                </div>
+              </div>
+              <button type="submit"
+                class="w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-slate-950 font-bold text-xs shadow hover:opacity-95 transition">
+                Save New Admin Credentials ✓
+              </button>
+            </form>
+          </div>
 
             <div class="flex items-center gap-3">
               <div class="w-14 h-14 rounded-2xl bg-slate-950 border border-white/15 flex items-center justify-center overflow-hidden shrink-0">
@@ -1469,6 +1498,7 @@
     let coinTransactions = [];
     let roomMessageCounts = {};
     let appBrandingConfig = { appIconUrl: '', adminAvatarUrl: '' };
+    let adminCredentials = { adminId: 'admin', passcode: 'admin123' };
 
     let activeChat = null;
     let unsubscribeMessages = null;
@@ -1759,12 +1789,38 @@
       const id = document.getElementById('admin-id-input').value.trim();
       const pass = document.getElementById('admin-pass-input').value.trim();
 
-      if (id === 'admin' && pass === 'admin123') {
+      const validId = adminCredentials.adminId || 'admin';
+      const validPass = adminCredentials.passcode || 'admin123';
+
+      if (id === validId && pass === validPass) {
         sessionStorage.setItem('ddp_active_session', JSON.stringify({ isAdmin: true }));
         showToast('Admin Control Center unlocked! 🛡️', 'success');
         enterAdminDashboard();
       } else {
         showToast('Galat Admin ID ya Passcode!', 'error');
+      }
+    };
+
+    window.handleUpdateAdminCredentials = async (e) => {
+      e.preventDefault();
+      const newId = document.getElementById('new-admin-id-input').value.trim();
+      const newPass = document.getElementById('new-admin-pass-input').value.trim();
+
+      if (newId.length < 3 || newPass.length < 4) {
+        showToast('Admin ID min 3 aur Passcode min 4 characters ka rakhein!', 'error');
+        return;
+      }
+
+      try {
+        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'admin_auth'), {
+          adminId: newId,
+          passcode: newPass,
+          updatedAt: Date.now()
+        });
+        adminCredentials = { adminId: newId, passcode: newPass };
+        showToast(`Admin Credentials updated! Naya ID: "${newId}" 🔐`, 'success');
+      } catch (err) {
+        showToast('Credentials update karne mein error aaya', 'error');
       }
     };
 
@@ -1930,6 +1986,20 @@
         if (snap.exists()) {
           appBrandingConfig = snap.data();
           applyBrandingToUI();
+        }
+      });
+
+      // 8B. Dynamic Admin Credentials Sync
+      onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'admin_auth'), (snap) => {
+        if (snap.exists()) {
+          const data = snap.data();
+          if (data.adminId && data.passcode) {
+            adminCredentials = { adminId: data.adminId, passcode: data.passcode };
+            const idField = document.getElementById('new-admin-id-input');
+            const passField = document.getElementById('new-admin-pass-input');
+            if (idField && !idField.value) idField.value = data.adminId;
+            if (passField && !passField.value) passField.value = data.passcode;
+          }
         }
       });
 
@@ -2500,6 +2570,11 @@
       document.getElementById('admin-dashboard-view').classList.remove('hidden');
 
       setupRealtimeListeners();
+      const idField = document.getElementById('new-admin-id-input');
+      const passField = document.getElementById('new-admin-pass-input');
+      if (idField) idField.value = adminCredentials.adminId || 'admin';
+      if (passField) passField.value = adminCredentials.passcode || 'admin123';
+
       switchAdminSubTab('flags');
       renderAdminRoomsList();
       updateAdminStats();
